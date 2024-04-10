@@ -24,8 +24,32 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
-  </head>
+    <title>РосАвтоДор</title>
+
+    <script src="https://api-maps.yandex.ru/v3/?apikey=<d12b99dc-3d48-456a-8dd6-4ab2376e1012>&lang=en_US" type="text/javascript"></script>
+      <!-- <script>
+        initMap();
+
+        async function initMap() {
+            await ymaps3.ready;
+
+            const {YMap, YMapDefaultSchemeLayer} = ymaps3;
+
+            const map = new YMap(
+                document.getElementById('map'),
+                {
+                    location: {
+                        center: [37.588144, 55.733842],
+                        zoom: 10
+                    }
+                }
+            );
+
+            map.addChild(new YMapDefaultSchemeLayer());
+        }
+    </script>
+   -->
+    </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
