@@ -40,9 +40,9 @@ const FormCreatePoint = () => {
   };
 
   return (
-    <form className="p-5 position-absolute top-50 start-50 translate-middle w-50 shadow-sm p-3 mb-5 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-3 align-items-start">
+    <form className="p-5  w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-start">
       <h3>Добавить точку</h3>
-      <div class="my-4 w-100">
+      <div class="my-3 w-100">
         <div class="container-fluid w-100 p-0">
           <div class="row">
             <div class="col-12">
@@ -115,7 +115,7 @@ const FormCreatePoint = () => {
       <button
         type="button"
         onClick={handleSubmit}
-        class="btn btn-primary align-self-end"
+        class="btn btn-primary align-self-end mt-3 "
       >
         Добавить
       </button>
