@@ -3,8 +3,10 @@ import Select from "react-select";
 import CustomInput from "../CustomInput/custom_input";
 import FormData from "../../helpers/FormData";
 import FormDefaultData from "../../helpers/FormDefaultData";
+import CrudPoints from "../../helpers/CrudPoints.js";
 
-const FormCreatePoint = () => {
+
+const FormCreatePoint = (props) => {
   const [inputValues, setInputValues] = useState(FormDefaultData);
 
   const handleInputChange = (event) => {
@@ -37,6 +39,16 @@ const FormCreatePoint = () => {
     e.preventDefault();
     // TODO
     console.log(inputValues);
+    const points_list = props.points_list;
+    const set_list = props.set_list;
+    console.log(points_list)
+    console.log(set_list)
+    if (points_list)
+      set_list(points_list => [...points_list, inputValues]);
+    else 
+      set_list([inputValues])
+    // props.points_list.map((marker, index) => console.log(marker["coordinates"].toString() + ' ' + index))
+    //CrudPoints.createPoint(inputValues)
   };
 
   return (
