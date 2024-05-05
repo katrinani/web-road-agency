@@ -47,8 +47,8 @@ const FormCreatePoint = (props) => {
       set_list(points_list => [...points_list, inputValues]);
     else 
       set_list([inputValues])
-    // props.points_list.map((marker, index) => console.log(marker["coordinates"].toString() + ' ' + index))
-    //CrudPoints.createPoint(inputValues)
+    props.points_list.map((marker, index) => console.log(marker["coordinates"].toString() + ' ' + index))
+    CrudPoints.createPoint(inputValues)
   };
 
   return (
