@@ -1,3 +1,3 @@
-const url = "https://smiling-striking-lionfish.ngrok-free.app";
+const url = "http://backend:8080";
 
 export default url;
