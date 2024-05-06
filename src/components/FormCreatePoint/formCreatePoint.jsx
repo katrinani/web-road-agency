@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import CustomInput from "../CustomInput/custom_input";
-import FormData from "../../helpers/FormData";
+import { FormData } from "../../helpers/FormData.js";
 import FormDefaultData from "../../helpers/FormDefaultData";
 import CrudPoints from "../../helpers/CrudPoints.js";
-
 
 const FormCreatePoint = (props) => {
   const [inputValues, setInputValues] = useState(FormDefaultData);
@@ -27,8 +26,16 @@ const FormCreatePoint = (props) => {
     }));
   };
 
-  const handleMultipleSelectChange = (event) => {
-    const selectedValues = event.map((option) => option.value);
+  // const handleMultipleSelectChange = (event) => {
+  //   const selectedValues = event.map((option) => option.value);
+  //   setInputValues((prevState) => ({
+  //     ...prevState,
+  //     "Тип точки": selectedValues,
+  //   }));
+  // };
+
+  const handleSingleSelectChangeType = (event) => {
+    const selectedValues = event.value;
     setInputValues((prevState) => ({
       ...prevState,
       "Тип точки": selectedValues,
@@ -41,14 +48,14 @@ const FormCreatePoint = (props) => {
     console.log(inputValues);
     const points_list = props.points_list;
     const set_list = props.set_list;
-    console.log(points_list)
-    console.log(set_list)
-    if (points_list)
-      set_list(points_list => [...points_list, inputValues]);
-    else 
-      set_list([inputValues])
-    props.points_list.map((marker, index) => console.log(marker["coordinates"].toString() + ' ' + index))
-    CrudPoints.createPoint(inputValues)
+    // console.log(points_list);
+    // console.log(set_list);
+    if (points_list) set_list((points_list) => [...points_list, inputValues]);
+    // else set_list([inputValues]);
+    // props.points_list.map((marker, index) =>
+    //   console.log(marker["coordinates"].toString() + " " + index)
+    // );
+    CrudPoints.createPoint(inputValues);
   };
 
   return (
@@ -119,8 +126,7 @@ const FormCreatePoint = (props) => {
               value,
               label: value,
             }))}
-            isMulti
-            onChange={handleMultipleSelectChange}
+            onChange={handleSingleSelectChangeType}
           />
         </div>
       </div>
@@ -134,6 +140,5 @@ const FormCreatePoint = (props) => {
     </form>
   );
 };
-
 
 export default FormCreatePoint;

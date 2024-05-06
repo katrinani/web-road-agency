@@ -1,22 +1,26 @@
 import axios from "axios";
+import { point_types } from "./FormData";
+import url from "./url"
 
-const url = "https://smiling-striking-lionfish.ngrok-free.app";
 
 class CrudPoints {
   static async createPoint(point) {
-
     let body = {
       point: {
         name: point["Название"],
-        type: 0,
+        type: point_types.indexOf(point["Тип точки"]),
         coordinates: {
           latitude: point["Широта"],
           longitude: point["Долгота"],
-        }
+        },
       },
     };
 
-    const response = await axios.post(url + `/api/roads/${point["Дорога"]}/verifiedPoints`, body);
+    
+    const response = await axios.post(
+      url + `/api/roads/${point["Дорога"]}/verifiedPoints`,
+      body
+    );
 
     console.log(response);
   }
