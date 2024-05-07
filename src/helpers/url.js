@@ -1,3 +1,3 @@
-const url = "http://backend:8080";
+const url = "http://localhost:5139";
 
 export default url;
