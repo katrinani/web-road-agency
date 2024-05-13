@@ -8,14 +8,6 @@ import {
 import React from "react";
 
 const Map = (props) => {
-  // const points_list = [{
-  //   coordinates: [61.40, 55.16],
-  //   popup: {
-  //     content: "АЗС",
-  //     position: "top"
-  //   },
-  // }];
-
   return (
     <div className="map w-50 h-100 px-2">
       <YMapComponentsProvider apiKey={props.apiKey}>
@@ -27,6 +19,8 @@ const Map = (props) => {
               <YMapDefaultMarker
                 key={index}
                 coordinates={[marker["Широта"], marker["Долгота"]]}
+                title={marker["Название"]}
+                color={"#0c307c"}
               />
             ))}
         </YMap>
