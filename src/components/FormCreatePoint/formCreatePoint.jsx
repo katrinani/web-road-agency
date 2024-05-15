@@ -45,19 +45,9 @@ const FormCreatePoint = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO
-    // console.log(inputValues);
-    // const points_list = props.points_list;
-    // const set_list = props.set_list;
-    // console.log(points_list);
-    // console.log(set_list);
-    // if (points_list) set_list((points_list) => [...points_list, inputValues]);
-    // // else set_list([inputValues]);
-    // // props.points_list.map((marker, index) =>
-    // //   console.log(marker["coordinates"].toString() + " " + index)
-    // // );
+    props.setButtonName('Добавить')
     // CrudPoints.createPoint(inputValues);
-      await CrudPoints.createPoint(inputValues);
+      //await CrudPoints.createPoint(inputValues);
       const roadName = inputValues.Дорога;
       const points = await getAllPoints(roadName);
       props.set_list(points);
@@ -140,7 +130,7 @@ const FormCreatePoint = (props) => {
         onClick={handleSubmit}
         class="btn btn-primary align-self-end mt-3 "
       >
-        Добавить
+        {props.button_name}
       </button>
     </form>
   );
