@@ -1,5 +1,7 @@
 import axios from "axios";
-import url from "./url";
+import url from "../url";
+import handleError from "../Notifications";
+
 
 const getRoads = async () => {
     try {
@@ -10,10 +12,8 @@ const getRoads = async () => {
             return roadNames;
         }
     } catch (error) {
-        if (error.response && error.response.status === 404) {
-            console.log("Нет ни одной дороги");
-        } else {
-            console.error("Произошла ошибка при получении дорог", error);
+        {
+            handleError(error)
         }
     }
 };

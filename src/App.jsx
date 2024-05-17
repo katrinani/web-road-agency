@@ -2,6 +2,9 @@ import React from "react";
 import FormCreatePoint from "./components/FormCreatePoint/formCreatePoint";
 import Map from "./components/Map/Map";
 import { useState } from "react";
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
+
 
 function App() {
     const location = { center: [61.40, 55.16], zoom: 9 };
@@ -13,6 +16,7 @@ function App() {
             <div className="position-absolute translate-middle top-50 start-50 w-75 h-75 d-flex flex-row">
                 <FormCreatePoint points_list={points_list} set_list={set_list} />
                 <Map location={location} apiKey={apiKey} points_list={points_list} />
+                <NotificationContainer/>
             </div>
         </div>
     );

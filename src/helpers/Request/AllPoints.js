@@ -1,5 +1,7 @@
 import axios from "axios";
-import url from "./url";
+import url from "../url";
+import handleError from "../Notifications";
+
 
 const getAllPoints = async (roadName) => {
     try {
@@ -14,13 +16,12 @@ const getAllPoints = async (roadName) => {
             }));
 
             console.log(points_list);
+
             return points_list;
         }
     } catch (error) {
-        if (error.response && error.response.status === 404) {
-            console.log("Нет ни одной дороги");
-        } else {
-            console.error("Произошла ошибка", error);
+        {
+            handleError(error)
         }
     }
 };
