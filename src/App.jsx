@@ -2,6 +2,9 @@ import React from "react";
 import FormCreatePoint from "./components/FormCreatePoint/formCreatePoint";
 import Map from "./components/Map/Map";
 import { useState } from "react";
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
+
 import { Container } from "react-bootstrap";
 import MessageWindow from "./components/MessageWindow/MessageWindow";
 
@@ -25,6 +28,7 @@ function App() {
               apiKey={apiKey}
               points_list={points_list}
             />
+                <NotificationContainer/>
           </div>
         </div>
       )}

@@ -3,8 +3,8 @@ import Select from "react-select";
 import CustomInput from "../CustomInput/custom_input";
 import { FormData } from "../../helpers/FormData.js";
 import FormDefaultData from "../../helpers/FormDefaultData";
-import CrudPoints from "../../helpers/CrudPoints.js";
-import getAllPoints from "../../helpers/AllPoints";
+import CrudPoints from "../../helpers/Request/CrudPoints.js";
+import getAllPoints from "../../helpers/Request/AllPoints";
 
 const FormCreatePoint = (props) => {
   const [inputValues, setInputValues] = useState(FormDefaultData);
