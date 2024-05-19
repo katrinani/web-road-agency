@@ -11,7 +11,7 @@
 
 
 import axios from "axios";
-import url from "./url";
+import url from "../url";
 
 const sendAdvert = async (advert) => {
     try {

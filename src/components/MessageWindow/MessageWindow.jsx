@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, ListGroup } from "react-bootstrap";
 import Select from "react-select";
-import roads from "../../helpers/Roads";
-import regions from "../../helpers/Regions";
+import roads from "../../helpers/Request/Roads";
+import regions from "../../helpers/Request/Regions";
 import DateTimePicker from "react-datetime-picker";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
@@ -26,12 +26,12 @@ const MessageWindow = () => {
     console.log(selectedDateTime);
   };
 
-//   useEffect(() => {
-//     setRoads(roads);
-//     setRegions(regions);
-//     console.log(roads);
-//     console.log(regions);
-//   }, []);
+  useEffect(() => {
+    setRoads(roads);
+    setRegions(regions);
+    console.log(roads);
+    console.log(regions);
+  }, []);
 
   const handleInputChange = (inputName) => (selectedOption) => {
     if (inputName === "locationType") {
