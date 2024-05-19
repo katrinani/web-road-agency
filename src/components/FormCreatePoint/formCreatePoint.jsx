@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import CustomInput from "../CustomInput/custom_input";
 import { FormData } from "../../helpers/FormData.js";
 import FormDefaultData from "../../helpers/FormDefaultData";
 import CrudPoints from "../../helpers/CrudPoints.js";
 import getAllPoints from "../../helpers/AllPoints";
+import regions from "../../helpers/Regions.js";
 
 const FormCreatePoint = (props) => {
   const [inputValues, setInputValues] = useState(FormDefaultData);
+
+  useEffect(() => {
+    if (props.button_name === 'Добавить') {
+      setInputValues(FormDefaultData);
+    }
+  }, [props.button_name]);
 
   const handleInputChange = (event) => {
     console.log(event);
@@ -27,14 +34,6 @@ const FormCreatePoint = (props) => {
     }));
   };
 
-  // const handleMultipleSelectChange = (event) => {
-  //   const selectedValues = event.map((option) => option.value);
-  //   setInputValues((prevState) => ({
-  //     ...prevState,
-  //     "Тип точки": selectedValues,
-  //   }));
-  // };
-
   const handleSingleSelectChangeType = (event) => {
     const selectedValues = event.value;
     setInputValues((prevState) => ({
@@ -43,14 +42,46 @@ const FormCreatePoint = (props) => {
     }));
   };
 
+  const handleSingleSelectChangeRegion = (event) => {
+    const selectedValues = event.value;
+    setInputValues((prevState) => ({
+      ...prevState,
+      "Регион": selectedValues,
+    }));
+  };
+
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    props.setButtonName('Добавить')
-    // CrudPoints.createPoint(inputValues);
-      //await CrudPoints.createPoint(inputValues);
-      const roadName = inputValues.Дорога;
-      const points = await getAllPoints(roadName);
-      props.set_list(points);
+    
+    props.setButtonName('Добавить');
+    // await CrudPoints.createPoint(inputValues);
+    const roadName = inputValues.Дорога;
+    const points = await getAllPoints(roadName);
+    props.set_list(points);
+    console.log(points)
+    console.log(props.points_list);
+    setInputValues(FormDefaultData)
+    console.log(inputValues)
+  };
+
+
+  const renderRegionInput = () => {
+    if (inputValues["Тип точки"] === "километр") {
+      return (
+        <div className="my-3">
+          <span>Регион</span>
+          <Select
+            options={regions.map((value) => ({
+              value,
+              label: value,
+            }))}
+            onChange={handleSingleSelectChangeRegion}
+          />
+        </div>
+      );
+    }
+
+    return null;
   };
 
   return (
@@ -124,6 +155,9 @@ const FormCreatePoint = (props) => {
             onChange={handleSingleSelectChangeType}
           />
         </div>
+
+        {renderRegionInput()}
+
       </div>
       <button
         type="button"

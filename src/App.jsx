@@ -16,7 +16,7 @@ function App() {
     <div className="App bg-light-subtle">
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>{"Точка" || selectedPoint["Название"]}</Modal.Title>
+        <Modal.Title>{selectedPoint && selectedPoint["Название"] ? selectedPoint["Название"] : "Точка"}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="d-flex justify-content-between">
           <Button
@@ -49,10 +49,6 @@ function App() {
           setSelectedPoint={setSelectedPoint}
         />
       </div>
-
-      <Button variant="dark" onClick={() => setShowModal(!showModal)}>
-        Open Modal
-      </Button>
     </div>
   );
 }

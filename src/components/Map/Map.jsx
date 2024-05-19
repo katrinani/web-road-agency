@@ -6,15 +6,14 @@ import {
   YMapDefaultMarker,
 } from "ymap3-components";
 import React from "react";
-import { useState } from "react";
 
-const Map = (props) => {
-  
-  
+
+const Map = (props) => {  
   const handleMarkerClick = (marker) => {
     console.log("Координаты маркера: ", marker["Широта"], marker["Долгота"]);
     console.log("Название", marker["Название"]);
     props.setSelectedPoint(marker);
+    console.log(marker)
     props.setShowModal(true);
   };
 
