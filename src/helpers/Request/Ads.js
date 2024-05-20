@@ -1,30 +1,41 @@
-// {
-//     "advertisement": {
-//       "title": "string",
-//       "description": "string", // необязательный параметр
-//       "regionName": "string", // обязательно должно быть или имя дороги, или имя региона. Оба одновременно не должны 
-//                              // присутствовать или отсутствовать
-//       "roadName": "string",
-//       "expirationTime": "2024-05-19T14:26:52+05:00" // это просто пример, в каком формате должны быть дата и время 
-//     }
-//   }
-
-
 import axios from "axios";
 import url from "../url";
+import {point_types} from "../FormData";
+import handleError from "../Notifications";
+import {NotificationManager} from "react-notifications";
 
-const sendAdvert = async (advert) => {
+const prepareAdvert = (newMessage) => {
+    const {locationType, location, title, description, expireTime} = newMessage;
+    const expirationTime = expireTime.toISOString();
+    console.log(expirationTime)
+    const advertisement = {
+        title,
+        description: description || undefined,
+    };
+    if (locationType === 'Дорога') {
+        advertisement.roadName = location;
+    } else if (locationType === 'Регион') {
+        advertisement.regionName = location;
+    }
+    advertisement.expirationTime = expirationTime;
+    console.log(advertisement)
+    return {advertisement};
+};
+
+const sendAdvert = async (newMessage) => {
     try {
+        const advert = prepareAdvert(newMessage);
         const response = await axios.post(`${url}/api/advertisements`, advert);
+        console.log(response)
         if (response.status === 201) {
-            console.log('Объявление успешно отправлено')
+            console.log('Объявление успешно отправлено');
+            NotificationManager.success('Успешно создано');
         }
     } catch (error) {
-        if (error.response && error.response.status === 404) {
-            console.log("Не найдена дорога или регион");
-        } else {
-            console.error("Произошла ошибка при создании объявления", error);
+        {
+            handleError(error)
         }
     }
 };
+
 export default sendAdvert;

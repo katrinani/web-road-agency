@@ -7,6 +7,7 @@ import DateTimePicker from "react-datetime-picker";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
+import sendAdvert from "../../helpers/Request/Ads";
 
 const MessageWindow = () => {
   const [messages, setMessages] = useState([]);
@@ -80,6 +81,7 @@ const MessageWindow = () => {
       });
       setSelectedDateTime(new Date());
       console.log(newMessage)
+      sendAdvert(newMessage)
     }
   };
 

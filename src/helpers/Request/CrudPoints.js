@@ -17,10 +17,11 @@ class CrudPoints {
             longitude: point["Долгота"],
           },
         },
+        roadName: point["Дорога"]
       };
 
       const response = await axios.post(
-          url + `/api/roads/${point["Дорога"]}/verifiedPoints`,
+          url + `/api/verifiedPoints`,
           body
       );
       if (response.status === 201) {

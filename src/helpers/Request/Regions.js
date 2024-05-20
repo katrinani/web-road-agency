@@ -1,5 +1,6 @@
 import axios from "axios";
 import url from "../url";
+import handleError from "../Notifications";
 
 const getRegions = async () => {
     try {
@@ -10,10 +11,8 @@ const getRegions = async () => {
             return regions;
         }
     } catch (error) {
-        if (error.response && error.response.status === 404) {
-            console.log("Нет ни одного региона");
-        } else {
-            console.error("Произошла ошибка при получении регионов", error);
+        {
+            handleError(error)
         }
     }
 };
