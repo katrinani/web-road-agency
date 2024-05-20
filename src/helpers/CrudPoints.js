@@ -1,10 +1,12 @@
 import axios from "axios";
 import { point_types } from "./FormData";
-import url from "./url"
-
+import url from "./url";
 
 class CrudPoints {
   static async createPoint(point) {
+    console.log(point["Тип точки"]);
+    console.log(point["Тип точки"] === point_types[0]);
+    console.log(point_types.indexOf(point["Тип точки"]));
     let body = {
       point: {
         name: point["Название"],
@@ -16,7 +18,6 @@ class CrudPoints {
       },
     };
 
-    
     const response = await axios.post(
       url + `/api/roads/${point["Дорога"]}/verifiedPoints`,
       body

@@ -11,6 +11,14 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [buttonName, setButtonName] = useState("Добавить");
+  const [formValues, setFormValues] = useState(null);
+  const [isActive, setIsActive] = useState(false);
+
+
+  const handleFormValues = (marker) => {
+    console.log(marker)
+    setFormValues(marker)
+  }
 
   return (
     <div className="App bg-light-subtle">
@@ -22,6 +30,7 @@ function App() {
           <Button
             variant="light"
             onClick={() => {
+              setIsActive(true)
               setShowModal(false);
               setButtonName("Сохранить");
             }}
@@ -40,6 +49,8 @@ function App() {
           set_list={set_list}
           button_name={buttonName}
           setButtonName={setButtonName}
+          formValues={formValues}
+          isActive={isActive}
         />
         <Map
           location={location}
@@ -47,6 +58,7 @@ function App() {
           points_list={points_list}
           setShowModal={setShowModal}
           setSelectedPoint={setSelectedPoint}
+          setFormValues={handleFormValues}
         />
       </div>
     </div>

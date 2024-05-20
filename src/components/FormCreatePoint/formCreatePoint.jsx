@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import CustomInput from "../CustomInput/custom_input";
-import { FormData } from "../../helpers/FormData.js";
+import { FormData, highways, point_types } from "../../helpers/FormData.js";
 import FormDefaultData from "../../helpers/FormDefaultData";
 import CrudPoints from "../../helpers/CrudPoints.js";
 import getAllPoints from "../../helpers/AllPoints";
 import regions from "../../helpers/Regions.js";
 
 const FormCreatePoint = (props) => {
+
   const [inputValues, setInputValues] = useState(FormDefaultData);
 
   useEffect(() => {
-    if (props.button_name === 'Добавить') {
-      setInputValues(FormDefaultData);
+    // console.log(props.isActive, props.formValues, props.isActive && props.formValues)
+    if (props.isActive && props.formValues) {
+      setInputValues(props.formValues);
     }
-  }, [props.button_name]);
+  }, [props.isActive, props.formValues]);
 
-  const handleInputChange = (event) => {
+  console.log(props.formValues);
+
+  
+  const handleInputChange = (name) => (event) => {
     console.log(event);
-    const { name, value } = event.target;
+    const { value } = event.target;
     console.log(value);
     setInputValues((prevState) => ({
       ...prevState,
@@ -27,18 +32,17 @@ const FormCreatePoint = (props) => {
   };
 
   const handleSingleSelectChange = (event) => {
-    const selectedValues = event.value;
+    // console.log(event, Object.keys(FormData)[3])
     setInputValues((prevState) => ({
       ...prevState,
-      Дорога: selectedValues,
+      [Object.keys(FormData)[3]]: event,
     }));
   };
 
   const handleSingleSelectChangeType = (event) => {
-    const selectedValues = event.value;
     setInputValues((prevState) => ({
       ...prevState,
-      "Тип точки": selectedValues,
+      [Object.keys(FormData)[4]]: event,
     }));
   };
 
@@ -46,24 +50,28 @@ const FormCreatePoint = (props) => {
     const selectedValues = event.value;
     setInputValues((prevState) => ({
       ...prevState,
-      "Регион": selectedValues,
+      Регион: selectedValues,
     }));
   };
 
-
   const handleSubmit = async (e) => {
-    
-    props.setButtonName('Добавить');
-    // await CrudPoints.createPoint(inputValues);
-    const roadName = inputValues.Дорога;
+    props.setButtonName("Добавить");
+    const form = {
+      ...inputValues,
+      Дорога: inputValues["Дорога"].value,
+      "Тип точки": inputValues["Тип точки"].value,
+    };
+    //await CrudPoints.createPoint(form);
+    const roadName = form.Дорога;
     const points = await getAllPoints(roadName);
+    console.log("ахуй ", e);
     props.set_list(points);
-    console.log(points)
+    console.log(points);
+    console.log("дефолт ", FormDefaultData);
     console.log(props.points_list);
-    setInputValues(FormDefaultData)
-    console.log(inputValues)
+    setInputValues(FormDefaultData);
+    console.log(inputValues);
   };
-
 
   const renderRegionInput = () => {
     if (inputValues["Тип точки"] === "километр") {
@@ -93,14 +101,8 @@ const FormCreatePoint = (props) => {
             <div class="col-12">
               <CustomInput
                 name={Object.keys(FormData)[0]}
-                onChange={(e) =>
-                  handleInputChange({
-                    target: {
-                      name: Object.keys(FormData)[0],
-                      value: e.target.value,
-                    },
-                  })
-                }
+                value={inputValues[Object.keys(FormData)[0]]}
+                onChange={handleInputChange(Object.keys(FormData)[0])}
               />
             </div>
           </div>
@@ -109,27 +111,15 @@ const FormCreatePoint = (props) => {
             <div class="col-6">
               <CustomInput
                 name={Object.keys(FormData)[1]}
-                onChange={(e) =>
-                  handleInputChange({
-                    target: {
-                      name: Object.keys(FormData)[1],
-                      value: e.target.value,
-                    },
-                  })
-                }
+                value={inputValues[Object.keys(FormData)[1]]}
+                onChange={handleInputChange(Object.keys(FormData)[1])}
               />
             </div>
             <div class="col-6">
               <CustomInput
                 name={Object.keys(FormData)[2]}
-                onChange={(e) =>
-                  handleInputChange({
-                    target: {
-                      name: Object.keys(FormData)[2],
-                      value: e.target.value,
-                    },
-                  })
-                }
+                value={inputValues[Object.keys(FormData)[2]]}
+                onChange={handleInputChange(Object.keys(FormData)[2])}
               />
             </div>
           </div>
@@ -137,7 +127,9 @@ const FormCreatePoint = (props) => {
         <div>
           <span>Название дороги</span>
           <Select
-            options={FormData["Дорога"].map((value) => ({
+            key={`road ${inputValues[Object.keys(FormData)[3]]}`}
+            value={inputValues[Object.keys(FormData)[3]] || ""}
+            options={highways.map((value) => ({
               value,
               label: value,
             }))}
@@ -148,7 +140,9 @@ const FormCreatePoint = (props) => {
         <div class="my-3">
           <span>Тип точки</span>
           <Select
-            options={FormData["Тип точки"].map((value) => ({
+            key={`type ${inputValues[Object.keys(FormData)[4]]}`}
+            value={inputValues[Object.keys(FormData)[4]] || ""}
+            options={point_types.map((value) => ({
               value,
               label: value,
             }))}
@@ -157,7 +151,6 @@ const FormCreatePoint = (props) => {
         </div>
 
         {renderRegionInput()}
-
       </div>
       <button
         type="button"
