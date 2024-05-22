@@ -12,7 +12,7 @@ const Map = (props) => {
   const handleMarkerClick = (marker) => {
     console.log(marker);
     props.setSelectedPoint(marker);
-    console.log(marker)
+    console.log(marker);
     props.setShowModal(true);
     props.setFormValues(marker)
   };
@@ -32,6 +32,7 @@ const Map = (props) => {
                   key={index}
                   coordinates={[marker["Широта"], marker["Долгота"]]}
                   title={marker["Название"]}
+
                   color={"#0c307c"}
                 />
               ))}

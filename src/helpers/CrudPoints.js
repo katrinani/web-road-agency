@@ -4,26 +4,30 @@ import url from "./url";
 
 class CrudPoints {
   static async createPoint(point) {
-    console.log(point["Тип точки"]);
-    console.log(point["Тип точки"] === point_types[0]);
-    console.log(point_types.indexOf(point["Тип точки"]));
-    let body = {
-      point: {
-        name: point["Название"],
-        type: point_types.indexOf(point["Тип точки"]),
-        coordinates: {
-          latitude: point["Широта"],
-          longitude: point["Долгота"],
+    try {
+      let body = {
+        point: {
+          name: point["Название"],
+          type: point_types.indexOf(point["Тип точки"]),
+          coordinates: {
+            latitude: point["Широта"],
+            longitude: point["Долгота"],
+          },
         },
-      },
-    };
+        roadName: point["Дорога"]
+      };
 
-    const response = await axios.post(
-      url + `/api/roads/${point["Дорога"]}/verifiedPoints`,
-      body
-    );
+      const response = await axios.post(
+          url + `/api/verifiedPoints`,
+          body
+      );
+      if (response.status === 201) {
+        console.log(response);
+      }
 
-    console.log(response);
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

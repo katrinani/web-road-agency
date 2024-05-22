@@ -10,7 +10,11 @@ const getAllPoints = async (roadName) => {
             const points_list = response.data.points.map(point => ({
                 "Широта": point.coordinates.latitude,
                 "Долгота": point.coordinates.longitude,
-                "Название": point.name
+                "Название": point.name,
+                "ID": point.id,
+                "Тип": point.type,
+                "Описание": point.description,
+                "Дорога": roadName
             }));
 
             console.log(points_list);

@@ -3,6 +3,7 @@ import FormCreatePoint from "./components/FormCreatePoint/formCreatePoint";
 import Map from "./components/Map/Map";
 import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+import pointDeleting from "./helpers/PointDeleting";
 
 function App() {
   const location = { center: [61.4, 55.16], zoom: 9 };
@@ -37,7 +38,12 @@ function App() {
           >
             Редактировать
           </Button>
-          <Button variant="dark" onClick={() => setShowModal(false)}>
+          <Button variant="dark" onClick={async () => {
+            setShowModal(false)
+            console.log('Удаляем...')
+            console.log(selectedPoint)
+            await pointDeleting(selectedPoint)
+          }}>
             Удалить
           </Button>
         </Modal.Body>
