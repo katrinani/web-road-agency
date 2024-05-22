@@ -3,9 +3,9 @@ import Select from "react-select";
 import CustomInput from "../CustomInput/custom_input";
 import { FormData, highways, point_types } from "../../helpers/FormData.js";
 import FormDefaultData from "../../helpers/FormDefaultData";
-import CrudPoints from "../../helpers/CrudPoints.js";
-import getAllPoints from "../../helpers/AllPoints";
-import regions from "../../helpers/Regions.js";
+import CrudPoints from "../../helpers/Request/CrudPoints.js";
+import getAllPoints from "../../helpers/Request/AllPoints";
+import regions from "../../helpers/Request/Regions.js";
 import pointEditing from "../../helpers/PointEditing";
 
 const FormCreatePoint = (props) => {
