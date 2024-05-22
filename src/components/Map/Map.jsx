@@ -8,32 +8,37 @@ import {
 import React from "react";
 
 
-const handleMarkerClick = (latitude, longitude, name) => {
-  console.log("Координаты маркера: ", latitude, longitude);
-  console.log("Название", name)
-};
+const Map = (props) => {  
+  const handleMarkerClick = (marker) => {
+    console.log(marker);
+    props.setSelectedPoint(marker);
+    console.log(marker);
+    props.setShowModal(true);
+    props.setFormValues(marker)
+  };
 
-
-const Map = (props) => {
   return (
-    <div className="map w-50 h-100 px-2">
-      <YMapComponentsProvider apiKey={props.apiKey}>
-        <YMap location={props.location} >
-          <YMapDefaultSchemeLayer />
-          <YMapDefaultFeaturesLayer />
-          {props.points_list &&
-            props.points_list.map((marker, index) => (
-              <YMapDefaultMarker
-                  onClick={() => handleMarkerClick(marker["Широта"], marker["Долгота"], marker["Название"])}
-                key={index}
-                coordinates={[marker["Широта"], marker["Долгота"]]}
-                title={marker["Название"]}
-                color={"#0c307c"}
-              />
-            ))}
-        </YMap>
-      </YMapComponentsProvider>
-    </div>
+      <div className="map w-50 h-100 px-2">
+        <YMapComponentsProvider apiKey={props.apiKey}>
+          <YMap location={props.location}>
+            <YMapDefaultSchemeLayer />
+            <YMapDefaultFeaturesLayer />
+            {props.points_list &&
+              props.points_list.map((marker, index) => (
+                <YMapDefaultMarker
+                  onClick={() =>
+                    handleMarkerClick(marker)
+                  }
+                  key={index}
+                  coordinates={[marker["Широта"], marker["Долгота"]]}
+                  title={marker["Название"]}
+
+                  color={"#0c307c"}
+                />
+              ))}
+          </YMap>
+        </YMapComponentsProvider>
+      </div>
   );
 };
 
