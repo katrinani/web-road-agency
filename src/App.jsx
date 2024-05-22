@@ -4,6 +4,11 @@ import Map from "./components/Map/Map";
 import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import pointDeleting from "./helpers/PointDeleting";
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
+
+import { Container } from "react-bootstrap";
+import MessageWindow from "./components/MessageWindow/MessageWindow";
 
 function App() {
   const location = { center: [61.4, 55.16], zoom: 9 };
