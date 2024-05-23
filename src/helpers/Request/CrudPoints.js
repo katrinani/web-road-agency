@@ -16,12 +16,15 @@ class CrudPoints {
             latitude: point["Широта"],
             longitude: point["Долгота"],
           },
+          description: point["Описание"] || null
         },
-        roadName: point["Дорога"]
+        regionName: point["Регион"]["value"] || null,
+        roadName: point["Дорога"] || null
       };
-
+      console.log(body)
+      let mainURL = url + `/api/verifiedPoints`
       const response = await axios.post(
-          url + `/api/verifiedPoints`,
+          mainURL,
           body
       );
       if (response.status === 201) {
