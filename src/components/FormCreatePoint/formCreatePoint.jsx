@@ -12,9 +12,6 @@ const FormCreatePoint = (props) => {
   const [inputValues, setInputValues] = useState(FormDefaultData);
   const [isEditMode, setIsEditMode] = useState(false);
 
-
-  console.log(inputValues['Тип точки']['value'])
-
   useEffect(() => {
     if (props.isActive && props.formValues) {
       setInputValues(props.formValues);
@@ -136,7 +133,7 @@ const FormCreatePoint = (props) => {
           />
         </div>
 
-        {inputValues["Тип точки"]['value'] === "Километр" &&
+        {inputValues["Тип точки"] === "Километр" &&
         (
           <div className="my-3">
             <span>Регион</span>
