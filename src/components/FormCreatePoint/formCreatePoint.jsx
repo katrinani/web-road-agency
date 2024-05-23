@@ -7,13 +7,13 @@ import CrudPoints from "../../helpers/Request/CrudPoints.js";
 import getAllPoints from "../../helpers/Request/AllPoints";
 import regions from "../../helpers/Request/Regions.js";
 import pointEditing from "../../helpers/PointEditing";
+import Form from "react-bootstrap/Form";
 
 const FormCreatePoint = (props) => {
   const [inputValues, setInputValues] = useState(FormDefaultData);
   const [isEditMode, setIsEditMode] = useState(false);
 
-
-  console.log(inputValues['Тип точки']['value'])
+  console.log(inputValues["Тип точки"]["value"]);
 
   useEffect(() => {
     if (props.isActive && props.formValues) {
@@ -136,8 +136,7 @@ const FormCreatePoint = (props) => {
           />
         </div>
 
-        {inputValues["Тип точки"]['value'] === "Километр" &&
-        (
+        {inputValues["Тип точки"]["value"] === "Километр" && (
           <div className="my-3">
             <span>Регион</span>
             <Select
@@ -147,6 +146,23 @@ const FormCreatePoint = (props) => {
               }))}
               onChange={handleSingleSelectChangeRegion}
             />
+          </div>
+        )}
+
+        {inputValues["Тип точки"]["value"] === "Событие" && (
+          <div>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Описание</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={inputValues[Object.keys(FormData)[6]]}
+                onChange={handleInputChange(Object.keys(FormData)[6])}
+              />
+            </Form.Group>
           </div>
         )}
       </div>
