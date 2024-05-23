@@ -6,7 +6,7 @@ import { Modal, Button } from "react-bootstrap";
 import pointDeleting from "./helpers/PointDeleting";
 import "react-notifications/lib/notifications.css";
 import { NotificationContainer } from "react-notifications";
-
+import "./App.css"
 import { Container } from "react-bootstrap";
 import MessageWindow from "./components/MessageWindow/MessageWindow";
 
@@ -28,9 +28,10 @@ function App() {
 
   return (
     <div>
-      <span onClick={() => setPage("Карта")}>Карта</span>
-      <span onClick={() => setPage("Новости")}>Новости</span>
-
+      <div class="nav">
+        <span onClick={() => setPage("Карта")} class="">Карта</span>
+        <span onClick={() => setPage("Новости")} class="">Новости</span>
+      </div>
       {page === "Карта" && (
         <div className="App bg-light-subtle">
           <Modal show={showModal} onHide={() => setShowModal(false)}>

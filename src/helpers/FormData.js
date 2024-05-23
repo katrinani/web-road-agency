@@ -10,5 +10,7 @@ export const FormData = {
     "Широта": "latitude", 
     "Долгота": "longitude", 
     "Дорога": highways,
-    "Тип точки": point_types
+    "Тип точки": point_types,
+    "Регион": "region",
+    "Описание": "decription"
 }

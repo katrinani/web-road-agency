@@ -3,7 +3,9 @@ const FormDefaultData = {
     "Широта": "", 
     "Долгота": "", 
     "Дорога": "",
-    "Тип точки": []
+    "Тип точки": [],
+    "Регион": "",
+    "Описание": ""
 }
 
 export default FormDefaultData

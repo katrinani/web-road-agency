@@ -15,7 +15,7 @@ const MessageWindow = () => {
     title: "",
     description: "",
     locationType: null,
-    location: null
+    location: null,
   });
   const [local_roads, setRoads] = useState([]);
   const [local_regions, setRegions] = useState([]);
@@ -51,7 +51,7 @@ const MessageWindow = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const a = document.getElementById('datetime').value; // Assuming the DateTimePicker has an id
+    const a = document.getElementById("datetime").value;
 
     console.log(a);
     console.log(selectedDateTime);
@@ -80,8 +80,8 @@ const MessageWindow = () => {
         location: null,
       });
       setSelectedDateTime(new Date());
-      console.log(newMessage)
-      sendAdvert(newMessage)
+      console.log(newMessage);
+      sendAdvert(newMessage);
     }
   };
 
@@ -90,16 +90,22 @@ const MessageWindow = () => {
       <ListGroup className="mt-3">
         {messages.map((message) => (
           <ListGroup.Item key={message.id}>
-            <strong>{message.timestamp}</strong>: {message.title} -{" "}
-            {message.description} ({message.locationType}, {message.location},{" "}
-            {message.expireTime.toLocaleString()})
+            {message.timestamp} <br />
+            <br />
+            <strong>{message.title}</strong>
+            <br />
+            {message.description} <br />#{message.location}
+            <br />
+            <br />
+            Новость существует до: {message.expireTime.toLocaleString()}
           </ListGroup.Item>
         ))}
       </ListGroup>
-
+      <br />
+      <br />
       <h2>Отправить новость</h2>
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="titleInput">
+        <Form.Group controlId="titleInput" className="mb-3">
           <Form.Control
             type="text"
             value={formData.title}
@@ -109,7 +115,7 @@ const MessageWindow = () => {
             placeholder="Название"
           />
         </Form.Group>
-        <Form.Group controlId="descriptionTextarea">
+        <Form.Group controlId="descriptionTextarea" className="mb-3">
           <Form.Control
             as="textarea"
             rows={3}
@@ -121,6 +127,7 @@ const MessageWindow = () => {
           />
         </Form.Group>
         <Select
+          className="mb-3"
           options={[
             { value: "region", label: "Регион" },
             { value: "road", label: "Дорога" },
@@ -131,6 +138,7 @@ const MessageWindow = () => {
         />
         {formData.locationType && formData.locationType.value === "region" && (
           <Select
+            className="mb-3"
             options={local_regions.map((region) => ({
               value: region,
               label: region,
@@ -142,6 +150,7 @@ const MessageWindow = () => {
         )}
         {formData.locationType && formData.locationType.value === "road" && (
           <Select
+            className="mb-3"
             options={local_roads.map((road) => ({
               value: road,
               label: road,
@@ -152,11 +161,12 @@ const MessageWindow = () => {
           />
         )}
         <DateTimePicker
+          className="mb-3"
           id="datetime"
           onChange={handleDateTimeChange}
           value={selectedDateTime}
         />
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="mx-3">
           Отправить
         </Button>
       </Form>

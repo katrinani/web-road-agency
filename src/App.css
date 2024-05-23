@@ -1,0 +1,14 @@
+.nav{
+    display: flex;
+    gap: 16px;
+    margin: 8px;
+    margin-left: 32px;
+    color: midnightblue;
+    font-weight: 600;
+}
+
+.nav span:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: cornflowerblue;
+}
