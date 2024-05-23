@@ -1,5 +1,7 @@
 import axios from "axios";
 import url from "./url";
+import {NotificationManager} from "react-notifications";
+import handleError from "./Notifications";
 
 const pointEditing = async (point) => {
     console.log(point)
@@ -27,9 +29,11 @@ const pointEditing = async (point) => {
     );
         if (response.status === 200) {
             console.log(response);
+            NotificationManager.success('Успешно изменена');
         }
     } catch (error) {
         console.log(error)
+        handleError(error)
     }
 }
 
