@@ -30,9 +30,8 @@ const Map = (props) => {
                     handleMarkerClick(marker)
                   }
                   key={index}
-                  coordinates={[marker["Широта"], marker["Долгота"]]}
+                  coordinates={[marker["Долгота"], marker["Широта"]]}
                   title={marker["Название"]}
-
                   color={"#0c307c"}
                 />
               ))}

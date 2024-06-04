@@ -64,6 +64,10 @@ const FormCreatePoint = (props) => {
       console.log("Создаем....");
       await CrudPoints.createPoint(form);
     }
+    // установка локации на новой точке
+    console.log(inputValues.Широта)
+    console.log(inputValues.Долгота)
+    props.setLocation({ center: [inputValues.Долгота, inputValues.Широта ], zoom: 9 });
 
     const roadName = form.Дорога;
     const points = await getAllPoints(roadName);

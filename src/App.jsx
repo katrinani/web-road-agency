@@ -1,18 +1,17 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import FormCreatePoint from "./components/FormCreatePoint/formCreatePoint";
 import Map from "./components/Map/Map";
-import { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import {Button, Container, Modal} from "react-bootstrap";
 import pointDeleting from "./helpers/PointDeleting";
 import "react-notifications/lib/notifications.css";
-import { NotificationContainer } from "react-notifications";
+import {NotificationContainer} from "react-notifications";
 import "./App.css"
-import { Container } from "react-bootstrap";
 import MessageWindow from "./components/MessageWindow/MessageWindow";
+import getAllPoints from "./helpers/Request/AllPoints";
 
 function App() {
-  const location = { center: [61.4, 55.16], zoom: 9 };
   const apiKey = "47e9428b-e698-4791-98ce-87001909f7fb";
+  const [location, setLocation] = useState({ center: [55, 61], zoom: 9 });
   const [points_list, set_list] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState(null);
@@ -20,6 +19,20 @@ function App() {
   const [formValues, setFormValues] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const [page, setPage] = useState("Карта");
+
+  useEffect(() => {
+    const fetchPoints = async () => {
+      const points = await getAllPoints('М-5 "Урал" ПкЕ: Челябинск - Екатеринбург');
+      set_list(points);
+      if (points.length > 0) {
+        const lastPoint = points[points.length - 1];
+        console.log(lastPoint.Широта)
+        console.log(lastPoint.Долгота)
+        setLocation({ center: [lastPoint.Долгота, lastPoint.Широта], zoom: 9 });
+      }
+    };
+    fetchPoints();
+  }, []);
 
   const handleFormValues = (marker) => {
     console.log(marker);
@@ -75,6 +88,7 @@ function App() {
               setButtonName={setButtonName}
               formValues={formValues}
               isActive={isActive}
+              setLocation={setLocation}
             />
             <Map
               location={location}
