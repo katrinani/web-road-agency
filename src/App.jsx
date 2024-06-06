@@ -2,12 +2,13 @@ import React, {useEffect, useState} from "react";
 import FormCreatePoint from "./components/FormCreatePoint/formCreatePoint";
 import Map from "./components/Map/Map";
 import {Button, Container, Modal} from "react-bootstrap";
-import pointDeleting from "./helpers/PointDeleting";
+import pointDeleting from "./helpers/Request/PointDeleting";
 import "react-notifications/lib/notifications.css";
 import {NotificationContainer} from "react-notifications";
 import "./App.css"
 import MessageWindow from "./components/MessageWindow/MessageWindow";
 import getAllPoints from "./helpers/Request/AllPoints";
+import ListPoints from "./components/ListPoints/ListPoints";
 
 function App() {
   const apiKey = "47e9428b-e698-4791-98ce-87001909f7fb";
@@ -93,6 +94,12 @@ function App() {
             <Map
               location={location}
               apiKey={apiKey}
+              points_list={points_list}
+              setShowModal={setShowModal}
+              setSelectedPoint={setSelectedPoint}
+              setFormValues={handleFormValues}
+            />
+            <ListPoints
               points_list={points_list}
               setShowModal={setShowModal}
               setSelectedPoint={setSelectedPoint}

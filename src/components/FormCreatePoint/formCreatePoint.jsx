@@ -6,7 +6,7 @@ import FormDefaultData from "../../helpers/FormDefaultData";
 import CrudPoints from "../../helpers/Request/CrudPoints.js";
 import getAllPoints from "../../helpers/Request/AllPoints";
 import regions from "../../helpers/Request/Regions.js";
-import pointEditing from "../../helpers/PointEditing";
+import pointEditing from "../../helpers/Request/PointEditing";
 import Form from "react-bootstrap/Form";
 
 const FormCreatePoint = (props) => {

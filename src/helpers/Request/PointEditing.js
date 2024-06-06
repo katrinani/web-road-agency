@@ -1,7 +1,7 @@
 import axios from "axios";
-import url from "./url";
+import url from "../url";
 import {NotificationManager} from "react-notifications";
-import handleError from "./Notifications";
+import handleError from "../Notifications";
 
 const pointEditing = async (point) => {
     console.log(point)

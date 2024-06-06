@@ -12,7 +12,6 @@ const Map = (props) => {
   const handleMarkerClick = (marker) => {
     console.log(marker);
     props.setSelectedPoint(marker);
-    console.log(marker);
     props.setShowModal(true);
     props.setFormValues(marker)
   };

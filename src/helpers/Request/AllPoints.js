@@ -18,6 +18,7 @@ const getAllPoints = async (roadName) => {
         Тип: point.type,
         Описание: point.description,
         Дорога: roadName,
+        Регион: point.regionName
       }));
 
       console.log(points_list);
