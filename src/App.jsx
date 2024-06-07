@@ -12,7 +12,7 @@ import ListPoints from "./components/ListPoints/ListPoints";
 
 function App() {
   const apiKey = "47e9428b-e698-4791-98ce-87001909f7fb";
-  const [location, setLocation] = useState({ center: [55, 61], zoom: 9 });
+  const [location, setLocation] = useState({ center: [55.163742, 61.400346], zoom: 11 });
   const [points_list, set_list] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState(null);
@@ -43,8 +43,8 @@ function App() {
   return (
     <div>
       <div class="nav">
-        <span onClick={() => setPage("Карта")} class="">Карта</span>
-        <span onClick={() => setPage("Новости")} class="">Новости</span>
+        <span onClick={() => setPage("Карта")} className="">Карта</span>
+        <span onClick={() => setPage("Новости")} className="">Новости</span>
       </div>
       {page === "Карта" && (
         <div className="App bg-light-subtle">

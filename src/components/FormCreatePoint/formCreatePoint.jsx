@@ -75,18 +75,18 @@ const FormCreatePoint = (props) => {
     props.set_list(points);
     console.log(points);
     console.log("дефолт ", FormDefaultData);
-    console.log("Dct nочки которые пришли", props.points_list);
+    console.log(props.points_list);
     setInputValues(FormDefaultData);
-    console.log(inputValues);
+    console.log("inputValues", inputValues);
   };
 
   return (
     <form className="p-5  w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-start">
       <h3>Добавить точку</h3>
-      <div class="my-3 w-100">
-        <div class="container-fluid w-100 p-0">
-          <div class="row">
-            <div class="col-12">
+      <div className="my-3 w-100">
+        <div className="container-fluid w-100 p-0">
+          <div className="row">
+            <div className="col-12">
               <CustomInput
                 name={Object.keys(FormData)[0]}
                 value={inputValues[Object.keys(FormData)[0]]}
@@ -95,15 +95,15 @@ const FormCreatePoint = (props) => {
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-6">
+          <div className="row">
+            <div className="col-6">
               <CustomInput
                 name={Object.keys(FormData)[1]}
                 value={inputValues[Object.keys(FormData)[1]]}
                 onChange={handleInputChange(Object.keys(FormData)[1])}
               />
             </div>
-            <div class="col-6">
+            <div className="col-6">
               <CustomInput
                 name={Object.keys(FormData)[2]}
                 value={inputValues[Object.keys(FormData)[2]]}
@@ -125,19 +125,18 @@ const FormCreatePoint = (props) => {
           />
         </div>
 
-        <div class="my-3">
+        <div className="my-3">
           <span>Тип точки</span>
           <Select
             key={`type ${inputValues[Object.keys(FormData)[4]]}`}
             value={inputValues[Object.keys(FormData)[4]] || ""}
             options={point_types.map((value) => ({
               value,
-              label: value,
+              label: value
             }))}
             onChange={handleSingleSelectChangeType}
           />
         </div>
-
         {inputValues["Тип точки"]["value"] === "Километр" && (
           <div className="my-3">
             <span>Регион</span>
@@ -171,7 +170,7 @@ const FormCreatePoint = (props) => {
       <button
         type="button"
         onClick={handleSubmit}
-        class="btn btn-primary align-self-end mt-3 "
+        className="btn btn-primary align-self-end mt-3 "
       >
         {isEditMode ? "Сохранить" : props.button_name}
       </button>

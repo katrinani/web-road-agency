@@ -11,14 +11,14 @@ const getAllPoints = async (roadName) => {
 
     if (response.status === 200) {
       const points_list = response.data.points.map((point) => ({
-        Широта: point.coordinates.latitude,
-        Долгота: point.coordinates.longitude,
-        Название: point.name,
-        ID: point.id,
-        Тип: point.type,
-        Описание: point.description,
-        Дорога: roadName,
-        Регион: point.regionName
+        "Широта": point.coordinates.latitude,
+        "Долгота": point.coordinates.longitude,
+        "Название": point.name,
+        "ID": point.id,
+        "Тип точки": [point.type],
+        "Описание": point.description,
+        "Дорога": roadName,
+        "Регион": point.regionName
       }));
 
       console.log(points_list);

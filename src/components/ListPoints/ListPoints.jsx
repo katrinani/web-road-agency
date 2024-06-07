@@ -40,10 +40,14 @@ const ListPoints = (props) => {
                         <li key={index} onClick={() => handleMarkerClick(marker)}>
                             <div>Название: {marker["Название"]}</div>
                             <div>Координаты: {marker["Долгота"]}, {marker["Широта"]}</div>
-                            <div>Тип точки: {point_types[marker["Тип"]]}</div>
+                            <div>Тип точки: {point_types[marker["Тип точки"][0]]}</div>
                             <div>Дорога: {marker["Дорога"]}</div>
-                            {marker["Тип"] === 5 && <div>Описание: {marker["Описание"] === "" ? 'Нет данных' : marker["Описание"]}</div>}
-                            {marker["Тип"] === 8 && <div>Регион: {marker["Регион"] === "" ? 'Нет данных' : marker["Регион"]}</div>}
+                            {marker["Тип точки"][0] === 5 && <div>Описание: {marker["Описание"] === ""
+                                ? 'Нет данных'
+                                : marker["Описание"]}</div>}
+                            {marker["Тип точки"][0] === 8 && <div>Регион: {marker["Регион"] === ""
+                                ? 'Нет данных'
+                                : marker["Регион"]}</div>}
                         </li>
                     ))}
                 </ol>

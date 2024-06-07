@@ -3,9 +3,10 @@ import {
   YMapDefaultSchemeLayer,
   YMapDefaultFeaturesLayer,
   YMapComponentsProvider,
-  YMapDefaultMarker,
+  YMapMarker
 } from "ymap3-components";
 import React from "react";
+import {icons} from "../../helpers/IconsData";
 
 
 const Map = (props) => {  
@@ -24,15 +25,24 @@ const Map = (props) => {
             <YMapDefaultFeaturesLayer />
             {props.points_list &&
               props.points_list.map((marker, index) => (
-                <YMapDefaultMarker
-                  onClick={() =>
-                    handleMarkerClick(marker)
-                  }
-                  key={index}
-                  coordinates={[marker["Долгота"], marker["Широта"]]}
-                  title={marker["Название"]}
-                  color={"#0c307c"}
-                />
+                  <YMapMarker
+                      coordinates={[marker["Долгота"], marker["Широта"]]}
+                      key={index}
+                      onClick={() => handleMarkerClick(marker)}
+                  >
+                    <div style={{display: 'flex', alignItems: 'center'}}>
+                      <img
+                          src={icons[marker["Тип точки"][0]]}
+                          alt={marker["Название"]}
+                          style={{width: '30px', height: '30px', marginRight: '5px'}}
+                      />
+                      <span style={{
+                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                        padding: '5px',
+                        borderRadius: '5px'
+                      }}>{marker["Название"]}</span>
+                    </div>
+                  </YMapMarker>
               ))}
           </YMap>
         </YMapComponentsProvider>
