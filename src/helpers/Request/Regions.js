@@ -15,5 +15,7 @@ const getRegions = async () => {
   }
 };
 
-const regions = await getRegions();
+// const regions = await getRegions();
+// TODO: убрать хардкод
+const regions = ['Челябинская область', 'Курганская область']
 export default regions;

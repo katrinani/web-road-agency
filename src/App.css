@@ -12,3 +12,9 @@
     text-decoration: underline;
     color: cornflowerblue;
 }
+
+.border-midnightblue {
+    border-color: midnightblue !important; /* Устанавливаем цвет границы */
+    border-width: 2px !important; /* Устанавливаем ширину границы */
+    border-style: solid !important; /* Устанавливаем стиль границы */
+}

@@ -14,6 +14,7 @@ const getRoads = async () => {
     handleError(error);
   }
 };
-
-const roads = await getRoads();
+// TODO: убрать хардкод
+// const roads = await getRoads();
+const roads = ['М-5', 'А-310', 'Р-435', 'Р-645']
 export default roads;

@@ -21,13 +21,12 @@ const getAllPoints = async (roadName) => {
         "Регион": point.regionName
       }));
 
-      console.log(points_list);
-
       return points_list;
     }
   } catch (error) {
     handleError(error);
   }
 };
+
 
 export default getAllPoints;
