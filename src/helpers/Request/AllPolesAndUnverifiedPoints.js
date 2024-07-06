@@ -1,0 +1,40 @@
+import axios from "axios";
+import url from "../url";
+import handleError from "../Notifications";
+
+const polesAndUnverifiedPoints = async () => {
+    try {
+        const response = await axios.get(
+            `${url}/polesAndUnverifiedPoints`
+        );
+
+        if (response.status === 200) {
+            const kilometerPoles = response.data["kilometerPoles"].map((point) => ({
+                "ID": point.id,
+                "Название": point.name,
+                "Тип точки": [point.type],
+                "Широта": point.coordinates.latitude,
+                "Долгота": point.coordinates.longitude,
+                "Дорога": point.roadName,
+                "Регион": point.regionName
+            }))
+            const unverifiedPoints =  response.data["kilometerPoles"].map((point) => ({
+                "Широта": point.coordinates.latitude,
+                "Долгота": point.coordinates.longitude,
+                "Название": point.name,
+                "ID": point.id,
+                "Тип точки": [point.type],
+                "Описание": point.description,
+                "Дорога": point.roadName,
+                "Регион": point.regionName
+            }))
+
+            return unverifiedPoints.concat(kilometerPoles);
+        }
+    } catch (error) {
+        console.log(error)
+        handleError(error);
+    }
+};
+
+export default polesAndUnverifiedPoints;

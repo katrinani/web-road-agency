@@ -29,7 +29,7 @@ const getAllPoints = async (coordinate) => {
       return points_list;
     }
   } catch (error) {
-      console.log("Пиздос", error)
+      console.log(error)
       handleError(error);
   }
 };

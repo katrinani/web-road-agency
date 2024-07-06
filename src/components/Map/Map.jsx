@@ -5,7 +5,7 @@ import {
   YMapComponentsProvider,
   YMapMarker
 } from "ymap3-components";
-import {icons} from "../../helpers/IconsData";
+import {iconsVerified} from "../../helpers/IconsPath";
 import React, {useEffect, useState} from "react";
 import Filter from "./Filter";
 
@@ -46,7 +46,7 @@ const Map = (props) => {
                           >
                               <div style={{display: 'flex', alignItems: 'center'}}>
                                   <img
-                                      src={icons[marker["Тип точки"][0]]}
+                                      src={iconsVerified[marker["Тип точки"][0]]}
                                       alt={marker["Название"]}
                                       style={{width: '30px', height: '30px', marginRight: '5px'}}
                                   />

@@ -10,6 +10,7 @@ import MessageWindow from "./components/MessageWindow/MessageWindow";
 import getAllPoints from "./helpers/Request/AllPoints";
 import ListPoints from "./components/ListPoints/ListPoints";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import Analysis from "./components/Analysis/Analysis";
 
 
 function App() {
@@ -120,7 +121,11 @@ function App() {
       )}
 
       {page === "Анализ" && (
-          <div></div>
+          <p>хы</p>
+          // <Analysis
+          //     apiKey={apiKey}
+          //     location={location}
+          // />
       )}
     </div>
   );

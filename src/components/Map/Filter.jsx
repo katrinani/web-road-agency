@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {point_types} from "../../helpers/FormData";
-import {icons} from "../../helpers/IconsData";
+import {iconsVerified} from "../../helpers/IconsPath";
 
 
 const Filter = (props) => {
@@ -42,7 +42,7 @@ const Filter = (props) => {
                     >
                         <a className="dropdown-item" href="#">
                             <img
-                                src={icons[point_types.indexOf(type)]}
+                                src={iconsVerified[point_types.indexOf(type)]}
                                 alt={type}
                                 style={{width: '25px', height: '25px', marginRight: '5px'}}
                             /> {type}
