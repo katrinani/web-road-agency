@@ -22,7 +22,7 @@ class CrudPoints {
         roadName: point["Дорога"] || null
       };
       console.log(body)
-      let mainURL = url + `/api/verifiedPoints`
+      let mainURL = url + `/verifiedPoints`
       const response = await axios.post(
           mainURL,
           body

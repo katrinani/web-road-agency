@@ -6,7 +6,7 @@ import handleError from "../Notifications";
 const pointDeleting = async (point) => {
     console.log(point)
     try {
-        let mainUrl = `/api/verifiedPoints/${point.ID}`
+        let mainUrl = `/verifiedPoints/${point.ID}`
         console.log(mainUrl)
 
         const response = await axios.delete(

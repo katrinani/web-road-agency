@@ -4,7 +4,7 @@ import handleError from "../Notifications";
 
 const getRegions = async () => {
   try {
-    const response = await axios.get(`${url}/api/regions`);
+    const response = await axios.get(`${url}/regions`);
     if (response.status === 200) {
       const regions = response.data.regions.map((region) => region.name);
       console.log(regions);
@@ -15,7 +15,5 @@ const getRegions = async () => {
   }
 };
 
-// const regions = await getRegions();
-// TODO: убрать хардкод
-const regions = ['Челябинская область', 'Курганская область']
+const regions = await getRegions();
 export default regions;

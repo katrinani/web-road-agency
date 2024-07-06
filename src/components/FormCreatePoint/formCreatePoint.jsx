@@ -70,30 +70,7 @@ const FormCreatePoint = (props) => {
     props.setLocation({ center: [inputValues.Долгота, inputValues.Широта ], zoom: 9 });
 
     const roadName = form.Дорога;
-    // const points = await getAllPoints(roadName);
-    // TODO: убрать хардкод
-    const points = [
-      {
-        "Широта": 55.38229517732815,
-        "Долгота": 61.3663445598471,
-        "Название": "29",
-        "ID": "00c527fe-3e6d-47b5-9b19-52a995b99be0",
-        "Тип точки": [8],
-        "Описание": "",
-        "Дорога": "М-5 \"Урал\" ПкЕ: Челябинск - Екатеринбург",
-        "Регион": "Челябинская область"
-      },
-      {
-        "Широта": 55.39229519999999,
-        "Долгота": 61.3963449999999,
-        "Название": "30",
-        "ID": "00c527fe-3e6d-47b5-9b19-52a995b99be0",
-        "Тип точки": [5],
-        "Описание": "",
-        "Дорога": "М-5 \"Урал\" ПкЕ: Челябинск - Екатеринбург",
-        "Регион": ""
-      }
-    ];
+    const points = await getAllPoints(props.location);
     console.log(points);
     props.set_list(points);
     console.log(points);

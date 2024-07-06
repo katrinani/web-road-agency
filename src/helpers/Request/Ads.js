@@ -1,6 +1,5 @@
 import axios from "axios";
 import url from "../url";
-import { point_types } from "../FormData";
 import handleError from "../Notifications";
 import { NotificationManager } from "react-notifications";
 
@@ -25,7 +24,7 @@ const prepareAdvert = (newMessage) => {
 const sendAdvert = async (newMessage) => {
   try {
     const advert = prepareAdvert(newMessage);
-    const response = await axios.post(`${url}/api/advertisements`, advert);
+    const response = await axios.post(`${url}/advertisements`, advert);
     console.log(response);
     if (response.status === 201) {
       console.log("Объявление успешно отправлено");

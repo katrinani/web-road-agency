@@ -20,7 +20,7 @@ const pointEditing = async (point) => {
             newRoadName: point.Дорога || null,
         };
         console.log('Body: ', body)
-        let mainUrl = `/api/verifiedPoints/${point.ID}`
+        let mainUrl = `/verifiedPoints/${point.ID}`
         console.log(mainUrl)
 
         const response = await axios.put(

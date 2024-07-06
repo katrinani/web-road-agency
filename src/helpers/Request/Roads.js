@@ -4,7 +4,7 @@ import handleError from "../Notifications";
 
 const getRoads = async () => {
   try {
-    const response = await axios.get(`${url}/api/roads`);
+    const response = await axios.get(`${url}/roads`);
     if (response.status === 200) {
       const roadNames = response.data.roads.map((road) => road.roadName);
       console.log(roadNames);
@@ -14,7 +14,6 @@ const getRoads = async () => {
     handleError(error);
   }
 };
-// TODO: убрать хардкод
-// const roads = await getRoads();
-const roads = ['М-5', 'А-310', 'Р-435', 'Р-645']
+
+const roads = await getRoads();
 export default roads;
