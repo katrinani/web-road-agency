@@ -3,7 +3,7 @@ import {NotificationManager} from "react-notifications";
 function handleError(error) {
     console.log(error);
     if (error.response != null) {
-        NotificationManager.error(error, "Ошибка")
+        NotificationManager.error(error, "Ошибка");
     }
     if (error.response && ((error.response.status / 100 === 4))) {
         NotificationManager.warning(error.response.data.detail, 'Внимание!');

@@ -10,7 +10,30 @@ import {iconsUnverified} from "../../helpers/IconsPath";
 import polesAndUnverifiedPoints from "../../helpers/Request/AllPolesAndUnverifiedPoints";
 
 const Analysis = (props) => {
-    const UnverifiedPoints = polesAndUnverifiedPoints()
+    // const UnverifiedPoints = polesAndUnverifiedPoints()
+    // TO-DO: ХАРДКОД УБРАТЬ
+    const UnverifiedPoints = [
+        {
+            "ID": "0cebea38-1297-4e10-b934-f1cbf0eefe1c",
+            "Долгота": 59.8693905448016,
+            "Дорога": "М-5 \"Урал\": Уфа - Челябинск",
+            "Название": "1766",
+            "Описание": "",
+            "Регион": "Челябинская область",
+            "Тип точки": [1],
+            "Широта": 54.98215228182743
+        },
+        {
+            "ID": "5d3fec98-c909-4507-9e22-329e63fd6147",
+            "Долгота": 59.87995844832021,
+            "Дорога": "М-5 \"Урал\": Уфа - Челябинск",
+            "Название": "\"1767\"",
+            "Описание": "",
+            "Регион": "Челябинская область",
+            "Тип точки": [3],
+            "Широта": 54.97556812815027
+        },
+    ]
     const handleMarkerClick = (marker) => {};
 
     return (
@@ -29,7 +52,6 @@ const Analysis = (props) => {
                                 onClick={() => handleMarkerClick(marker)}
                             >
                                 <div style={{display: 'flex', alignItems: 'center'}}>
-                                    {/*TO-DO: Какой номер какому типу соответствует*/}
                                     <img
                                         src={iconsUnverified[marker["Тип точки"][0]]}
                                         alt={marker["Название"]}

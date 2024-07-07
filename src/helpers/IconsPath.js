@@ -11,8 +11,8 @@ export const iconsVerified = [
 ]
 
 export const iconsUnverified = [
-    "Icons/UnverifiedIcons/barrier.png",
-    "Icons/UnverifiedIcons/pistol.png",
-    "Icons/UnverifiedIcons/sink.png",
-    "Icons/UnverifiedIcons/stone-on-the-road.png"
+    "Icons/UnverifiedIcons/stone-on-the-road.png",  // 'ДТП' 0
+    "Icons/UnverifiedIcons/sink.png",  // 'Недостатки дороги' 1
+    "Icons/UnverifiedIcons/barrier.png",  // 'Преграда' 2
+    "Icons/UnverifiedIcons/pistol.png"  //  'Противоправные действия 3х лиц' 3
 ]

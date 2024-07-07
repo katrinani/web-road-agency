@@ -46,9 +46,9 @@ function App() {
   return (
     <div>
       <div class="nav">
-        <span onClick={() => setPage("Карта")} className="">Карта</span>
+        <span onClick={() => setPage("Карта")} className="">Верифицированные точки</span>
         <span onClick={() => setPage("Новости")} className="">Новости</span>
-        <span onClick={() => setPage("Анализ")} className="">Анализ</span>
+        <span onClick={() => setPage("Анализ")} className="">Анализ дорог</span>
       </div>
       {page === "Карта" && (
           <div className="App bg-light-subtle">
@@ -121,11 +121,12 @@ function App() {
       )}
 
       {page === "Анализ" && (
-          <p>хы</p>
-          // <Analysis
-          //     apiKey={apiKey}
-          //     location={location}
-          // />
+          <div className="position-absolute translate-middle top-50 start-50 w-75 h-75 d-flex flex-row">
+            <Analysis
+                apiKey={apiKey}
+                location={location}
+            />
+          </div>
       )}
     </div>
   );
