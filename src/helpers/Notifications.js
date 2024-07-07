@@ -2,7 +2,7 @@ import {NotificationManager} from "react-notifications";
 
 function handleError(error) {
     console.log(error);
-    if (error.response != null) {
+    if (error.response) {
         NotificationManager.error(error, "Ошибка");
     }
     if (error.response && ((error.response.status / 100 === 4))) {

@@ -125,6 +125,7 @@ function App() {
             <Analysis
                 apiKey={apiKey}
                 location={location}
+                points_list={points_list}
             />
           </div>
       )}

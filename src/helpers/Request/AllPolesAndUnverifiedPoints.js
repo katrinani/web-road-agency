@@ -19,14 +19,13 @@ const polesAndUnverifiedPoints = async () => {
                 "Регион": point.regionName
             }))
             const unverifiedPoints =  response.data["kilometerPoles"].map((point) => ({
+                "ID": point.id,
+                "Описание": point.description,
                 "Широта": point.coordinates.latitude,
                 "Долгота": point.coordinates.longitude,
-                "Название": point.name,
-                "ID": point.id,
                 "Тип точки": [point.type],
-                "Описание": point.description,
+                "Уровень доверия": point.reliabilityLevel,
                 "Дорога": point.roadName,
-                "Регион": point.regionName
             }))
 
             return unverifiedPoints.concat(kilometerPoles);

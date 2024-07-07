@@ -4,10 +4,12 @@ import {
     YMapComponentsProvider,
     YMapDefaultFeaturesLayer,
     YMapDefaultSchemeLayer,
-    YMapMarker
+    YMapMarker,
+    YMapFeature
 } from "ymap3-components";
 import {iconsUnverified} from "../../helpers/IconsPath";
 import polesAndUnverifiedPoints from "../../helpers/Request/AllPolesAndUnverifiedPoints";
+import segments from "../../helpers/Segments";
 
 const Analysis = (props) => {
     // const UnverifiedPoints = polesAndUnverifiedPoints()
@@ -27,15 +29,22 @@ const Analysis = (props) => {
             "ID": "5d3fec98-c909-4507-9e22-329e63fd6147",
             "Долгота": 59.87995844832021,
             "Дорога": "М-5 \"Урал\": Уфа - Челябинск",
-            "Название": "\"1767\"",
+            "Название": "1767",
             "Описание": "",
             "Регион": "Челябинская область",
             "Тип точки": [3],
             "Широта": 54.97556812815027
         },
+        {
+            "Долгота": 59.8958484,
+            "Широта": 54.9938383,
+            "Тип точки": [3],
+        }
     ]
     const handleMarkerClick = (marker) => {};
-
+    const segmentsMarkers = segments(props.points_list)
+    // TO-DO: Учесть километры
+    // TO-DO: Почему то null в регионах
     return (
         // карта
         <div className="map w-50 h-100 px-2 position-relative">
@@ -44,6 +53,28 @@ const Analysis = (props) => {
                 <YMap location={props.location}>
                     <YMapDefaultSchemeLayer/>
                     <YMapDefaultFeaturesLayer/>
+                    {segmentsMarkers["stressed"] && (
+                        segmentsMarkers["stressed"].map((segment) => (
+                            <YMapFeature
+                                geometry={{
+                                    type: 'Polygon',
+                                    coordinates: [segment]
+                                }}
+                                style={{stroke: [{color: '#d60000', width: 2}], fill: 'rgba(255,33,33,0.5)'}}
+                            />
+                        ))
+                    )}
+                    {segmentsMarkers["medium"] && (
+                        segmentsMarkers["medium"].map((segment) => (
+                            <YMapFeature
+                            geometry={{
+                                type: 'Polygon',
+                                coordinates: segment
+                            }}
+                            style={{stroke: [{color: '#d67d00', width: 2}], fill: 'rgba(255,148,33,0.5)'}}
+                            />
+                        ))
+                    )}
                     {UnverifiedPoints &&
                         UnverifiedPoints.map((marker, index) => (
                             <YMapMarker
