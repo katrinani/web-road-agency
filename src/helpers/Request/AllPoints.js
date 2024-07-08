@@ -4,6 +4,7 @@ import handleError from "../Notifications";
 
 const getAllPoints = async (coordinate) => {
   try {
+    console.log(coordinate)
     let latitude = `?Coordinates.Latitude=${coordinate.center[0]}`
     let longitude = `&Coordinates.Longitude=${coordinate.center[1]}`
     let radius = `&RadiusInKm=${100}`

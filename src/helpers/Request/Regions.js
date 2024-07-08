@@ -6,7 +6,7 @@ const getRegions = async () => {
   try {
     const response = await axios.get(`${url}/regions`);
     if (response.status === 200) {
-      const regions = response.data.regions.map((region) => region.name);
+      const regions = response.data["regions"].map((region) => region["regionName"]);
       console.log(regions);
       return regions;
     }

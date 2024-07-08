@@ -23,7 +23,7 @@ function App() {
   const [formValues, setFormValues] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const [page, setPage] = useState("Карта");
-
+  console.log(location)
   useEffect(() => {
     const fetchPoints = async () => {
       const points = await getAllPoints(location);
@@ -77,7 +77,10 @@ function App() {
                   setShowModal(false);
                   console.log("Удаляем...");
                   console.log(selectedPoint);
-                  await pointDeleting(selectedPoint);
+                  const response = await pointDeleting(selectedPoint);
+                  if (response === 200) {
+                    window.location.reload(); // Обновление страницы
+                  }
                 }}
               >
                 Удалить

@@ -16,6 +16,7 @@ const pointDeleting = async (point) => {
             console.log(response);
             NotificationManager.success('Успешно удалено');
         }
+        return response.status;
     } catch (error) {
         console.log(error)
         handleError(error)

@@ -4,22 +4,20 @@ import url from "../url"
 import {NotificationManager} from "react-notifications";
 import handleError from "../Notifications";
 
-
 class CrudPoints {
   static async createPoint(point) {
     try {
+
       let body = {
-        point: {
-          name: point["Название"],
-          type: point_types.indexOf(point["Тип точки"]),
-          coordinates: {
-            latitude: point["Широта"],
-            longitude: point["Долгота"],
-          },
-          description: point["Описание"] || null
+        name: point["Название"],
+        type: point_types.indexOf(point["Тип точки"]),
+        coordinates: {
+          latitude: point["Широта"],
+          longitude: point["Долгота"],
         },
+        roadName: point["Дорога"] || null,
         regionName: point["Регион"]["value"] || null,
-        roadName: point["Дорога"] || null
+        description: point["Описание"] || null
       };
       console.log(body)
       let mainURL = url + `/verifiedPoints`

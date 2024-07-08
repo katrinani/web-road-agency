@@ -10,7 +10,6 @@ import React, {useEffect, useState} from "react";
 import Filter from "./Filter";
 
 const Map = (props) => {
-    console.log(props.points_list)
     const [filteredPoints, setFilteredPoints] = useState([]);
     useEffect(() => {
         setFilteredPoints(props.points_list);

@@ -46,7 +46,7 @@ export function makeSegments (points) {
 
         if (nearbyPoints.length > 10) {
             stressedSegments.push(nearbyPoints);
-        } else if (nearbyPoints.length >= 2 && nearbyPoints.length <= 10) {
+        } else if (nearbyPoints.length >= 3 && nearbyPoints.length <= 10) {
             mediumSegments.push(nearbyPoints);
         }
     });

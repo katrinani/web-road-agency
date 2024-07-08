@@ -7,15 +7,13 @@ const pointEditing = async (point) => {
     console.log(point)
     try {
         let body = {
-            point: {
-                name: point.Название,
-                type: point.Тип,
-                coordinates: {
-                    latitude: point.Широта,
-                    longitude: point.Долгота,
-                },
-                description: point.Описание || null,
+            name: point.Название,
+            type: point.Тип,
+            coordinates: {
+                latitude: point.Широта,
+                longitude: point.Долгота,
             },
+            description: point.Описание || null,
             regionName: point.Регион || null,
             newRoadName: point.Дорога || null,
         };

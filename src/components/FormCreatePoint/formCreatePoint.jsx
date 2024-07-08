@@ -57,6 +57,10 @@ const FormCreatePoint = (props) => {
       "Тип точки": inputValues["Тип точки"].value,
     };
 
+    // установка локации на новой точке
+    console.log({ center: [inputValues.Долгота, inputValues.Широта ], zoom: 9 })
+    props.setLocation({ center: [inputValues.Долгота, inputValues.Широта ], zoom: 9 });
+
     if (isEditMode) {
       console.log("Редактируем....");
       await pointEditing(form);
@@ -64,12 +68,7 @@ const FormCreatePoint = (props) => {
       console.log("Создаем....");
       await CrudPoints.createPoint(form);
     }
-    // установка локации на новой точке
-    console.log(inputValues.Широта)
-    console.log(inputValues.Долгота)
-    props.setLocation({ center: [inputValues.Долгота, inputValues.Широта ], zoom: 9 });
 
-    const roadName = form.Дорога;
     const points = await getAllPoints(props.location);
     console.log(points);
     props.set_list(points);

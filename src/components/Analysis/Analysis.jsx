@@ -6,7 +6,7 @@ import {
     YMapMarker,
     YMapFeature
 } from "ymap3-components";
-import {iconsUnverified} from "../../helpers/IconsPath";
+import {iconsUnverified, iconsVerified} from "../../helpers/IconsPath";
 import polesAndUnverifiedPoints from "../../helpers/Request/AllPolesAndUnverifiedPoints";
 import {makeSegments} from "../../helpers/Segments";
 
@@ -37,14 +37,12 @@ const Analysis = (props) => {
         {
             "Долгота": 59.8958484,
             "Широта": 54.9938383,
-            "Тип точки": [3],
+            "Тип точки": [8],
         }
     ]
     const handleMarkerClick = (marker) => {
     };
 
-    // TO-DO: Учесть километры
-    // TO-DO: Почему то null в регионах
     const segmentsMarkers = makeSegments(props.points_list);
     console.log(segmentsMarkers)
     return (
@@ -86,7 +84,10 @@ const Analysis = (props) => {
                             >
                                 <div style={{display: 'flex', alignItems: 'center'}}>
                                     <img
-                                        src={iconsUnverified[marker["Тип точки"][0]]}
+                                        src={
+                                            marker["Тип точки"][0] !== 8 && iconsUnverified[marker["Тип точки"][0]] ||
+                                            marker["Тип точки"][0] === 8 && iconsVerified[marker["Тип точки"][0]]
+                                        }
                                         alt={marker["Название"]}
                                         style={{width: '30px', height: '30px', marginRight: '5px'}}
                                     />
