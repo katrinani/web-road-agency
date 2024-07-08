@@ -1,32 +1,34 @@
-const segments = async (points) => {
-    // Функция для вычисления расстояния между двумя точками по их координатам
-    function getDistance(lat1, lon1, lat2, lon2) {
-        let R = 6371; // Радиус земли в километрах
-        let dLat = deg2rad(lat2 - lat1);
-        let dLon = deg2rad(lon2 - lon1);
-        let a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        let d = R * c; // Расстояние в километрах
-        return d;
-    }
+// Функция для вычисления расстояния между двумя точками по их координатам
+function getDistance(lat1, lon1, lat2, lon2) {
+    let R = 6371; // Радиус земли в километрах
+    let dLat = deg2rad(lat2 - lat1);
+    let dLon = deg2rad(lon2 - lon1);
+    let a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    let d = R * c; // Расстояние в километрах
+    return d;
+}
 
-    function deg2rad(deg) {
-        return deg * (Math.PI / 180);
-    }
+function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+}
 
-// Исходные данные: список точек и список километровых столбов
+
+export function makeSegments (points) {
+    // Исходные данные: список точек и список километровых столбов
     const other = [];
     const milestones = [];
-    points.map((marker) => {
+    points.forEach((marker) => {
         if (marker["Тип точки"][0] !== 8) {
             other.push([marker["Долгота"], marker["Широта"]]);
         } else {
             milestones.push([marker["Долгота"], marker["Широта"]]);
         }
     });
+
 
     let stressedSegments = [];
     let mediumSegments = [];
@@ -49,12 +51,8 @@ const segments = async (points) => {
         }
     });
 
-    console.log("Напряженные участки: ", stressedSegments);
-    console.log("Средние участки: ", mediumSegments);
     return {
         "stressed": stressedSegments,
         "medium": mediumSegments
     }
 }
-
-export default segments;

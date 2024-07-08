@@ -1,4 +1,3 @@
-import React from "react";
 import {
     YMap,
     YMapComponentsProvider,
@@ -9,11 +8,11 @@ import {
 } from "ymap3-components";
 import {iconsUnverified} from "../../helpers/IconsPath";
 import polesAndUnverifiedPoints from "../../helpers/Request/AllPolesAndUnverifiedPoints";
-import segments from "../../helpers/Segments";
+import {makeSegments} from "../../helpers/Segments";
 
 const Analysis = (props) => {
-    // const UnverifiedPoints = polesAndUnverifiedPoints()
     // TO-DO: ХАРДКОД УБРАТЬ
+    // const UnverifiedPoints = polesAndUnverifiedPoints()
     const UnverifiedPoints = [
         {
             "ID": "0cebea38-1297-4e10-b934-f1cbf0eefe1c",
@@ -41,10 +40,13 @@ const Analysis = (props) => {
             "Тип точки": [3],
         }
     ]
-    const handleMarkerClick = (marker) => {};
-    const segmentsMarkers = segments(props.points_list)
+    const handleMarkerClick = (marker) => {
+    };
+
     // TO-DO: Учесть километры
     // TO-DO: Почему то null в регионах
+    const segmentsMarkers = makeSegments(props.points_list);
+    console.log(segmentsMarkers)
     return (
         // карта
         <div className="map w-50 h-100 px-2 position-relative">
@@ -67,11 +69,11 @@ const Analysis = (props) => {
                     {segmentsMarkers["medium"] && (
                         segmentsMarkers["medium"].map((segment) => (
                             <YMapFeature
-                            geometry={{
-                                type: 'Polygon',
-                                coordinates: segment
-                            }}
-                            style={{stroke: [{color: '#d67d00', width: 2}], fill: 'rgba(255,148,33,0.5)'}}
+                                geometry={{
+                                    type: 'Polygon',
+                                    coordinates: [segment]
+                                }}
+                                style={{stroke: [{color: '#d67d00', width: 2}], fill: 'rgba(255,148,33,0.5)'}}
                             />
                         ))
                     )}
