@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import FormCreatePoint from "./components/FormCreatePoint/formCreatePoint";
 import Map from "./components/Map/Map";
 import {Button, Container, Modal} from "react-bootstrap";
-import pointDeleting from "./helpers/Request/PointDeleting";
 import "react-notifications/lib/notifications.css";
 import {NotificationContainer} from "react-notifications";
 import "./App.css"
@@ -11,6 +10,7 @@ import getAllPoints from "./helpers/Request/AllPoints";
 import ListPoints from "./components/ListPoints/ListPoints";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Analysis from "./components/Analysis/Analysis";
+import CrudPoints from "./helpers/Request/CrudPoints";
 
 
 function App() {
@@ -77,7 +77,8 @@ function App() {
                   setShowModal(false);
                   console.log("Удаляем...");
                   console.log(selectedPoint);
-                  const response = await pointDeleting(selectedPoint);
+                  // const response = await pointDeleting(selectedPoint);
+                  const response = await CrudPoints.pointDeleting(selectedPoint);
                   if (response === 200) {
                     window.location.reload(); // Обновление страницы
                   }
@@ -124,13 +125,11 @@ function App() {
       )}
 
       {page === "Анализ" && (
-          <div className="position-absolute translate-middle top-50 start-50 w-75 h-75 d-flex flex-row">
-            <Analysis
+          <Analysis
                 apiKey={apiKey}
                 location={location}
                 points_list={points_list}
-            />
-          </div>
+          />
       )}
     </div>
   );

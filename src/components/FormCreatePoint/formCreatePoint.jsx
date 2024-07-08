@@ -6,7 +6,6 @@ import FormDefaultData from "../../helpers/FormDefaultData";
 import CrudPoints from "../../helpers/Request/CrudPoints.js";
 import getAllPoints from "../../helpers/Request/AllPoints";
 import regions from "../../helpers/Request/Regions.js";
-import pointEditing from "../../helpers/Request/PointEditing";
 import Form from "react-bootstrap/Form";
 
 const FormCreatePoint = (props) => {
@@ -57,26 +56,34 @@ const FormCreatePoint = (props) => {
       "Тип точки": inputValues["Тип точки"].value,
     };
 
-    // установка локации на новой точке
-    console.log({ center: [inputValues.Долгота, inputValues.Широта ], zoom: 9 })
-    props.setLocation({ center: [inputValues.Долгота, inputValues.Широта ], zoom: 9 });
-
+    // // установка локации на новой точке
+    // console.log({ center: [inputValues.Долгота, inputValues.Широта ], zoom: 9 })
+    // props.setLocation({ center: [inputValues.Долгота, inputValues.Широта ], zoom: 9 });
+    const newCenter = {center: [inputValues.Долгота, inputValues.Широта], zoom: 9};
     if (isEditMode) {
       console.log("Редактируем....");
-      await pointEditing(form);
+      const response = await CrudPoints.pointEditing(form);
+      if (response === 200) {
+        props.setLocation(newCenter);
+      }
     } else {
       console.log("Создаем....");
-      await CrudPoints.createPoint(form);
+      const response = await CrudPoints.createPoint(form);
+      if (response === 200) {
+        props.setLocation(newCenter);
+      }
     }
-
-    const points = await getAllPoints(props.location);
+    console.log(newCenter)
+    const points = await getAllPoints(newCenter);
     console.log(points);
-    props.set_list(points);
-    console.log(points);
+    if (points) {
+      props.set_list(points);
+    }
     console.log("дефолт ", FormDefaultData);
     console.log(props.points_list);
     setInputValues(FormDefaultData);
     console.log("inputValues", inputValues);
+    window.location.reload(); // Обновление страницы
   };
 
   return (

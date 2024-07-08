@@ -25,13 +25,67 @@ class CrudPoints {
           mainURL,
           body
       );
+      console.log(response);
       if (response.status === 201) {
-        console.log(response);
         NotificationManager.success('Успешно создано');
       }
 
     } catch (error) {
         handleError(error)
+    }
+  }
+
+  static async pointEditing (point) {
+    console.log(point)
+    try {
+      let body = {
+        name: point.Название,
+        type: point.Тип,
+        coordinates: {
+          latitude: point.Широта,
+          longitude: point.Долгота,
+        },
+        description: point.Описание || null,
+        regionName: point.Регион || null,
+        newRoadName: point.Дорога || null,
+      };
+      console.log('Body: ', body)
+      let mainUrl = `/verifiedPoints/${point.ID}`
+      console.log(mainUrl)
+
+      const response = await axios.put(
+          url + mainUrl,
+          body
+      );
+      console.log(response);
+      if (response.status === 200) {
+        console.log(response);
+        NotificationManager.success('Успешно изменена');
+      }
+    } catch (error) {
+      console.log(error)
+      handleError(error)
+    }
+  }
+
+  static async pointDeleting (point) {
+    console.log(point)
+    try {
+      let mainUrl = `/verifiedPoints/${point.ID}`
+      console.log(mainUrl)
+
+      const response = await axios.delete(
+          url + mainUrl
+      );
+      console.log(response);
+      if (response.status === 200) {
+        console.log(response);
+        NotificationManager.success('Успешно удалено');
+      }
+      return response.status;
+    } catch (error) {
+      console.log(error)
+      handleError(error)
     }
   }
 }
