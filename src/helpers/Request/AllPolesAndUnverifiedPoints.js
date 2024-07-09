@@ -18,7 +18,7 @@ const polesAndUnverifiedPoints = async () => {
                 "Дорога": point.roadName,
                 "Регион": point.regionName
             }))
-            const unverifiedPoints =  response.data["kilometerPoles"].map((point) => ({
+            const unverifiedPoints =  response.data["unverifiedPoints"].map((point) => ({
                 "ID": point.id,
                 "Описание": point.description,
                 "Широта": point.coordinates.latitude,

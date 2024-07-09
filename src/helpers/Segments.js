@@ -23,9 +23,9 @@ export function makeSegments (points) {
     const milestones = [];
     points.forEach((marker) => {
         if (marker["Тип точки"][0] !== 8) {
-            other.push([marker["Долгота"], marker["Широта"]]);
+            other.push({"coordinate": [marker["Долгота"], marker["Широта"]], "marker": marker});
         } else {
-            milestones.push([marker["Долгота"], marker["Широта"]]);
+            milestones.push({"coordinate": [marker["Долгота"], marker["Широта"]], "marker": marker});
         }
     });
 
@@ -37,7 +37,12 @@ export function makeSegments (points) {
         let nearbyPoints = [];
 
         other.forEach(point => {
-            let distance = getDistance(point[0], point[1], milestone[0], milestone[1]);
+            let distance = getDistance(
+                point["coordinate"][0],
+                point["coordinate"][1],
+                milestone["coordinate"][0],
+                milestone["coordinate"][1]
+            );
 
             if (distance <= 1) {
                 nearbyPoints.push(point);
