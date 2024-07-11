@@ -1,25 +1,28 @@
 import React from "react";
+import {unverifiedTypes} from "../../helpers/FormData";
 
 const AnalysisList = (props) => {
     const segments = props.segmentsMarkers
 
     return (
-        <div className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-start">
-            <h3>Анализ участков</h3>
+        <div
+            className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-center">
+            <h3 className="text-center">Анализ участков</h3>
             <div
                 className="p-2 rounded border-dark-subtle overflow-auto shadow-sm"
-                style={{ height: 'calc(100% - 60px)', width: 'calc(100% - 16px)' }}
+                style={{height: 'calc(100% - 60px)', width: 'calc(100% - 16px)'}}
             >
                 {["stressed", "medium"].map((kind) => (
                     <div className="accordion" id={`accordion-${kind}`}>
                         <div className="accordion-item">
                             <h2 className="accordion-header" id={`heading-${kind}`}>
                                 <button className="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target={`#collapse-${kind}`} aria-expanded="true" aria-controls={`collapse-${kind}`}>
-                                    <div>{
-                                        kind === "stressed" && "Напряженные участки" ||
-                                        kind === "medium" && "Средняя напряженность"
-                                    }</div>
+                                        data-bs-target={`#collapse-${kind}`} aria-expanded="true"
+                                        aria-controls={`collapse-${kind}`}>
+                                    <div
+                                        className={`text ${kind === "stressed" ? "text-danger" : kind === "medium" ? "text-warning" : ""}`}>
+                                        {kind === "stressed" ? "Напряженные участки" : kind === "medium" ? "Средняя напряженность" : ""}
+                                    </div>
                                 </button>
                             </h2>
                             <div id={`collapse-${kind}`} className="accordion-collapse collapse show"
@@ -80,7 +83,7 @@ const AnalysisList = (props) => {
                                                                                                 <div>Широта: {point["marker"]["Широта"]}</div>
                                                                                                 <div>Долгота: {point["marker"]["Долгота"]}</div>
                                                                                                 <div>Тип
-                                                                                                    точки: {point["marker"]["Тип точки"]}</div>
+                                                                                                    точки: {unverifiedTypes[point["marker"]["Тип точки"]]}</div>
                                                                                                 <div>Уровень
                                                                                                     доверия: {point["marker"]["Уровень доверия"]}</div>
                                                                                                 <div>Дорога: {point["marker"]["Дорога"]}</div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import CustomInput from "../CustomInput/custom_input";
-import { FormData, highways, point_types } from "../../helpers/FormData.js";
+import { FormData, highways, verifiedTypes } from "../../helpers/FormData.js";
 import FormDefaultData from "../../helpers/FormDefaultData";
 import CrudPoints from "../../helpers/Request/CrudPoints.js";
 import getAllPoints from "../../helpers/Request/AllPoints";
@@ -136,7 +136,7 @@ const FormCreatePoint = (props) => {
           <Select
             key={`type ${inputValues[Object.keys(FormData)[4]]}`}
             value={inputValues[Object.keys(FormData)[4]] || ""}
-            options={point_types.map((value) => ({
+            options={verifiedTypes.map((value) => ({
               value,
               label: value
             }))}

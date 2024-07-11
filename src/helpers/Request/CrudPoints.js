@@ -1,5 +1,5 @@
 import axios from "axios";
-import { point_types } from "../FormData";
+import { verifiedTypes } from "../FormData";
 import url from "../url"
 import {NotificationManager} from "react-notifications";
 import handleError from "../Notifications";
@@ -10,7 +10,7 @@ class CrudPoints {
 
       let body = {
         name: point["Название"],
-        type: point_types.indexOf(point["Тип точки"]),
+        type: verifiedTypes.indexOf(point["Тип точки"]),
         coordinates: {
           latitude: point["Широта"],
           longitude: point["Долгота"],

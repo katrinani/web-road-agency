@@ -16,3 +16,10 @@ export const iconsUnverified = [
     "Icons/UnverifiedIcons/barrier.png",  // 'Преграда' 2
     "Icons/UnverifiedIcons/pistol.png"  //  'Противоправные действия 3х лиц' 3
 ]
+
+export const iconsReliability = [
+    "Icons/Reliability/circle-1.png",
+    "Icons/Reliability/circle-2.png",
+    "Icons/Reliability/circle-3.png",
+    "Icons/Reliability/circle-4.png"
+]

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {point_types} from "../../helpers/FormData";
+import {verifiedTypes} from "../../helpers/FormData";
 
 const ListPoints = (props) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -40,7 +40,7 @@ const ListPoints = (props) => {
                         <li key={index} onClick={() => handleMarkerClick(marker)}>
                             <div>Название: {marker["Название"]}</div>
                             <div>Координаты: {marker["Долгота"]}, {marker["Широта"]}</div>
-                            <div>Тип точки: {point_types[marker["Тип точки"][0]]}</div>
+                            <div>Тип точки: {verifiedTypes[marker["Тип точки"][0]]}</div>
                             <div>Дорога: {marker["Дорога"]}</div>
                             {marker["Тип точки"][0] === 5 && <div>Описание: {marker["Описание"] === ""
                                 ? 'Нет данных'

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {point_types} from "../../helpers/FormData";
+import {verifiedTypes} from "../../helpers/FormData";
 import {iconsVerified} from "../../helpers/IconsPath";
 
 
@@ -21,7 +21,7 @@ const Filter = (props) => {
         console.log("Выбранные фильтры ", newSelectedTypes);
 
         function exactlyThree(point) {
-            return newSelectedTypes.includes(point_types[point["Тип точки"][0]]);
+            return newSelectedTypes.includes(verifiedTypes[point["Тип точки"][0]]);
         }
         const filteringPoints = props.points_list.filter(exactlyThree);
         props.setFilteredPoints(filteringPoints);
@@ -34,15 +34,15 @@ const Filter = (props) => {
                 Фильтрация точек
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {point_types.map((type) => (
+                {verifiedTypes.map((type) => (
                     <li
-                        key={point_types.indexOf(type)}
+                        key={verifiedTypes.indexOf(type)}
                         onClick={(e) => handleSelectType(type, e)}
                         className={`dropdown-item ${selectedTypes.includes(type) ? 'border-midnightblue' : ''}`}
                     >
                         <a className="dropdown-item" href="#">
                             <img
-                                src={iconsVerified[point_types.indexOf(type)]}
+                                src={iconsVerified[verifiedTypes.indexOf(type)]}
                                 alt={type}
                                 style={{width: '25px', height: '25px', marginRight: '5px'}}
                             /> {type}
