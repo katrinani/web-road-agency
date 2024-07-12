@@ -18,6 +18,13 @@ const FilterForAnalysis = (props) => {
         "Высокий уровень"
     ]
 
+    const ExplanationForReliabilityLevels = [
+        "У точки нет ни прикрепленного файла, ни нынешней локации",
+        "У точки есть только прикрепленый файл",
+        "У точки есть только нынешняя локация",
+        "У точки есть и прикрепленный файл, и нынешняя локация"
+    ]
+
     const handleSelectType = (typeId, event) => {
         event.stopPropagation();
         toggleSelection(selectedTypes, setSelectedTypes, typeId);
@@ -130,7 +137,6 @@ const FilterForAnalysis = (props) => {
                 </div>
 
                 {/* Фильтрация по уровню доверия */}
-                {/*TODO сделать поясение*/}
                 <div className="accordion" id="level">
                     <div className="accordion-item">
                         <div className="accordion-header" id="heading-level">
@@ -144,9 +150,10 @@ const FilterForAnalysis = (props) => {
                              aria-labelledby="heading-level"
                              data-bs-parent="#accordion-level">
                             <div className="accordion-body">
-                                {ReliabilityLevels.map((reliabilityLevel) => (
+                                {ReliabilityLevels.map((reliabilityLevel, index) => (
                                     <li
                                         key={ReliabilityLevels.indexOf(reliabilityLevel) + 1}
+                                        title={ExplanationForReliabilityLevels[index]}
                                         onClick={(e) =>
                                             handleSelectReliabilityLevel(ReliabilityLevels.indexOf(reliabilityLevel) + 1, e)}
                                         className={`dropdown-item ${
