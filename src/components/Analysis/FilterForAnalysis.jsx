@@ -28,8 +28,9 @@ const FilterForAnalysis = (props) => {
         toggleSelection(selectedReliabilityLevels, setSelectedReliabilityLevels, reliabilityLevel);
     };
 
-    const handleSelectCreationTime = (dates) => {
+    const handleSelectCreationTime = (dates, event) => {
         // [startDate, endDate]
+        event.stopPropagation();
         setStartDate(dates[0]);
         setEndDate(dates[1]);
     };
@@ -81,6 +82,7 @@ const FilterForAnalysis = (props) => {
                             <Button className="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse-type" aria-expanded="true"
                                     aria-controls="collapse-type"
+                                    onClick={(e) => e.stopPropagation()}
                             >По типу точек:</Button>
                         </div>
                         <div id="collapse-type" className="accordion-collapse collapse show"
@@ -128,19 +130,21 @@ const FilterForAnalysis = (props) => {
                 </div>
 
                 {/* Фильтрация по уровню доверия */}
+                {/*TODO сделать поясение*/}
                 <div className="accordion" id="level">
                     <div className="accordion-item">
                         <div className="accordion-header" id="heading-level">
                             <Button className="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse-level" aria-expanded="true"
                                     aria-controls="collapse-level"
+                                    onClick={(e) => e.stopPropagation()}
                             >По уровню доверия:</Button>
                         </div>
                         <div id="collapse-level" className="accordion-collapse collapse show"
                              aria-labelledby="heading-level"
                              data-bs-parent="#accordion-level">
                             <div className="accordion-body">
-                                {ReliabilityLevels.map((reliabilityLevel) => ( // Массив уровней доверия
+                                {ReliabilityLevels.map((reliabilityLevel) => (
                                     <li
                                         key={ReliabilityLevels.indexOf(reliabilityLevel) + 1}
                                         onClick={(e) =>
@@ -164,18 +168,36 @@ const FilterForAnalysis = (props) => {
                         </div>
                     </div>
                 </div>
+
                 {/* Фильтрация по времени создания  */}
-                <li>
-                    <DatePicker
-                        selected={startDate}
-                        onChange={handleSelectCreationTime}
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectsRange // Включаем выбор диапазона дат
-                        inline // Отображаем DatePicker в строке
-                    />
-                </li>
-                <li>
+                <div className="accordion" id="data">
+                    <div className="accordion-item">
+                        <div className="accordion-header" id="heading-data">
+                            <Button className="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-data" aria-expanded="true"
+                                    aria-controls="collapse-data"
+                                    onClick={(e) => e.stopPropagation()}
+                            >По дате создания:</Button>
+                        </div>
+                        <div id="collapse-data" className="accordion-collapse collapse show"
+                             aria-labelledby="heading-data"
+                             data-bs-parent="#accordion-data">
+                            <div className="accordion-body">
+                                <li>
+                                    <DatePicker
+                                        selected={startDate}
+                                        onChange={handleSelectCreationTime}
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        selectsRange
+                                        inline
+                                    />
+                                </li>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <li style={{display: 'flex', justifyContent: 'center'}}>
                     <button className="btn btn-primary mt-2" onClick={filterPoints}>
                         Применить фильтры
                     </button>

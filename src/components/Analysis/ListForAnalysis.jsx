@@ -87,6 +87,7 @@ const AnalysisList = (props) => {
                                                                                                 <div>Уровень
                                                                                                     доверия: {point["marker"]["Уровень доверия"]}</div>
                                                                                                 <div>Дорога: {point["marker"]["Дорога"]}</div>
+                                                                                                <div>Дата создания: {point["marker"]["Дата"]}</div>
                                                                                             </div>}
                                                                                         </div>
                                                                                     </div>
