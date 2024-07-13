@@ -1,9 +1,24 @@
 import React, {useEffect, useState} from "react";
 import createTestVariant from "../../helpers/Request/CreateTestVariant";
+import pointConfirmation from "../../helpers/Request/PointConfirmation";
 
 const PointVerification = (props) => {
+    const [pointData, setPointData] = useState({
+        id: '',
+        name: '',
+        description: '',
+        type: '',
+        coordinates: {
+            latitude: '',
+            longitude: '',
+        },
+        roadName: '',
+        expirationTime: '',
+        filesIds: [],
+        urlForFiles: ''
+    });
+
     // TODO убрать хардкод
-    console.log(props.listIDs);
     // const testPoint = await createTestVariant(props.listIDs);
     const testPoint = {
         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -17,15 +32,64 @@ const PointVerification = (props) => {
         },
         "roadName": "М-5 \"Урал\" ПкЕ: Челябинск - Екатеринбург",
         "filesIds": [
-            "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            "/1675522840_www-funnyart-club-p-kot-mem-kartinki-4.jpg",
+            "/thumbs/1675522854_www-funnyart-club-p-kot-mem-kartinki-21.jpg",
+            "/1675522869_www-funnyart-club-p-kot-mem-kartinki-70.jpg",
+            // "/1675522794_www-funnyart-club-p-kot-mem-kartinki-62.jpg"
         ],
-        "urlForFiles": "string"
+        "urlForFiles": "https://www.funnyart.club/uploads/posts/2023-02"
+    };
+    const [selectedImageIndex, setSelectedImageIndex] = useState(testPoint.filesIds[0]);
+
+    useEffect(() => {
+        setPointData({
+            id: testPoint.id,
+            name: testPoint.name,
+            description: testPoint.description,
+            type: testPoint.type,
+            coordinates: {
+                latitude: testPoint.coordinates.latitude,
+                longitude: testPoint.coordinates.longitude,
+            },
+            roadName: testPoint.roadName,
+            expirationTime: testPoint.expirationTime.slice(0, -8),
+            filesIds: testPoint.filesIds,
+            urlForFiles: testPoint.urlForFiles
+        });
+    }, []);
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+
+        setPointData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
     };
 
-    // <label htmlFor="expirationTime">Время жизни точки:</label>
-    // <input type="datetime-local" id="expirationTime" name="expirationTime" required/>
-    const handleSubmit = (event) => {
-        event.preventDefault();}
+    const handleCoordinatesChange = (event, coordinate) => {
+        const value = parseFloat(event.target.value);
+
+        setPointData((prevState) => ({
+            ...prevState,
+            coordinates: {
+                ...prevState.coordinates,
+                [coordinate]: value,
+            },
+        }));
+    };
+
+    const handleFileChange = (file) => {
+        setSelectedImageIndex(file);
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        console.log(pointData);
+        // await pointConfirmation(pointData, selectedImageIndex)
+        props.setRightPart("Список")
+    }
+
     return (
         <div
             className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-center position-relative">
@@ -45,36 +109,37 @@ const PointVerification = (props) => {
                 <div className="row">
                     <div className="col">
                         <div className="form-group">
-                            <label htmlFor="name">Название</label>
+                            <label htmlFor="name">Название:</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 id="name"
                                 name="name"
-                                value={testPoint.name}
-                                // onChange={handleInputChange}
+                                value={pointData.name}
+                                onChange={handleInputChange}
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="description">Описание</label>
+                            <label htmlFor="description">Описание:</label>
                             <textarea
+                                style={{height: "100px"}}
                                 className="form-control"
                                 id="description"
                                 name="description"
-                                value={testPoint.description}
-                                // onChange={handleInputChange}
+                                value={pointData.description}
+                                onChange={handleInputChange}
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="type">Тип точки</label>
+                            <label htmlFor="type">Тип точки:</label>
                             <select
                                 className="form-control"
                                 id="type"
                                 name="type"
-                                value={testPoint.type}
-                                // onChange={handleInputChange}
+                                value={pointData.type}
+                                onChange={handleInputChange}
                             >
                                 <option value="1">ДТП</option>
                                 <option value="2">Недостатки дороги</option>
@@ -82,79 +147,81 @@ const PointVerification = (props) => {
                                 <option value="4">Противоправные действия 3х лиц</option>
                             </select>
                         </div>
-
-                        <div className="form-group">
-                            <label htmlFor="roadName">Дорога</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="roadName"
-                                name="roadName"
-                                value={testPoint.roadName}
-                                // onChange={handleInputChange}
-                                disabled
-                            />
-                        </div>
                     </div>
 
                     <div className="col">
                         <div className="form-group">
-                            <label htmlFor="latitude">Широта</label>
+                            <label htmlFor="latitude">Широта:</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 id="latitude"
                                 name="latitude"
-                                value={testPoint.coordinates.latitude}
-                                // onChange={(event) => handleCoordinatesChange(event, 'latitude')}
+                                value={pointData.coordinates.latitude}
+                                onChange={(event) => handleCoordinatesChange(event, 'latitude')}
                             />
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="longitude">Долгота</label>
+                            <label htmlFor="longitude">Долгота:</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 id="longitude"
                                 name="longitude"
-                                value={testPoint.coordinates.longitude}
-                                // onChange={(event) => handleCoordinatesChange(event, 'longitude')}
+                                value={pointData.coordinates.longitude}
+                                onChange={(event) => handleCoordinatesChange(event, 'longitude')}
                             />
                         </div>
-
+                        {/*TODO время без секунд*/}
                         <div className="form-group">
-                            <label htmlFor="expirationTime">Время жизни точки</label>
+                            <label htmlFor="expirationTime">Время жизни точки:</label>
                             <input
                                 type="datetime-local"
                                 className="form-control"
                                 id="expirationTime"
                                 name="expirationTime"
-                                value={testPoint.expirationTime}
-                                // onChange={handleInputChange}
+                                value={pointData.expirationTime}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="roadName">Дорога:</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="roadName"
+                                name="roadName"
+                                value={pointData.roadName}
+                                onChange={handleInputChange}
+                                disabled
                             />
                         </div>
                     </div>
                 </div>
-
-                {/*<div className="form-group mt-3">*/}
-                {/*    <div className="d-flex flex-row overflow-auto">*/}
-                {/*        {files.map((file) => (*/}
-                {/*            <div key={file.id} className="p-1">*/}
-                {/*                <img src={file.url} alt={file.name} width="100"/>*/}
-                {/*                <div className="form-check">*/}
-                {/*                    <input*/}
-                {/*                        className="form-check-input"*/}
-                {/*                        type="checkbox"*/}
-                {/*                        id={`file-${file.id}`}*/}
-                {/*                        value={file.id}*/}
-                {/*                        checked={pointData.filesIds.includes(file.id)}*/}
-                {/*                        // onChange={(event) => handleFileChange(event, file.id)}*/}
-                {/*                    />*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*        ))}*/}
-                {/*    </div>*/}
-                {/*</div>*/}
+                {/*TODO больше 3х фото и сьезжает, скрол не выходит*/}
+                <div className="form-group">
+                    <label htmlFor="photo">Фотографии:</label>
+                    <div className="d-flex flex-row overflow-x-scroll" style={{maxWidth: '100%'}}>
+                        {pointData.filesIds.map((file, index) => (
+                            <div key={index} className="p-1 position-relative">
+                                <img src={pointData.urlForFiles + file} alt={file} height="150"/>
+                                <div className="form-check position-absolute top-0 end-0">
+                                    <input
+                                        name="photo"
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id={`file-${index}`}
+                                        style={{margin: '8px'}}
+                                        value={index}
+                                        checked={selectedImageIndex === file}
+                                        onChange={(event) => handleFileChange(file)}
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
 
                 <button type="submit" className="btn btn-primary mt-3">
                     Создать точку

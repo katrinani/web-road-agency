@@ -8,7 +8,7 @@ const createTestVariant = async (IDs) => {
     try {
         let body = {
             "ids": IDs
-        }
+        };
         const response = await axios.post(`${url}/verify`, body);
         console.log(response);
         if (response.status === 201) {

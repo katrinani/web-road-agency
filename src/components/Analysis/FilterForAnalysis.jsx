@@ -82,6 +82,7 @@ const FilterForAnalysis = (props) => {
                 aria-expanded="false">
                 Фильтрация точек
             </button>
+            {/*TODO сделать открытие только одного фильтра из 3х одновременно*/}
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 {/* Фильтрация по типу */}
                 <div className="accordion" id="type">
