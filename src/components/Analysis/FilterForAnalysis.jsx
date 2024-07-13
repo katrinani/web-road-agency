@@ -5,6 +5,7 @@ import {Button} from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+
 const FilterForAnalysis = (props) => {
     const [selectedTypes, setSelectedTypes] = useState([]);
     const [selectedReliabilityLevels, setSelectedReliabilityLevels] = useState([]);

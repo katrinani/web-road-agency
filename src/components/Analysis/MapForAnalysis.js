@@ -11,6 +11,11 @@ import FilterForAnalysis from "./FilterForAnalysis";
 
 const AnalysisMap = (props) => {
     const handleMarkerClick = (marker) => {};
+    const handleSegmentClick = (segment) => {
+        const IDs = segment.map((point) => (point["marker"]["ID"]))
+        props.setRightPart("Тестовый вариант")
+        props.setListIDs(IDs)
+    };
 
     return (
         <div className="map w-50 h-100 px-2 position-relative rounded">
@@ -30,6 +35,7 @@ const AnalysisMap = (props) => {
                         props.segmentsMarkers["stressed"].map((segment, index) => (
                             <YMapFeature
                                 key={index}
+                                onClick={() => handleSegmentClick(segment)}
                                 geometry={{
                                     type: 'Polygon',
                                     coordinates: [segment.map((points) => (points["coordinate"]))]
@@ -41,6 +47,7 @@ const AnalysisMap = (props) => {
                         props.segmentsMarkers["medium"].map((segment, index) => (
                             <YMapFeature
                                 key={index}
+                                onClick={() => handleSegmentClick(segment)}
                                 geometry={{
                                     type: 'Polygon',
                                     coordinates: [segment.map((points) => (points["coordinate"]))]

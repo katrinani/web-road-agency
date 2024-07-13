@@ -3,9 +3,14 @@ import AnalysisMap from "./MapForAnalysis";
 import AnalysisList from "./ListForAnalysis";
 import {useEffect, useState} from "react";
 import {Point} from "./Unverified";
+import PointVerification from "./PointVerification";
+
 
 const Analysis = (props) => {
-    // TO-DO: ХАРДКОД УБРАТЬ
+    const [rightPart, setRightPart] = useState("Список");
+    const [listIDs, setListIDs] = useState();
+
+    // TODO: ХАРДКОД УБРАТЬ
     // const UnverifiedPoints = polesAndUnverifiedPoints()
     const UnverifiedPoints = Point
 
@@ -20,7 +25,7 @@ const Analysis = (props) => {
 
     return (
         <div className="position-absolute translate-middle top-50 start-50 w-75 h-75 d-flex flex-row">
-            {/* карта*/}
+            {/*Карта*/}
             <AnalysisMap
                 apiKey={props.apiKey}
                 location={props.location}
@@ -28,11 +33,24 @@ const Analysis = (props) => {
                 filteredUnverifiedPoints={filteredUnverifiedPoints}
                 setFilteredUnverifiedPoints={setFilteredUnverifiedPoints}
                 segmentsMarkers={segmentsMarkers}
+                setRightPart={setRightPart}
+                setListIDs={setListIDs}
             />
-            {/*// Список всякого*/}
-            <AnalysisList
-                segmentsMarkers={segmentsMarkers}
-            />
+            {/*Список участков*/}
+            {rightPart === "Список" && (
+                <AnalysisList
+                    segmentsMarkers={segmentsMarkers}
+                    setRightPart={setRightPart}
+                    setListIDs={setListIDs}
+                />
+            )}
+            {/*Создание тестовой точки*/}
+            {rightPart === "Тестовый вариант" && (
+                <PointVerification
+                    listIDs={listIDs}
+                    setRightPart={setRightPart}
+                />
+            )}
         </div>
     )
 };

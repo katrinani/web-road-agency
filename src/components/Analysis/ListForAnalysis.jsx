@@ -3,6 +3,13 @@ import {unverifiedTypes} from "../../helpers/FormData";
 
 const AnalysisList = (props) => {
     const segments = props.segmentsMarkers
+    const handleSegmentClick = async (segment) => {
+        console.log(segment)
+        // const IDs = segment.map((point) => (point["marker"]["ID"]))
+        // props.setRightPart("Тестовый вариант")
+        // props.setListIDs(IDs)
+        // onClick={() => handleSegmentClick(segment)}
+    };
 
     return (
         <div
@@ -35,12 +42,16 @@ const AnalysisList = (props) => {
                                                 style={{border: 'none', margin: '0', padding: '0'}}>
                                                 <div className="accordion" id={`accordionSection${indexSegment}`}>
                                                     <div className="accordion-item">
-                                                        <h2 className="accordion-header" id={`heading${indexSegment}`}>
+                                                        <h2 className="accordion-header"
+                                                            id={`heading${indexSegment}`}
+
+                                                        >
                                                             <button className="accordion-button" type="button"
                                                                     data-bs-toggle="collapse"
                                                                     data-bs-target={`#collapse${indexSegment}`}
                                                                     aria-expanded="true"
-                                                                    aria-controls={`collapse${indexSegment}`}>
+                                                                    aria-controls={`collapse${indexSegment}`}
+                                                                    >
                                                                 {`Участок ${indexSegment + 1}`}
                                                             </button>
                                                         </h2>

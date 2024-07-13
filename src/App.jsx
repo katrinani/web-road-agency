@@ -77,7 +77,6 @@ function App() {
                   setShowModal(false);
                   console.log("Удаляем...");
                   console.log(selectedPoint);
-                  // const response = await pointDeleting(selectedPoint);
                   const response = await CrudPoints.pointDeleting(selectedPoint);
                   if (response === 200) {
                     window.location.reload(); // Обновление страницы
