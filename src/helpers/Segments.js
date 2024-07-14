@@ -21,10 +21,10 @@ export function makeSegments (points) {
     // Исходные данные: список точек и список километровых столбов
     const other = [];
     const milestones = [];
-    points.forEach((marker) => {
-        if (marker["Тип точки"][0] !== 8) {
+    points.filter(point => point["Тип точки"][0] !== 9).forEach((marker) => {
+        if (marker["Тип точки"][0] !== 8 && marker["Тип точки"][0] !== 9) {
             other.push({"coordinate": [marker["Долгота"], marker["Широта"]], "marker": marker});
-        } else {
+        } else if (marker["Тип точки"][0] !== 9) {
             milestones.push({"coordinate": [marker["Долгота"], marker["Широта"]], "marker": marker});
         }
     });

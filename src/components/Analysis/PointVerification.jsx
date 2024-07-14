@@ -21,7 +21,7 @@ const PointVerification = (props) => {
     // TODO убрать хардкод
     // const testPoint = await createTestVariant(props.listIDs);
     const testPoint = {
-        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66af12",
         "name": "ДТП",
         "description": "Тут жопа на дороге",
         "expirationTime": "2024-07-13T07:14:27.594Z",
@@ -39,6 +39,17 @@ const PointVerification = (props) => {
         ],
         "urlForFiles": "https://www.funnyart.club/uploads/posts/2023-02"
     };
+
+    useEffect(() => {
+        if (testPoint && !props.filteredUnverifiedPoints.find(point => point.ID === testPoint.id)) {
+            props.addTestPoint(testPoint);
+            // props.setLocationAnalysis({center: [
+            //         testPoint.coordinates.longitude,
+            //         testPoint.coordinates.latitude
+            //     ], zoom: 15});
+        }
+    }, [testPoint, props.filteredUnverifiedPoints]);
+
     const [selectedImageIndex, setSelectedImageIndex] = useState(testPoint.filesIds[0]);
 
     useEffect(() => {
@@ -86,8 +97,16 @@ const PointVerification = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(pointData);
-        // await pointConfirmation(pointData, selectedImageIndex)
-        props.setRightPart("Список")
+        // TODO eбрать хардкод
+        // const response = await pointConfirmation(pointData, selectedImageIndex)
+        const response = 200;
+        if (response === 200) {
+            // удаляем тестовую точку
+            props.setFilteredUnverifiedPoints(prevPoints => prevPoints.filter(point => point.ID !== pointData.id));
+            props.setRightPart("Список");
+            props.setIDSegmentChoose('');
+            // после обновления автоматом еще один запрос уже с подтвержденной точкой
+        }
     }
 
     return (
@@ -103,7 +122,11 @@ const PointVerification = (props) => {
                     position: 'absolute', margin: '20px',
                     right: '0', top: '0'
                 }}
-                onClick={() => props.setRightPart("Список")}
+                onClick={() => {
+                    props.setRightPart("Список");
+                    props.setFilteredUnverifiedPoints(prevPoints => prevPoints.filter(point => point.ID !== pointData.id));
+                    props.setIDSegmentChoose('');
+                }}
             />
             <form onSubmit={handleSubmit}>
                 <div className="row">

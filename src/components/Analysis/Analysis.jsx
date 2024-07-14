@@ -7,7 +7,9 @@ import PointVerification from "./PointVerification";
 
 
 const Analysis = (props) => {
+    const [locationAnalysis, setLocationAnalysis] = useState({center: [61.400346, 55.163742], zoom: 11});
     const [rightPart, setRightPart] = useState("Список");
+    const [IDSegmentChoose, setIDSegmentChoose] = useState('');
     const [listIDs, setListIDs] = useState();
 
     // TODO: ХАРДКОД УБРАТЬ
@@ -15,6 +17,7 @@ const Analysis = (props) => {
     const UnverifiedPoints = Point
 
     const [filteredUnverifiedPoints, setFilteredUnverifiedPoints] = useState([]);
+    console.log(filteredUnverifiedPoints);
     useEffect(() => {
         setFilteredUnverifiedPoints(UnverifiedPoints);
     }, [UnverifiedPoints]);
@@ -23,18 +26,31 @@ const Analysis = (props) => {
     const segmentsMarkers = makeSegments(filteredUnverifiedPoints);
     console.log(segmentsMarkers)
 
+    const addTestPoint = (testPoint) => {
+        setFilteredUnverifiedPoints(prevPoints => [...prevPoints, {
+            "ID": testPoint.id,
+            "Долгота": testPoint.coordinates.longitude,
+            "Широта": testPoint.coordinates.latitude,
+            "Название": testPoint.name,
+            "Тип точки": [9]
+        }]);
+    };
+
     return (
         <div className="position-absolute translate-middle top-50 start-50 w-75 h-75 d-flex flex-row">
             {/*Карта*/}
             <AnalysisMap
                 apiKey={props.apiKey}
-                location={props.location}
+                location={locationAnalysis}
                 points={UnverifiedPoints}
                 filteredUnverifiedPoints={filteredUnverifiedPoints}
                 setFilteredUnverifiedPoints={setFilteredUnverifiedPoints}
                 segmentsMarkers={segmentsMarkers}
                 setRightPart={setRightPart}
                 setListIDs={setListIDs}
+                IDSegmentChoose={IDSegmentChoose}
+                setIDSegmentChoose={setIDSegmentChoose}
+
             />
             {/*Список участков*/}
             {rightPart === "Список" && (
@@ -49,6 +65,10 @@ const Analysis = (props) => {
                 <PointVerification
                     listIDs={listIDs}
                     setRightPart={setRightPart}
+                    addTestPoint={addTestPoint}
+                    filteredUnverifiedPoints={filteredUnverifiedPoints}
+                    setFilteredUnverifiedPoints={setFilteredUnverifiedPoints}
+                    setIDSegmentChoose={setIDSegmentChoose}
                 />
             )}
         </div>

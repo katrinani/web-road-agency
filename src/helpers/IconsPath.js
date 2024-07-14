@@ -23,3 +23,5 @@ export const iconsReliability = [
     "Icons/Reliability/circle-3.png",
     "Icons/Reliability/circle-4.png"
 ]
+
+export const iconTestPoint = "Icons/question.png"

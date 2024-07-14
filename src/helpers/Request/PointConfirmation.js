@@ -23,10 +23,11 @@ const pointConfirmation = async (pointData, selectedImageIndex) => {
             body
         );
         console.log(response);
-        if (response.status === 201) {
+        if (response.status === 200) {
             console.log("Подтвержденная точка успешно создана");
             NotificationManager.success("Успешно создано");
         }
+        return response.status;
     } catch (error) {
         handleError(error);
     }
