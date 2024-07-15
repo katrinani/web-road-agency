@@ -1,23 +1,15 @@
 import React, { useState } from "react";
-import {unverifiedTypes, verifiedTypes} from "../../helpers/FormData";
+import {ReliabilityLevels, unverifiedTypes, verifiedTypes} from "../../helpers/FormData";
 import {iconsReliability, iconsUnverified, iconsVerified} from "../../helpers/IconsPath";
 import {Button} from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
 
 const FilterForAnalysis = (props) => {
     const [selectedTypes, setSelectedTypes] = useState([]);
     const [selectedReliabilityLevels, setSelectedReliabilityLevels] = useState([]);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
-
-    const ReliabilityLevels = [
-        "Низкий уровень",
-        "Средний уровень (Файл)",
-        "Средний уровень (Локация)",
-        "Высокий уровень"
-    ]
 
     const ExplanationForReliabilityLevels = [
         "У точки нет ни прикрепленного файла, ни нынешней локации",

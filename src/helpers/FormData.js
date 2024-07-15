@@ -1,6 +1,5 @@
 import roads from "./Request/Roads"
 
-// export const highways = ['М-5', 'А-310', 'Р-254', 'Р-354']
 export const highways = roads;
 
 export const verifiedTypes = [
@@ -20,6 +19,13 @@ export const unverifiedTypes = [
     "Недостатки дороги", // 1
     "Преграда", // 2
     "Противоправные действия 3х лиц" // 3
+]
+
+export const ReliabilityLevels = [
+    "Низкий уровень",
+    "Средний уровень (Файл)",
+    "Средний уровень (Локация)",
+    "Высокий уровень"
 ]
 
 export const FormData = {

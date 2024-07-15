@@ -4,12 +4,14 @@ import AnalysisList from "./ListForAnalysis";
 import {useEffect, useState} from "react";
 import {Point} from "./Unverified";
 import PointVerification from "./PointVerification";
+import DescriptionPoint from "./DescriptionPoint";
 
 
 const Analysis = (props) => {
     const [locationAnalysis, setLocationAnalysis] = useState({center: [61.400346, 55.163742], zoom: 11});
     const [rightPart, setRightPart] = useState("Список");
     const [IDSegmentChoose, setIDSegmentChoose] = useState('');
+    const [markerChoose, setMarkerChoose] = useState();
     const [listIDs, setListIDs] = useState();
 
     // TODO: ХАРДКОД УБРАТЬ
@@ -50,6 +52,7 @@ const Analysis = (props) => {
                 setListIDs={setListIDs}
                 IDSegmentChoose={IDSegmentChoose}
                 setIDSegmentChoose={setIDSegmentChoose}
+                setMarkerChoose={setMarkerChoose}
 
             />
             {/*Список участков*/}
@@ -69,6 +72,13 @@ const Analysis = (props) => {
                     filteredUnverifiedPoints={filteredUnverifiedPoints}
                     setFilteredUnverifiedPoints={setFilteredUnverifiedPoints}
                     setIDSegmentChoose={setIDSegmentChoose}
+                />
+            )}
+            {/*Описание точки*/}
+            {rightPart === "Описание точки" && (
+                <DescriptionPoint
+                    setRightPart={setRightPart}
+                    markerChoose={markerChoose}
                 />
             )}
         </div>

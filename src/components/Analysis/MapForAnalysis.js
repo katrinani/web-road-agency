@@ -10,7 +10,10 @@ import React, {useState} from "react";
 import FilterForAnalysis from "./FilterForAnalysis";
 
 const AnalysisMap = (props) => {
-    const handleMarkerClick = (marker) => {};
+    const handleMarkerClick = (marker) => {
+        props.setMarkerChoose(marker);
+        props.setRightPart("Описание точки");
+    };
     const handleSegmentClick = (segment, idSegment) => {
         const IDs = segment.map((point) => (point["marker"]["ID"]));
         props.setIDSegmentChoose(idSegment)
