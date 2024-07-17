@@ -63,7 +63,7 @@ const PointVerification = (props) => {
                 longitude: testPoint.coordinates.longitude,
             },
             roadName: testPoint.roadName,
-            expirationTime: testPoint.expirationTime.slice(0, -8),
+            expirationTime: testPoint.expirationTime.slice(0, -1),
             filesIds: testPoint.filesIds,
             urlForFiles: testPoint.urlForFiles
         });
@@ -201,6 +201,7 @@ const PointVerification = (props) => {
                             <label htmlFor="expirationTime">Время жизни точки:</label>
                             <input
                                 type="datetime-local"
+                                step=".1"
                                 className="form-control"
                                 id="expirationTime"
                                 name="expirationTime"

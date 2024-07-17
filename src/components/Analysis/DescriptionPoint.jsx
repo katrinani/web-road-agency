@@ -3,8 +3,6 @@ import {ReliabilityLevels, unverifiedTypes, verifiedTypes} from "../../helpers/F
 
 const DescriptionPoint = (props) => {
     const marker = props.markerChoose;
-    const date = new Date(marker["Дата"]);
-    const formattedDate = date.toISOString().slice(0, 19).replace('T', ' ');
 
     return (
         <div
@@ -23,28 +21,123 @@ const DescriptionPoint = (props) => {
                     props.setRightPart("Список");
                 }}
             />
-            {marker["Название"] && <div>Название: {marker["Название"]}</div> ||
-                marker["Описание"] && <div>Описание: {marker["Описание"]}</div>}
-            <div>Тип точки: {unverifiedTypes[marker["Тип точки"][0]] || verifiedTypes[marker["Тип точки"][0]]}</div>
-            <div>Координаты: {marker["Долгота"]}, {marker["Широта"]}</div>
-            <div>Дорога: {marker["Дорога"]}</div>
-            {marker["Регион"] && <div>Регион: {marker["Регион"]}</div> ||
-                marker["Уровень доверия"] &&
-                <div>Уровень доверия: {ReliabilityLevels[marker["Уровень доверия"] - 1]}</div>}
-            {marker["Дата"] && (
-                <div>
-                    <label htmlFor="date"><h6>Дата создания:</h6></label>
-                    <input
-                        type="datetime-local"
-                        className="form-control"
-                        id="date"
-                        name="date"
-                        // value={marker["Дата"].slice(0, -8)}
-                        value={formattedDate}
-                        disabled
-                    />
+            <div className="row">
+                <div className="col">
+                    {/*Название или Описание*/}
+                    {marker["Название"] && (
+                            <div>
+                                <label htmlFor="name"><h6>Название:</h6></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="name"
+                                    name="name"
+                                    value={marker["Название"]}
+                                    disabled
+                                />
+                            </div>
+                        )
+                        || marker["Описание"] && (
+                            <div>
+                                <label htmlFor="description"><h6>Описание:</h6></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="description"
+                                    name="description"
+                                    value={marker["Описание"]}
+                                    disabled
+                                />
+                            </div>
+                        )
+                    }
+
+                    {/*Тип точки*/}
+                    <div>
+                        <label htmlFor="type"><h6>Тип точки:</h6></label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="type"
+                            name="type"
+                            value={unverifiedTypes[marker["Тип точки"][0]] || verifiedTypes[marker["Тип точки"][0]]}
+                            disabled
+                        />
+                    </div>
+
+                    {/*Координаты*/}
+                    <div>
+                        <label htmlFor="coordinate"><h6>Координаты:</h6></label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="coordinate"
+                            name="coordinate"
+                            value={`${marker["Долгота"]}, ${marker["Широта"]}`}
+                            disabled
+                        />
+                    </div>
                 </div>
-            )}
+
+                <div className="col">
+                    {/*Дорога*/}
+                    <div>
+                        <label htmlFor="road"><h6>Дорога:</h6></label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="road"
+                            name="road"
+                            value={marker["Дорога"]}
+                            disabled
+                        />
+                    </div>
+
+                    {/*Регион или Уровень доверия*/}
+                    {marker["Регион"] && (
+                            <div>
+                                <label htmlFor="region"><h6>Регион:</h6></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="region"
+                                    name="region"
+                                    value={marker["Регион"]}
+                                    disabled
+                                />
+                            </div>
+                        )
+                        || marker["Уровень доверия"] && (
+                            <div>
+                                <label htmlFor="reliability"><h6>Уровень доверия:</h6></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="reliability"
+                                    name="reliability"
+                                    value={ReliabilityLevels[marker["Уровень доверия"] - 1]}
+                                    disabled
+                                />
+                            </div>
+                        )}
+
+                    {/*Дата создания*/}
+                    {marker["Дата"] && (
+                        <div>
+                            <label htmlFor="date"><h6>Дата создания:</h6></label>
+                            <input
+                                type="datetime-local"
+                                step=".1"
+                                className="form-control"
+                                id="date"
+                                name="date"
+                                value={marker["Дата"].slice(0, -1)}
+                                disabled
+                            />
+                        </div>)
+                    }
+                </div>
+            </div>
         </div>
     );
 };
