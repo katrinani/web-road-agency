@@ -43,10 +43,6 @@ const PointVerification = (props) => {
     useEffect(() => {
         if (testPoint && !props.filteredUnverifiedPoints.find(point => point.ID === testPoint.id)) {
             props.addTestPoint(testPoint);
-            // props.setLocationAnalysis({center: [
-            //         testPoint.coordinates.longitude,
-            //         testPoint.coordinates.latitude
-            //     ], zoom: 15});
         }
     }, [testPoint, props.filteredUnverifiedPoints]);
 
@@ -196,7 +192,6 @@ const PointVerification = (props) => {
                                 onChange={(event) => handleCoordinatesChange(event, 'longitude')}
                             />
                         </div>
-                        {/*TODO время без секунд*/}
                         <div className="form-group">
                             <label htmlFor="expirationTime">Время жизни точки:</label>
                             <input

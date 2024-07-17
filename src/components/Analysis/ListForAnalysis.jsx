@@ -1,5 +1,5 @@
 import React from "react";
-import {unverifiedTypes} from "../../helpers/FormData";
+import {ReliabilityLevels, unverifiedTypes, verifiedTypes} from "../../helpers/FormData";
 
 const AnalysisList = (props) => {
     const segments = props.segmentsMarkers
@@ -96,7 +96,7 @@ const AnalysisList = (props) => {
                                                                                                 <div>Тип
                                                                                                     точки: {unverifiedTypes[point["marker"]["Тип точки"]]}</div>
                                                                                                 <div>Уровень
-                                                                                                    доверия: {point["marker"]["Уровень доверия"]}</div>
+                                                                                                    доверия: {ReliabilityLevels[point["marker"]["Уровень доверия"] - 1]}</div>
                                                                                                 <div>Дорога: {point["marker"]["Дорога"]}</div>
                                                                                                 <div>Дата создания: {point["marker"]["Дата"]}</div>
                                                                                             </div>}
