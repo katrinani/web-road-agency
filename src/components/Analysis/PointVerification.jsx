@@ -234,7 +234,7 @@ const PointVerification = (props) => {
                                         style={{margin: '8px'}}
                                         value={index}
                                         checked={selectedImageIndex === file}
-                                        onChange={(event) => handleFileChange(file)}
+                                        onChange={() => handleFileChange(file)}
                                     />
                                 </div>
                             </div>

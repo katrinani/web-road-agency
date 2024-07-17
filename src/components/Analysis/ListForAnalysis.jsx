@@ -1,15 +1,19 @@
 import React from "react";
-import {ReliabilityLevels, unverifiedTypes, verifiedTypes} from "../../helpers/FormData";
+import {
+    ExplanationForReliabilityLevels,
+    ReliabilityLevels,
+    unverifiedTypes
+} from "../../helpers/FormData";
 
 const AnalysisList = (props) => {
     const segments = props.segmentsMarkers
-    const handleSegmentClick = async (segment) => {
-        console.log(segment)
-        // const IDs = segment.map((point) => (point["marker"]["ID"]))
-        // props.setRightPart("Тестовый вариант")
-        // props.setListIDs(IDs)
-        // onClick={() => handleSegmentClick(segment)}
-    };
+    // const handleSegmentClick = async (segment) => {
+    //     console.log(segment)
+    //     // const IDs = segment.map((point) => (point["marker"]["ID"]))
+    //     // props.setRightPart("Тестовый вариант")
+    //     // props.setListIDs(IDs)
+    //     // onClick={() => handleSegmentClick(segment)}
+    // };
 
     return (
         <div
@@ -94,8 +98,11 @@ const AnalysisList = (props) => {
                                                                                                 <div>Долгота: {point["marker"]["Долгота"]}</div>
                                                                                                 <div>Тип
                                                                                                     точки: {unverifiedTypes[point["marker"]["Тип точки"]]}</div>
-                                                                                                <div>Уровень
-                                                                                                    доверия: {ReliabilityLevels[point["marker"]["Уровень доверия"] - 1]}</div>
+                                                                                                <div
+                                                                                                    title={ExplanationForReliabilityLevels[point["marker"]["Уровень доверия"] - 1]}
+                                                                                                >
+                                                                                                    Уровень доверия:
+                                                                                                    {ReliabilityLevels[point["marker"]["Уровень доверия"] - 1]}</div>
                                                                                                 <div>Дорога: {point["marker"]["Дорога"]}</div>
                                                                                                 <div>Дата создания: {point["marker"]["Дата"]}</div>
                                                                                             </div>}

@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import {ReliabilityLevels, unverifiedTypes, verifiedTypes} from "../../helpers/FormData";
+import {
+    ExplanationForReliabilityLevels,
+    ReliabilityLevels,
+    unverifiedTypes,
+    verifiedTypes
+} from "../../helpers/FormData";
 import {iconsReliability, iconsUnverified, iconsVerified} from "../../helpers/IconsPath";
 import {Button} from "react-bootstrap";
 
@@ -8,13 +13,6 @@ const FilterForAnalysis = (props) => {
     const [selectedReliabilityLevels, setSelectedReliabilityLevels] = useState([]);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
-
-    const ExplanationForReliabilityLevels = [
-        "У точки нет ни прикрепленного файла, ни нынешней локации",
-        "У точки есть только прикрепленый файл",
-        "У точки есть только нынешняя локация",
-        "У точки есть и прикрепленный файл, и нынешняя локация"
-    ]
 
     const handleSelectType = (typeId, event) => {
         event.stopPropagation();

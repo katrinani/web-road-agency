@@ -1,5 +1,10 @@
 import React from "react";
-import {ReliabilityLevels, unverifiedTypes, verifiedTypes} from "../../helpers/FormData";
+import {
+    ExplanationForReliabilityLevels,
+    ReliabilityLevels,
+    unverifiedTypes,
+    verifiedTypes
+} from "../../helpers/FormData";
 
 const DescriptionPoint = (props) => {
     const marker = props.markerChoose;
@@ -111,6 +116,7 @@ const DescriptionPoint = (props) => {
                             <div>
                                 <label htmlFor="reliability"><h6>Уровень доверия:</h6></label>
                                 <input
+                                    title={ExplanationForReliabilityLevels[marker["Уровень доверия"] - 1]}
                                     type="text"
                                     className="form-control"
                                     id="reliability"
@@ -138,6 +144,7 @@ const DescriptionPoint = (props) => {
                     }
                 </div>
             </div>
+            {/*TODO Фото точки*/}
         </div>
     );
 };
