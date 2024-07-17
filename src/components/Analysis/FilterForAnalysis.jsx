@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {ReliabilityLevels, unverifiedTypes, verifiedTypes} from "../../helpers/FormData";
 import {iconsReliability, iconsUnverified, iconsVerified} from "../../helpers/IconsPath";
 import {Button} from "react-bootstrap";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 const FilterForAnalysis = (props) => {
     const [selectedTypes, setSelectedTypes] = useState([]);
@@ -28,11 +26,14 @@ const FilterForAnalysis = (props) => {
         toggleSelection(selectedReliabilityLevels, setSelectedReliabilityLevels, reliabilityLevel);
     };
 
-    const handleSelectCreationTime = (dates, event) => {
-        // [startDate, endDate]
-        event.stopPropagation();
-        setStartDate(dates[0]);
-        setEndDate(dates[1]);
+    const handleSetStartTime = (event) => {
+        const start = event.target.value;
+        setStartDate(new Date(start));
+    };
+
+    const handleSetEndTime = (event) => {
+        const end = event.target.value;
+        setEndDate(new Date(end));
     };
 
     const toggleSelection = (selectedArray, setSelection, value) => {
@@ -74,21 +75,24 @@ const FilterForAnalysis = (props) => {
                 aria-expanded="false">
                 Фильтрация точек
             </button>
-            {/*TODO сделать открытие только одного фильтра из 3х одновременно*/}
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {/* Фильтрация по типу */}
-                <div className="accordion" id="type">
+                <div className="accordion" id="all_accordion">
+                    {/* Фильтрация по типу */}
                     <div className="accordion-item">
                         <div className="accordion-header" id="heading-type">
-                            <Button className="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapse-type" aria-expanded="true"
-                                    aria-controls="collapse-type"
-                                    onClick={(e) => e.stopPropagation()}
+                            <Button
+                                className="accordion-button"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapse-type"
+                                aria-expanded="true"
+                                aria-controls="collapse-type"
+                                onClick={(e) => e.stopPropagation()}
                             >По типу точек:</Button>
                         </div>
                         <div id="collapse-type" className="accordion-collapse collapse show"
                              aria-labelledby="heading-type"
-                             data-bs-parent="#accordion-type">
+                             data-bs-parent="#all_accordion">
                             <div className="accordion-body">
                                 {unverifiedTypes.map((type) => (
                                     <li
@@ -128,21 +132,23 @@ const FilterForAnalysis = (props) => {
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Фильтрация по уровню доверия */}
-                <div className="accordion" id="level">
+                    {/* Фильтрация по уровню доверия */}
                     <div className="accordion-item">
                         <div className="accordion-header" id="heading-level">
-                            <Button className="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapse-level" aria-expanded="true"
-                                    aria-controls="collapse-level"
-                                    onClick={(e) => e.stopPropagation()}
+                            <Button
+                                className="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapse-level"
+                                aria-expanded="false"
+                                aria-controls="collapse-level"
+                                onClick={(e) => e.stopPropagation()}
                             >По уровню доверия:</Button>
                         </div>
-                        <div id="collapse-level" className="accordion-collapse collapse show"
+                        <div id="collapse-level" className="accordion-collapse collapse"
                              aria-labelledby="heading-level"
-                             data-bs-parent="#accordion-level">
+                             data-bs-parent="#all_accordion">
                             <div className="accordion-body">
                                 {ReliabilityLevels.map((reliabilityLevel, index) => (
                                     <li
@@ -168,39 +174,54 @@ const FilterForAnalysis = (props) => {
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Фильтрация по времени создания  */}
-                <div className="accordion" id="data">
+                    {/* Фильтрация по времени создания  */}
                     <div className="accordion-item">
                         <div className="accordion-header" id="heading-data">
-                            <Button className="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapse-data" aria-expanded="true"
-                                    aria-controls="collapse-data"
-                                    onClick={(e) => e.stopPropagation()}
+                            <Button
+                                className="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapse-data"
+                                aria-expanded="false"
+                                aria-controls="collapse-data"
+                                onClick={(e) => e.stopPropagation()}
                             >По дате создания:</Button>
                         </div>
-                        <div id="collapse-data" className="accordion-collapse collapse show"
+                        <div id="collapse-data" className="accordion-collapse collapse"
                              aria-labelledby="heading-data"
-                             data-bs-parent="#accordion-data">
+                             data-bs-parent="#all_accordion">
                             <div className="accordion-body">
                                 <li>
-                                    <DatePicker
-                                        selected={startDate}
-                                        onChange={handleSelectCreationTime}
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        selectsRange
-                                        inline
-                                    />
+                                    <div>
+                                        <label htmlFor="startDate"><h6>От:</h6></label>
+                                        <input
+                                            type="datetime-local"
+                                            className="form-control"
+                                            id="startDate"
+                                            name="startDate"
+                                            onChange={event => handleSetStartTime(event)}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="endDate"><h6>До:</h6></label>
+                                        <input
+                                            type="datetime-local"
+                                            className="form-control"
+                                            id="endDate"
+                                            name="endDate"
+                                            onChange={event => handleSetEndTime(event)}
+                                        />
+                                    </div>
                                 </li>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <li style={{display: 'flex', justifyContent: 'center'}}>
                     <button className="btn btn-primary mt-2" onClick={filterPoints}>
-                        Применить фильтры
+                    Применить фильтры
                     </button>
                 </li>
             </ul>

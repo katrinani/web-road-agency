@@ -44,7 +44,6 @@ const AnalysisList = (props) => {
                                                     <div className="accordion-item">
                                                         <h2 className="accordion-header"
                                                             id={`heading${indexSegment}`}
-
                                                         >
                                                             <button className="accordion-button" type="button"
                                                                     data-bs-toggle="collapse"
