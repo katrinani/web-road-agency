@@ -35,7 +35,7 @@ const PointVerification = (props) => {
             "/1675522840_www-funnyart-club-p-kot-mem-kartinki-4.jpg",
             "/thumbs/1675522854_www-funnyart-club-p-kot-mem-kartinki-21.jpg",
             "/1675522869_www-funnyart-club-p-kot-mem-kartinki-70.jpg",
-            // "/1675522794_www-funnyart-club-p-kot-mem-kartinki-62.jpg"
+            "/1675522794_www-funnyart-club-p-kot-mem-kartinki-62.jpg"
         ],
         "urlForFiles": "https://www.funnyart.club/uploads/posts/2023-02"
     };
@@ -107,7 +107,7 @@ const PointVerification = (props) => {
 
     return (
         <div
-            className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-center position-relative">
+            className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle position-relative mb-2">
             <h3>Верификация точки</h3>
             {/*Закрытие страницы*/}
             <img
@@ -177,7 +177,8 @@ const PointVerification = (props) => {
                                 id="latitude"
                                 name="latitude"
                                 value={pointData.coordinates.latitude}
-                                onChange={(event) => handleCoordinatesChange(event, 'latitude')}
+                                onChange={(event) =>
+                                    handleCoordinatesChange(event, 'latitude')}
                             />
                         </div>
 
@@ -189,7 +190,8 @@ const PointVerification = (props) => {
                                 id="longitude"
                                 name="longitude"
                                 value={pointData.coordinates.longitude}
-                                onChange={(event) => handleCoordinatesChange(event, 'longitude')}
+                                onChange={(event) =>
+                                    handleCoordinatesChange(event, 'longitude')}
                             />
                         </div>
                         <div className="form-group">
@@ -218,10 +220,9 @@ const PointVerification = (props) => {
                         </div>
                     </div>
                 </div>
-                {/*TODO больше 3х фото и сьезжает, скрол не выходит*/}
                 <div className="form-group">
                     <label htmlFor="photo">Фотографии:</label>
-                    <div className="d-flex flex-row overflow-x-scroll" style={{maxWidth: '100%'}}>
+                    <div className="d-flex overflow-x-auto">
                         {pointData.filesIds.map((file, index) => (
                             <div key={index} className="p-1 position-relative">
                                 <img src={pointData.urlForFiles + file} alt={file} height="150"/>
@@ -241,8 +242,7 @@ const PointVerification = (props) => {
                         ))}
                     </div>
                 </div>
-
-                <button type="submit" className="btn btn-primary mt-3">
+                <button type="submit" className="btn btn-primary mt-2">
                     Создать точку
                 </button>
             </form>
