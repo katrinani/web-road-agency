@@ -108,7 +108,7 @@ const PointVerification = (props) => {
     return (
         <div
             className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle position-relative mb-2">
-            <h3>Верификация точки</h3>
+            <h3 className="text-center">Верификация точки</h3>
             {/*Закрытие страницы*/}
             <img
                 src="Icons/x-button.png"

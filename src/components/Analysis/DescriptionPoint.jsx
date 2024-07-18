@@ -11,8 +11,8 @@ const DescriptionPoint = (props) => {
 
     return (
         <div
-            className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-center position-relative">
-            <h3>Точка</h3>
+            className="p-5 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle mb-2 align-items-center position-relative">
+            <h3 className="text-center">Точка</h3>
             {/*Закрытие страницы*/}
             <img
                 src="Icons/x-button.png"
@@ -30,7 +30,7 @@ const DescriptionPoint = (props) => {
                 <div className="col">
                     {/*Название или Описание*/}
                     {marker["Название"] && (
-                            <div>
+                            <div className="form-group">
                                 <label htmlFor="name"><h6>Название:</h6></label>
                                 <input
                                     type="text"
@@ -43,7 +43,7 @@ const DescriptionPoint = (props) => {
                             </div>
                         )
                         || marker["Описание"] && (
-                            <div>
+                            <div className="form-group">
                                 <label htmlFor="description"><h6>Описание:</h6></label>
                                 <input
                                     type="text"
@@ -58,7 +58,7 @@ const DescriptionPoint = (props) => {
                     }
 
                     {/*Тип точки*/}
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="type"><h6>Тип точки:</h6></label>
                         <input
                             type="text"
@@ -71,7 +71,7 @@ const DescriptionPoint = (props) => {
                     </div>
 
                     {/*Координаты*/}
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="coordinate"><h6>Координаты:</h6></label>
                         <input
                             type="text"
@@ -86,9 +86,10 @@ const DescriptionPoint = (props) => {
 
                 <div className="col">
                     {/*Дорога*/}
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="road"><h6>Дорога:</h6></label>
                         <input
+                            title={marker["Дорога"]}
                             type="text"
                             className="form-control"
                             id="road"
@@ -100,7 +101,7 @@ const DescriptionPoint = (props) => {
 
                     {/*Регион или Уровень доверия*/}
                     {marker["Регион"] && (
-                            <div>
+                            <div className="form-group">
                                 <label htmlFor="region"><h6>Регион:</h6></label>
                                 <input
                                     type="text"
@@ -113,7 +114,7 @@ const DescriptionPoint = (props) => {
                             </div>
                         )
                         || marker["Уровень доверия"] && (
-                            <div>
+                            <div className="form-group">
                                 <label htmlFor="reliability"><h6>Уровень доверия:</h6></label>
                                 <input
                                     title={ExplanationForReliabilityLevels[marker["Уровень доверия"] - 1]}
@@ -129,7 +130,7 @@ const DescriptionPoint = (props) => {
 
                     {/*Дата создания*/}
                     {marker["Дата"] && (
-                        <div>
+                        <div className="form-group">
                             <label htmlFor="date"><h6>Дата создания:</h6></label>
                             <input
                                 type="datetime-local"
@@ -144,7 +145,18 @@ const DescriptionPoint = (props) => {
                     }
                 </div>
             </div>
-            {/*TODO Фото точки*/}
+            {marker["Файлы"] && (
+                <div className="form-group">
+                    <label htmlFor="photo"><h6>Фотографии:</h6></label>
+                    <div className="d-flex overflow-x-auto">
+                        {marker["Файлы"].map((file, index) => (
+                            <div key={index} className="p-1">
+                                <img src={marker["URL"] + file} alt={file} height="200"/>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
