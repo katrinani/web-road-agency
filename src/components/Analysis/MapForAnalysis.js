@@ -3,23 +3,84 @@ import {
     YMapComponentsProvider,
     YMapDefaultFeaturesLayer,
     YMapDefaultSchemeLayer,
-    YMapFeature, YMapMarker
+    YMapFeature, YMapMarker,
+    YMapCustomClusterer
 } from "ymap3-components";
-import {iconsUnverified, iconsVerified, iconTestPoint} from "../../helpers/IconsPath";
-import React, {useState} from "react";
+import {iconCluster, iconsUnverified, iconsVerified, iconTestPoint} from "../../helpers/IconsPath";
+import React, {useCallback} from "react";
 import FilterForAnalysis from "./FilterForAnalysis";
 
 const AnalysisMap = (props) => {
+    // TODO установить координаты на последней точке filteredUnverifiedPoints
     const handleMarkerClick = (marker) => {
         props.setMarkerChoose(marker);
         props.setRightPart("Описание точки");
     };
+
     const handleSegmentClick = (segment, idSegment) => {
         const IDs = segment.map((point) => (point["marker"]["ID"]));
         props.setIDSegmentChoose(idSegment)
         props.setRightPart("Тестовый вариант");
         props.setListIDs(IDs);
     };
+
+    const features = props.filteredUnverifiedPoints.map((marker) => ({
+        type: "Feature",
+        id: marker["ID"],
+        geometry: {
+            type: "Point",
+            coordinates: [marker["Долгота"], marker["Широта"]]
+        },
+        point: marker
+    }))
+
+    const marker = useCallback(
+        (feature) => (
+            <YMapMarker
+                coordinates={[feature.point["Долгота"], feature.point["Широта"]]}
+                onClick={() => handleMarkerClick(feature.point)}
+            >
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <img
+                        src={
+                            iconsUnverified[feature.point["Тип точки"][0]] ||
+                            iconsVerified[feature.point["Тип точки"][0]] ||
+                            iconTestPoint
+                        }
+                        alt={feature.point["Название"] || feature.point["Описание"]}
+                        style={{width: '30px', height: '30px', marginRight: '5px'}}
+                    />
+                    <span style={{
+                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                        padding: '5px',
+                        borderRadius: '5px'
+                    }}>{feature.point["Название"] || feature.point["Описание"]}</span>
+                </div>
+            </YMapMarker>
+        ),
+        []
+    );
+
+    const cluster = useCallback(
+        (coordinates, features) => (
+            <YMapMarker coordinates={coordinates}>
+                <div style={{ position: 'relative', width: '35px', height: '35px' }}>
+                    <img
+                        src={iconCluster}
+                        alt={features.length}
+                        style={{ width: '100%', height: '100%'}}
+                    />
+                    <span style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        textAlign: 'center',
+                        fontSize: '12px',
+                    }}><b>{features.length}</b></span>
+                </div>
+            </YMapMarker>
+        ), []);
 
     return (
         <div className="map w-50 h-100 px-2 position-relative rounded">
@@ -77,35 +138,17 @@ const AnalysisMap = (props) => {
                             />
                         ))
                     )}
-                    {props.filteredUnverifiedPoints &&
-                        props.filteredUnverifiedPoints.map((marker, index) => (
-                            <YMapMarker
-                                coordinates={[marker["Долгота"], marker["Широта"]]}
-                                key={index}
-                                onClick={() => handleMarkerClick(marker)}
-                            >
-                                <div style={{display: 'flex', alignItems: 'center'}}>
-                                    <img
-                                        src={
-                                            iconsUnverified[marker["Тип точки"][0]] ||
-                                            iconsVerified[marker["Тип точки"][0]] ||
-                                            iconTestPoint
-                                        }
-                                        alt={marker["Название"] || marker["Описание"]}
-                                        style={{width: '30px', height: '30px', marginRight: '5px'}}
-                                    />
-                                    <span style={{
-                                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                                        padding: '5px',
-                                        borderRadius: '5px'
-                                    }}>{marker["Название"] || marker["Описание"]}</span>
-                                </div>
-                            </YMapMarker>
-                        ))}
+                    <YMapCustomClusterer
+                        marker={marker}
+                        cluster={cluster}
+                        gridSize={64}
+                        features={features}
+                        maxZoom={16}
+                    />
                 </YMap>
             </YMapComponentsProvider>
         </div>
-    )
+    );
 };
 
 export default AnalysisMap;

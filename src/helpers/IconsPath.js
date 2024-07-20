@@ -25,3 +25,5 @@ export const iconsReliability = [
 ]
 
 export const iconTestPoint = "Icons/question.png"
+
+export const iconCluster = "Icons/circle.png"
