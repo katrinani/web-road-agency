@@ -28,7 +28,7 @@ function App() {
     const fetchPoints = async () => {
       const points = await getAllPoints(location);
       set_list(points);
-      if (points.length > 0) {
+      if (points?.length > 0) {
         const lastPoint = points[points.length - 1];
         console.log(lastPoint.Широта)
         console.log(lastPoint.Долгота)

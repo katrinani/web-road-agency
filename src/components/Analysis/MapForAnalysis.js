@@ -4,13 +4,29 @@ import {
     YMapDefaultFeaturesLayer,
     YMapDefaultSchemeLayer,
     YMapFeature, YMapMarker,
-    YMapCustomClusterer
+    YMapCustomClusterer,
+    YMapHintContext, YMapHint
 } from "ymap3-components";
 import {iconCluster, iconsUnverified, iconsVerified, iconTestPoint} from "../../helpers/IconsPath";
-import React, {useCallback} from "react";
+import React, {useCallback, useContext} from "react";
 import FilterForAnalysis from "./FilterForAnalysis";
 
 const AnalysisMap = (props) => {
+    const getHint = useCallback((object) => object?.properties?.hint, []);
+
+    function HintWindow() {
+        const hintContext = useContext(YMapHintContext);
+
+        return hintContext && <div
+            style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                padding: '5px',
+                borderRadius: '5px'
+            }}
+            dangerouslySetInnerHTML={{__html: hintContext.hint}}
+        />;
+    }
+
     // TODO установить координаты на последней точке filteredUnverifiedPoints
     const handleMarkerClick = (marker) => {
         props.setMarkerChoose(marker);
@@ -96,6 +112,9 @@ const AnalysisMap = (props) => {
                 <YMap location={props.location}>
                     <YMapDefaultSchemeLayer/>
                     <YMapDefaultFeaturesLayer/>
+                    <YMapHint hint={getHint}>
+                        <HintWindow />
+                    </YMapHint>
                     {props.segmentsMarkers["stressed"] && (
                         props.segmentsMarkers["stressed"].map((segment, index) => (
                             <YMapFeature
@@ -114,6 +133,7 @@ const AnalysisMap = (props) => {
                                     stroke: [{color: '#d60000', width: 2}],
                                     fill: 'rgba(255,33,33,0.5)'
                                 }}
+                                properties={{hint: `Напряженный участок ${index + 1}`}}
                             />
                         ))
                     )}
@@ -135,6 +155,7 @@ const AnalysisMap = (props) => {
                                     stroke: [{color: '#d67d00', width: 2}],
                                     fill: 'rgba(255,148,33,0.5)'
                                 }}
+                                properties={{hint: `Участок средней напряженности ${index + 1}`}}
                             />
                         ))
                     )}
