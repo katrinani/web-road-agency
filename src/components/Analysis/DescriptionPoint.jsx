@@ -11,8 +11,9 @@ const DescriptionPoint = (props) => {
 
     return (
         <div
-            className="p-5 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle mb-2 align-items-center position-relative">
-            <h3 className="text-center">Точка</h3>
+            className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-center position-relative"
+        >
+            <h3>Точка</h3>
             {/*Закрытие страницы*/}
             <img
                 src="Icons/x-button.png"
@@ -148,7 +149,9 @@ const DescriptionPoint = (props) => {
             {marker["Файлы"] && (
                 <div className="form-group">
                     <label htmlFor="photo"><h6>Фотографии:</h6></label>
-                    <div className="d-flex overflow-x-auto">
+                    <div className=" d-flex overflow-x-auto" style={{
+                        maxWidth: '480px'
+                    }}>
                         {marker["Файлы"].map((file, index) => (
                             <div key={index} className="p-1">
                                 <img src={marker["URL"] + file} alt={file} height="200"/>

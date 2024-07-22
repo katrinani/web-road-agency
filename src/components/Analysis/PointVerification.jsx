@@ -107,8 +107,8 @@ const PointVerification = (props) => {
 
     return (
         <div
-            className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle position-relative mb-2">
-            <h3 className="text-center">Верификация точки</h3>
+            className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-center">
+            <h3>Верификация точки</h3>
             {/*Закрытие страницы*/}
             <img
                 src="Icons/x-button.png"
@@ -215,6 +215,7 @@ const PointVerification = (props) => {
                                 name="roadName"
                                 value={pointData.roadName}
                                 onChange={handleInputChange}
+                                title={pointData.roadName}
                                 disabled
                             />
                         </div>
@@ -222,7 +223,9 @@ const PointVerification = (props) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="photo">Фотографии:</label>
-                    <div className="d-flex overflow-x-auto">
+                    <div className="d-flex overflow-x-auto" style={{
+                        maxWidth: '500px'
+                    }}>
                         {pointData.filesIds.map((file, index) => (
                             <div key={index} className="p-1 position-relative">
                                 <img src={pointData.urlForFiles + file} alt={file} height="150"/>
@@ -242,9 +245,11 @@ const PointVerification = (props) => {
                         ))}
                     </div>
                 </div>
-                <button type="submit" className="btn btn-primary mt-2">
-                    Создать точку
-                </button>
+                <div className="d-flex justify-content-center">
+                    <button type="submit" className="btn btn-primary mt-2">
+                        Создать точку
+                    </button>
+                </div>
             </form>
         </div>
     );

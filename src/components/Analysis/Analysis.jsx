@@ -8,25 +8,24 @@ import DescriptionPoint from "./DescriptionPoint";
 
 
 const Analysis = (props) => {
-    const [locationAnalysis, setLocationAnalysis] = useState({center: [61.400346, 55.163742], zoom: 11});
+    const [locationAnalysis, setLocationAnalysis] = useState(
+        {center: [61.400346, 55.163742], zoom: 11}
+    );
     const [rightPart, setRightPart] = useState("Список");
     const [IDSegmentChoose, setIDSegmentChoose] = useState('');
     const [markerChoose, setMarkerChoose] = useState();
     const [listIDs, setListIDs] = useState();
+    const [filteredUnverifiedPoints, setFilteredUnverifiedPoints] = useState([]);
+    const segmentsMarkers = makeSegments(filteredUnverifiedPoints);
+    console.log(segmentsMarkers)
 
     // TODO: ХАРДКОД УБРАТЬ
     // const UnverifiedPoints = polesAndUnverifiedPoints()
     const UnverifiedPoints = Point
-
-    const [filteredUnverifiedPoints, setFilteredUnverifiedPoints] = useState([]);
-    console.log(filteredUnverifiedPoints);
-    useEffect(() => {
-        setFilteredUnverifiedPoints(UnverifiedPoints);
-    }, [UnverifiedPoints]);
-    console.log("Все точки", filteredUnverifiedPoints)
-
-    const segmentsMarkers = makeSegments(filteredUnverifiedPoints);
-    console.log(segmentsMarkers)
+    // if (UnverifiedPoints?.length > 0) {
+    //     const lastPoint = UnverifiedPoints[UnverifiedPoints.length - 1];
+    //     setLocationAnalysis({ center: [lastPoint["Долгота"], lastPoint["Широта"]], zoom: 11 });
+    // }
 
     const addTestPoint = (testPoint) => {
         setFilteredUnverifiedPoints(prevPoints => [...prevPoints, {
@@ -37,6 +36,11 @@ const Analysis = (props) => {
             "Тип точки": [9]
         }]);
     };
+
+    useEffect(() => {
+        setFilteredUnverifiedPoints(UnverifiedPoints);
+    }, [UnverifiedPoints]);
+    console.log("Все точки", filteredUnverifiedPoints)
 
     return (
         <div className="position-absolute translate-middle top-50 start-50 w-75 h-75 d-flex flex-row">

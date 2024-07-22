@@ -27,8 +27,8 @@ const AnalysisMap = (props) => {
         />;
     }
 
-    // TODO установить координаты на последней точке filteredUnverifiedPoints
-    const handleMarkerClick = (marker) => {
+    const handleMarkerClick = (event, marker) => {
+        if (event.ctrlKey) {console.log('CTRL')}
         props.setMarkerChoose(marker);
         props.setRightPart("Описание точки");
     };
@@ -54,7 +54,7 @@ const AnalysisMap = (props) => {
         (feature) => (
             <YMapMarker
                 coordinates={[feature.point["Долгота"], feature.point["Широта"]]}
-                onClick={() => handleMarkerClick(feature.point)}
+                onClick={(event) => handleMarkerClick(event, feature.point)}
             >
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <img
