@@ -2,9 +2,9 @@ import {makeSegments} from "../../helpers/Segments";
 import AnalysisMap from "./MapForAnalysis";
 import AnalysisList from "./ListForAnalysis";
 import {useEffect, useState} from "react";
-import {Point} from "./Unverified";
 import PointVerification from "./PointVerification";
 import DescriptionPoint from "./DescriptionPoint";
+import UnverifiedPoints from "../../helpers/Request/AllPolesAndUnverifiedPoints";
 
 
 const Analysis = (props) => {
@@ -16,16 +16,6 @@ const Analysis = (props) => {
     const [markerChoose, setMarkerChoose] = useState();
     const [listIDs, setListIDs] = useState();
     const [filteredUnverifiedPoints, setFilteredUnverifiedPoints] = useState([]);
-    const segmentsMarkers = makeSegments(filteredUnverifiedPoints);
-    console.log(segmentsMarkers)
-
-    // TODO: ХАРДКОД УБРАТЬ
-    // const UnverifiedPoints = polesAndUnverifiedPoints()
-    const UnverifiedPoints = Point
-    // if (UnverifiedPoints?.length > 0) {
-    //     const lastPoint = UnverifiedPoints[UnverifiedPoints.length - 1];
-    //     setLocationAnalysis({ center: [lastPoint["Долгота"], lastPoint["Широта"]], zoom: 11 });
-    // }
 
     const addTestPoint = (testPoint) => {
         setFilteredUnverifiedPoints(prevPoints => [...prevPoints, {
@@ -41,6 +31,9 @@ const Analysis = (props) => {
         setFilteredUnverifiedPoints(UnverifiedPoints);
     }, [UnverifiedPoints]);
     console.log("Все точки", filteredUnverifiedPoints)
+
+    const segmentsMarkers = makeSegments(filteredUnverifiedPoints);
+    console.log(segmentsMarkers)
 
     return (
         <div className="position-absolute translate-middle top-50 start-50 w-75 h-75 d-flex flex-row">

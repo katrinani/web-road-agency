@@ -27,7 +27,6 @@ const polesAndUnverifiedPoints = async () => {
                 "Уровень доверия": point.reliabilityLevel,
                 "Дорога": point.roadName,
             }))
-
             return unverifiedPoints.concat(kilometerPoles);
         }
     } catch (error) {
@@ -36,4 +35,6 @@ const polesAndUnverifiedPoints = async () => {
     }
 };
 
-export default polesAndUnverifiedPoints;
+
+const UnverifiedPoints = await polesAndUnverifiedPoints()
+export default UnverifiedPoints;
