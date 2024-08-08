@@ -5,7 +5,8 @@ import handleError from "../Notifications";
 const polesAndUnverifiedPoints = async () => {
     try {
         const response = await axios.get(
-            `${url}/polesAndUnverifiedPoints`
+            `${url}/polesAndUnverifiedPoints`,
+            {timeout: 5000}
         );
 
         if (response.status === 200) {
@@ -26,6 +27,7 @@ const polesAndUnverifiedPoints = async () => {
                 "Тип точки": [point.type],
                 "Уровень доверия": point.reliabilityLevel,
                 "Дорога": point.roadName,
+                "Файлы": point.fileIds,
             }))
             return unverifiedPoints.concat(kilometerPoles);
         }

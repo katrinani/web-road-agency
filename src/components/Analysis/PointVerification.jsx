@@ -24,7 +24,7 @@ const PointVerification = (props) => {
         }
     }, [testPoint, props.filteredUnverifiedPoints]);
 
-    const [selectedImageIndex, setSelectedImageIndex] = useState(testPoint.filesIds[0]);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(testPoint.filesIds[0] || null);
 
     useEffect(() => {
         setPointData({
@@ -37,7 +37,7 @@ const PointVerification = (props) => {
                 longitude: testPoint.coordinates.longitude,
             },
             roadName: testPoint.roadName,
-            expirationTime: testPoint.expirationTime.slice(0, -1),
+            expirationTime: testPoint.expirationTime,
             filesIds: testPoint.filesIds,
             urlForFiles: testPoint.urlForFiles
         });
@@ -198,6 +198,7 @@ const PointVerification = (props) => {
                         </div>
                     </div>
                 </div>
+                {/*TODO проверка []*/}
                 <div className="form-group">
                     <label htmlFor="photo">Фотографии:</label>
                     <div className="d-flex overflow-x-auto" style={{

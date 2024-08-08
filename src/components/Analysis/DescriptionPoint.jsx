@@ -8,6 +8,7 @@ import {
 
 const DescriptionPoint = (props) => {
     const marker = props.markerChoose;
+    const URLForPhoto = "http://213.171.29.33:5139/api/v1/Web/files/"
 
     return (
         <div
@@ -146,17 +147,20 @@ const DescriptionPoint = (props) => {
                     }
                 </div>
             </div>
+            {/*TODO проверка на []*/}
             {marker["Файлы"] && (
-                <div className="form-group">
-                    <label htmlFor="photo"><h6>Фотографии:</h6></label>
-                    <div className=" d-flex overflow-x-auto" style={{
-                        maxWidth: '480px'
-                    }}>
-                        {marker["Файлы"].map((file, index) => (
-                            <div key={index} className="p-1">
-                                <img src={marker["URL"] + file} alt={file} height="200"/>
-                            </div>
-                        ))}
+                <div className="col">
+                    <div className="form-group">
+                        <label htmlFor="photo"><h6>Фотографии:</h6></label>
+                        <div className="d-flex justify-content-start overflow-x-auto" style={{
+                            maxWidth: '480px'
+                        }}>
+                            {marker["Файлы"].map((file, index) => (
+                                <div key={index} className="p-1">
+                                    <img src={URLForPhoto + file} alt={file} height="200"/>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             )}

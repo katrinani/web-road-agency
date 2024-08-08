@@ -9,7 +9,7 @@ const createTestVariant = async (IDs) => {
         let body = {
             "ids": IDs
         };
-        const response = await axios.post(`${url}/verify`, body);
+        const response = await axios.post(`${url}/verify`, body, {timeout: 5000});
         console.log(response);
         if (response.status === 200) {
             console.log("Пробный варинат успешно создан");
