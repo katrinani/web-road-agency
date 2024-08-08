@@ -15,7 +15,7 @@ const createTestVariant = async (IDs) => {
             console.log("Пробный варинат успешно создан");
             NotificationManager.success("Успешно создано");
         }
-        return response;
+        return response.data;
     } catch (error) {
         handleError(error);
     }

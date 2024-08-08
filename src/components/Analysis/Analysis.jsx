@@ -15,6 +15,7 @@ const Analysis = (props) => {
     const [IDSegmentChoose, setIDSegmentChoose] = useState('');
     const [markerChoose, setMarkerChoose] = useState();
     const [listIDs, setListIDs] = useState();
+    const [testPoint, setTestPoint] = useState(null);
     const [filteredUnverifiedPoints, setFilteredUnverifiedPoints] = useState([]);
 
     const addTestPoint = (testPoint) => {
@@ -50,7 +51,7 @@ const Analysis = (props) => {
                 IDSegmentChoose={IDSegmentChoose}
                 setIDSegmentChoose={setIDSegmentChoose}
                 setMarkerChoose={setMarkerChoose}
-
+                setTestPoint={setTestPoint}
             />
             {/*Список участков*/}
             {rightPart === "Список" && (
@@ -69,6 +70,7 @@ const Analysis = (props) => {
                     filteredUnverifiedPoints={filteredUnverifiedPoints}
                     setFilteredUnverifiedPoints={setFilteredUnverifiedPoints}
                     setIDSegmentChoose={setIDSegmentChoose}
+                    testPoint={testPoint}
                 />
             )}
             {/*Описание точки*/}

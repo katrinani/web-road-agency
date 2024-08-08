@@ -22,7 +22,8 @@ function App() {
   const [buttonName, setButtonName] = useState("Добавить");
   const [formValues, setFormValues] = useState(null);
   const [isActive, setIsActive] = useState(false);
-  const [page, setPage] = useState("Карта");
+  // TODO Сменить первую страницу
+  const [page, setPage] = useState("Анализ");
   console.log(location)
   useEffect(() => {
     const fetchPoints = async () => {

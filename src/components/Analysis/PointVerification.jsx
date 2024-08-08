@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import createTestVariant from "../../helpers/Request/CreateTestVariant";
 import pointConfirmation from "../../helpers/Request/PointConfirmation";
 
 const PointVerification = (props) => {
+    const testPoint = props.testPoint
     const [pointData, setPointData] = useState({
         id: '',
         name: '',
@@ -17,28 +17,6 @@ const PointVerification = (props) => {
         filesIds: [],
         urlForFiles: ''
     });
-
-    // TODO убрать хардкод
-    // const testPoint = await createTestVariant(props.listIDs);
-    const testPoint = {
-        "id": "3fa85f64-5717-4562-b3fc-2c963f66af12",
-        "name": "ДТП",
-        "description": "Тут жопа на дороге",
-        "expirationTime": "2024-07-13T07:14:27.594Z",
-        "type": 1,
-        "coordinates": {
-            "latitude": 55.240413,
-            "longitude": 61.398820
-        },
-        "roadName": "М-5 \"Урал\" ПкЕ: Челябинск - Екатеринбург",
-        "filesIds": [
-            "/1675522840_www-funnyart-club-p-kot-mem-kartinki-4.jpg",
-            "/thumbs/1675522854_www-funnyart-club-p-kot-mem-kartinki-21.jpg",
-            "/1675522869_www-funnyart-club-p-kot-mem-kartinki-70.jpg",
-            "/1675522794_www-funnyart-club-p-kot-mem-kartinki-62.jpg"
-        ],
-        "urlForFiles": "https://www.funnyart.club/uploads/posts/2023-02"
-    };
 
     useEffect(() => {
         if (testPoint && !props.filteredUnverifiedPoints.find(point => point.ID === testPoint.id)) {
@@ -93,9 +71,7 @@ const PointVerification = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(pointData);
-        // TODO eбрать хардкод
-        // const response = await pointConfirmation(pointData, selectedImageIndex)
-        const response = 200;
+        const response = await pointConfirmation(pointData, selectedImageIndex)
         if (response === 200) {
             // удаляем тестовую точку
             props.setFilteredUnverifiedPoints(prevPoints => prevPoints.filter(point => point.ID !== pointData.id));
@@ -194,6 +170,7 @@ const PointVerification = (props) => {
                                     handleCoordinatesChange(event, 'longitude')}
                             />
                         </div>
+                        {/*TODO The specified value "2024-08-15T08:49:34.5858029" does not conform to the required format.  The format is "yyyy-MM-ddThh:mm" followed by optional ":ss" or ":ss.SSS".*/}
                         <div className="form-group">
                             <label htmlFor="expirationTime">Время жизни точки:</label>
                             <input

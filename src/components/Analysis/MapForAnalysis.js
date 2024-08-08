@@ -10,6 +10,8 @@ import {
 import {iconCluster, iconsUnverified, iconsVerified, iconTestPoint} from "../../helpers/IconsPath";
 import React, {useCallback, useContext} from "react";
 import FilterForAnalysis from "./FilterForAnalysis";
+import pointConfirmation from "../../helpers/Request/PointConfirmation";
+import createTestVariant from "../../helpers/Request/CreateTestVariant";
 
 const AnalysisMap = (props) => {
     const getHint = useCallback((object) => object?.properties?.hint, []);
@@ -33,8 +35,11 @@ const AnalysisMap = (props) => {
         props.setRightPart("Описание точки");
     };
 
-    const handleSegmentClick = (segment, idSegment) => {
+    const handleSegmentClick = async (segment, idSegment) => {
         const IDs = segment.map((point) => (point["marker"]["ID"]));
+        const Point = await createTestVariant(IDs);
+        console.log(Point);
+        props.setTestPoint(Point);
         props.setIDSegmentChoose(idSegment)
         props.setRightPart("Тестовый вариант");
         props.setListIDs(IDs);
