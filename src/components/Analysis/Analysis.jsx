@@ -1,9 +1,9 @@
 import {makeSegments} from "../../helpers/Segments";
-import AnalysisMap from "./MapForAnalysis";
-import AnalysisList from "./ListForAnalysis";
+import AnalysisMap from "./AnalysisMap/MapForAnalysis";
+import AnalysisList from "./AnalysisList/ListForAnalysis";
 import {useEffect, useState} from "react";
-import PointVerification from "./PointVerification";
-import DescriptionPoint from "./DescriptionPoint";
+import PointVerification from "./PointVerification/PointVerification";
+import DescriptionPoint from "./DescriptionPoint/DescriptionPoint";
 import UnverifiedPoints from "../../helpers/Request/AllPolesAndUnverifiedPoints";
 
 
@@ -33,8 +33,11 @@ const Analysis = (props) => {
     }, [UnverifiedPoints]);
     console.log("Все точки", filteredUnverifiedPoints)
 
-    const segmentsMarkers = makeSegments(filteredUnverifiedPoints);
-    console.log(segmentsMarkers)
+    const [segmentsMarkers, setSegmentsMarkers] = useState(makeSegments(filteredUnverifiedPoints))
+    useEffect(() => {
+        console.log("segmentsMarkers:", segmentsMarkers);
+        setSegmentsMarkers(makeSegments(filteredUnverifiedPoints));
+    }, [filteredUnverifiedPoints]);
 
     return (
         <div className="position-absolute translate-middle top-50 start-50 w-75 h-75 d-flex flex-row">
@@ -52,6 +55,7 @@ const Analysis = (props) => {
                 setIDSegmentChoose={setIDSegmentChoose}
                 setMarkerChoose={setMarkerChoose}
                 setTestPoint={setTestPoint}
+                setSegmentsMarkers={setSegmentsMarkers}
             />
             {/*Список участков*/}
             {rightPart === "Список" && (

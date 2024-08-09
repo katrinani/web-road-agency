@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import pointConfirmation from "../../helpers/Request/PointConfirmation";
+import pointConfirmation from "../../../helpers/Request/PointConfirmation";
 
 const PointVerification = (props) => {
     const testPoint = props.testPoint
@@ -179,7 +179,7 @@ const PointVerification = (props) => {
                                 className="form-control"
                                 id="expirationTime"
                                 name="expirationTime"
-                                value={pointData.expirationTime}
+                                value={pointData.expirationTime.slice(0, -1)}
                                 onChange={handleInputChange}
                             />
                         </div>

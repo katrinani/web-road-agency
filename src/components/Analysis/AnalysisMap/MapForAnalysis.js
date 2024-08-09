@@ -7,15 +7,18 @@ import {
     YMapCustomClusterer,
     YMapHintContext, YMapHint
 } from "ymap3-components";
-import {iconCluster, iconsUnverified, iconsVerified, iconTestPoint} from "../../helpers/IconsPath";
-import React, {useCallback, useContext} from "react";
-import FilterForAnalysis from "./FilterForAnalysis";
-import pointConfirmation from "../../helpers/Request/PointConfirmation";
-import createTestVariant from "../../helpers/Request/CreateTestVariant";
+import {iconCluster, iconsUnverified, iconsVerified, iconTestPoint} from "../../../helpers/IconsPath";
+import React, {useCallback, useContext, useEffect, useState} from "react";
+import FilterForAnalysis from "./SmallComponents/FilterForAnalysis";
+import createTestVariant from "../../../helpers/Request/CreateTestVariant";
+import CreateSegment from "./SmallComponents/CreateSegment";
 
 const AnalysisMap = (props) => {
+    const [selectedCtrlPoints, setSelectedCtrlPoints] = useState([]);
+    const [makeSegment, setMakeSegment] = useState("");
     const getHint = useCallback((object) => object?.properties?.hint, []);
 
+    // Всплывающее описание сегмента
     function HintWindow() {
         const hintContext = useContext(YMapHintContext);
 
@@ -29,12 +32,26 @@ const AnalysisMap = (props) => {
         />;
     }
 
+    // Действие с точкой: Описание или создание сегмента
     const handleMarkerClick = (event, marker) => {
-        if (event.ctrlKey) {console.log('CTRL')}
-        props.setMarkerChoose(marker);
-        props.setRightPart("Описание точки");
+        if (event.ctrlKey) {
+            if (marker["Тип точки"][0] !== 8){
+                setSelectedCtrlPoints(prevSelectedPoints =>
+                    [...prevSelectedPoints.filter((point) => point["ID"] !== marker["ID"]), marker]
+                )
+            }
+        } else {
+            props.setMarkerChoose(marker);
+            props.setRightPart("Описание точки");
+        }
     };
 
+    useEffect(() => {
+        console.log("selectedCtrlPoints:", selectedCtrlPoints);
+        if (selectedCtrlPoints.length === 1) {setMakeSegment("Создаем")}
+    }, [selectedCtrlPoints]); // Зависит от selectedCtrlPoints
+
+    // Действие с сегментом
     const handleSegmentClick = async (segment, idSegment) => {
         const IDs = segment.map((point) => (point["marker"]["ID"]));
         const Point = await createTestVariant(IDs);
@@ -45,6 +62,7 @@ const AnalysisMap = (props) => {
         props.setListIDs(IDs);
     };
 
+    // Кластеризация
     const features = props.filteredUnverifiedPoints.map((marker) => ({
         type: "Feature",
         id: marker["ID"],
@@ -113,6 +131,17 @@ const AnalysisMap = (props) => {
                     setFilteredUnverifiedPoints={props.setFilteredUnverifiedPoints}
                 />
             </div>
+            {/*Окно для создания сегмента*/}
+            {makeSegment === "Создаем" && (
+                <div className="position-absolute bottom-0 end-0 p-2" style={{zIndex: 1}}>
+                    <CreateSegment
+                        selectedCtrlPoints={selectedCtrlPoints}
+                        setMakeSegment={setMakeSegment}
+                        setSelectedCtrlPoints={setSelectedCtrlPoints}
+                        setSegmentsMarkers={props.setSegmentsMarkers}
+                    />
+                </div>
+            )}
             <YMapComponentsProvider apiKey={props.apiKey}>
                 <YMap location={props.location}>
                     <YMapDefaultSchemeLayer/>

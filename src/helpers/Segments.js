@@ -32,7 +32,7 @@ export function makeSegments (points) {
 
     let stressedSegments = [];
     let mediumSegments = [];
-
+    // TODO убрать повторяющиеся сегменты
     milestones.forEach(milestone => {
         let nearbyPoints = [];
 

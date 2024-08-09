@@ -3,17 +3,10 @@ import {
     ExplanationForReliabilityLevels,
     ReliabilityLevels,
     unverifiedTypes
-} from "../../helpers/FormData";
+} from "../../../helpers/FormData";
 
 const AnalysisList = (props) => {
     const segments = props.segmentsMarkers
-    // const handleSegmentClick = async (segment) => {
-    //     console.log(segment)
-    //     // const IDs = segment.map((point) => (point["marker"]["ID"]))
-    //     // props.setRightPart("Тестовый вариант")
-    //     // props.setListIDs(IDs)
-    //     // onClick={() => handleSegmentClick(segment)}
-    // };
 
     return (
         <div

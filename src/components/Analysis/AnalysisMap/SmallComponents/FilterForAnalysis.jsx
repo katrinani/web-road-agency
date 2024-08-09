@@ -4,8 +4,8 @@ import {
     ReliabilityLevels,
     unverifiedTypes,
     verifiedTypes
-} from "../../helpers/FormData";
-import {iconsReliability, iconsUnverified, iconsVerified} from "../../helpers/IconsPath";
+} from "../../../../helpers/FormData";
+import {iconsReliability, iconsUnverified, iconsVerified} from "../../../../helpers/IconsPath";
 import {Button} from "react-bootstrap";
 
 const FilterForAnalysis = (props) => {

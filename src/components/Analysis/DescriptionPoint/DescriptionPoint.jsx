@@ -4,7 +4,7 @@ import {
     ReliabilityLevels,
     unverifiedTypes,
     verifiedTypes
-} from "../../helpers/FormData";
+} from "../../../helpers/FormData";
 
 const DescriptionPoint = (props) => {
     const marker = props.markerChoose;
