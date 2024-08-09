@@ -32,7 +32,7 @@ export function makeSegments (points) {
 
     let stressedSegments = [];
     let mediumSegments = [];
-    // TODO убрать повторяющиеся сегменты
+
     milestones.forEach(milestone => {
         let nearbyPoints = [];
 
@@ -56,8 +56,23 @@ export function makeSegments (points) {
         }
     });
 
+    // Сортировка на уникальные значения
+    function uniqueList(list) {
+        const uniqueIDs = new Set();
+        const uniqueList = list.map(innerArray => {
+            return innerArray.filter(item => {
+                if (!uniqueIDs.has(item.marker.ID)) {
+                    uniqueIDs.add(item.marker.ID);
+                    return true;
+                }
+                return false;
+            });
+        });
+        return uniqueList.filter(segment => segment.length !== 0);
+    }
+
     return {
-        "stressed": stressedSegments,
-        "medium": mediumSegments
+        "stressed": uniqueList(stressedSegments),
+        "medium": uniqueList(mediumSegments)
     }
 }
