@@ -19,7 +19,7 @@ const pointConfirmation = async (pointData, selectedImageIndex) => {
         }
         console.log("Тело запроса", body);
         const response = await axios.post(
-            `${url}/verify/${pointData.id}/confirm'`,
+            `${url}/verify/${pointData.id}/confirm`,
             body
         );
         console.log(response);
