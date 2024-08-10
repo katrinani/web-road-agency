@@ -28,6 +28,7 @@ const polesAndUnverifiedPoints = async () => {
                 "Уровень доверия": point.reliabilityLevel,
                 "Дорога": point.roadName,
                 "Файлы": point.fileIds,
+                "Дата": point.creationDateTime
             }))
             return unverifiedPoints.concat(kilometerPoles);
         }

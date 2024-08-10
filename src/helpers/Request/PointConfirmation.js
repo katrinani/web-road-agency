@@ -7,10 +7,9 @@ import handleError from "../Notifications";
 const pointConfirmation = async (pointData, selectedImageIndex) => {
     try {
         let body = {
-
             "name": pointData.name,
             "description": pointData.description,
-            "expirationTime": pointData.expirationTime + 'Z',
+            "expirationTime": pointData.expirationTime + ".9443764Z",
             "type": pointData.type,
             "coordinates": {
                 "latitude": pointData.coordinates.latitude,

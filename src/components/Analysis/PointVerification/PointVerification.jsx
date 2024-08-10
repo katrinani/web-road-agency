@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import pointConfirmation from "../../../helpers/Request/PointConfirmation";
 
 const PointVerification = (props) => {
+    const URLForPhoto = "http://213.171.29.33:5139/api/v1/Web/files/"
     const testPoint = props.testPoint
     const [pointData, setPointData] = useState({
         id: '',
@@ -136,10 +137,10 @@ const PointVerification = (props) => {
                                 value={pointData.type}
                                 onChange={handleInputChange}
                             >
-                                <option value="1">ДТП</option>
-                                <option value="2">Недостатки дороги</option>
-                                <option value="3">Преграда</option>
-                                <option value="4">Противоправные действия 3х лиц</option>
+                                <option value="0">ДТП</option>
+                                <option value="1">Недостатки дороги</option>
+                                <option value="2">Преграда</option>
+                                <option value="3">Противоправные действия 3х лиц</option>
                             </select>
                         </div>
                     </div>
@@ -170,16 +171,15 @@ const PointVerification = (props) => {
                                     handleCoordinatesChange(event, 'longitude')}
                             />
                         </div>
-                        {/*TODO The specified value "2024-08-15T08:49:34.5858029" does not conform to the required format.  The format is "yyyy-MM-ddThh:mm" followed by optional ":ss" or ":ss.SSS".*/}
                         <div className="form-group">
                             <label htmlFor="expirationTime">Время жизни точки:</label>
                             <input
                                 type="datetime-local"
-                                step=".1"
+                                step="1"
                                 className="form-control"
                                 id="expirationTime"
                                 name="expirationTime"
-                                value={pointData.expirationTime.slice(0, -1)}
+                                value={pointData.expirationTime.split('.')[0]}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -198,31 +198,32 @@ const PointVerification = (props) => {
                         </div>
                     </div>
                 </div>
-                {/*TODO проверка []*/}
-                <div className="form-group">
-                    <label htmlFor="photo">Фотографии:</label>
-                    <div className="d-flex overflow-x-auto" style={{
-                        maxWidth: '500px'
-                    }}>
-                        {pointData.filesIds.map((file, index) => (
-                            <div key={index} className="p-1 position-relative">
-                                <img src={pointData.urlForFiles + file} alt={file} height="150"/>
-                                <div className="form-check position-absolute top-0 end-0">
-                                    <input
-                                        name="photo"
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id={`file-${index}`}
-                                        style={{margin: '8px'}}
-                                        value={index}
-                                        checked={selectedImageIndex === file}
-                                        onChange={() => handleFileChange(file)}
-                                    />
+                {pointData.filesIds && pointData.filesIds.length > 0 && (
+                    <div className="form-group">
+                        <label htmlFor="photo">Фотографии:</label>
+                        <div className="d-flex overflow-x-auto" style={{
+                            maxWidth: '500px'
+                        }}>
+                            {pointData.filesIds.map((file, index) => (
+                                <div key={index} className="p-1 position-relative">
+                                    <img src={URLForPhoto + file} alt={file} height="150"/>
+                                    <div className="form-check position-absolute top-0 end-0">
+                                        <input
+                                            name="photo"
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            id={`file-${index}`}
+                                            style={{margin: '8px'}}
+                                            value={index}
+                                            checked={selectedImageIndex === file}
+                                            onChange={() => handleFileChange(file)}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
                 <div className="d-flex justify-content-center">
                     <button type="submit" className="btn btn-primary mt-2">
                         Создать точку
