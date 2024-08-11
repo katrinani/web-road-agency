@@ -1,6 +1,12 @@
 import axios from "axios";
 import url from "../url";
 import handleError from "../Notifications";
+import axiosRetry from "axios-retry";
+
+axiosRetry(axios, {
+  retries: 2,
+  retryDelay: axiosRetry.exponentialDelay,
+});
 
 const getRoads = async () => {
   try {

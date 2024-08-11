@@ -1,6 +1,12 @@
 import axios from "axios";
+import axiosRetry from 'axios-retry';
 import url from "../url";
 import handleError from "../Notifications";
+
+axiosRetry(axios, {
+    retries: 2,
+    retryDelay: axiosRetry.exponentialDelay,
+});
 
 const polesAndUnverifiedPoints = async () => {
     try {

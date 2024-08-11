@@ -2,6 +2,12 @@ import axios from "axios";
 import url from "../url";
 import handleError from "../Notifications";
 import { NotificationManager } from "react-notifications";
+import axiosRetry from "axios-retry";
+
+axiosRetry(axios, {
+  retries: 2,
+  retryDelay: axiosRetry.exponentialDelay,
+});
 
 const prepareAdvert = (newMessage) => {
   const { locationType, location, title, description, expireTime } = newMessage;

@@ -3,6 +3,12 @@ import { verifiedTypes } from "../FormData";
 import url from "../url"
 import {NotificationManager} from "react-notifications";
 import handleError from "../Notifications";
+import axiosRetry from "axios-retry";
+
+axiosRetry(axios, {
+  retries: 2,
+  retryDelay: axiosRetry.exponentialDelay,
+});
 
 class CrudPoints {
   static async createPoint(point) {

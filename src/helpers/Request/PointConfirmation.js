@@ -2,7 +2,12 @@ import axios from "axios";
 import url from "../url";
 import {NotificationManager} from "react-notifications";
 import handleError from "../Notifications";
+import axiosRetry from "axios-retry";
 
+axiosRetry(axios, {
+    retries: 2,
+    retryDelay: axiosRetry.exponentialDelay,
+});
 
 const pointConfirmation = async (pointData, selectedImageIndex) => {
     try {
