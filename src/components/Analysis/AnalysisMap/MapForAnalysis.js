@@ -52,14 +52,12 @@ const AnalysisMap = (props) => {
     }, [selectedCtrlPoints]); // Зависит от selectedCtrlPoints
 
     // Действие с сегментом
-    const handleSegmentClick = async (segment, idSegment) => {
+    const handleSegmentClick = async (segment) => {
         const IDs = segment.map((point) => (point["marker"]["ID"]));
         const Point = await createTestVariant(IDs);
         console.log(Point);
         props.setTestPoint(Point);
-        props.setIDSegmentChoose(idSegment)
         props.setRightPart("Тестовый вариант");
-        props.setListIDs(IDs);
     };
 
     // Кластеризация
@@ -159,7 +157,7 @@ const AnalysisMap = (props) => {
                             <YMapFeature
                                 id={`stressed-${index}`}
                                 key={`stressed-${index}`}
-                                onClick={() => handleSegmentClick(segment, `stressed-${index}`)}
+                                onClick={() => handleSegmentClick(segment)}
                                 geometry={{
                                     type: 'Polygon',
                                     coordinates: [segment.map((points) => (points["coordinate"]))]
@@ -181,7 +179,7 @@ const AnalysisMap = (props) => {
                             <YMapFeature
                                 id={`medium-${index}`}
                                 key={`medium-${index}`}
-                                onClick={() => handleSegmentClick(segment, `medium-${index}`)}
+                                onClick={() => handleSegmentClick(segment)}
                                 geometry={{
                                     type: 'Polygon',
                                     coordinates: [segment.map((points) => (points["coordinate"]))]

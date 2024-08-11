@@ -13,9 +13,7 @@ const Analysis = (props) => {
         {center: [61.400346, 55.163742], zoom: 11}
     );
     const [rightPart, setRightPart] = useState("Список");
-    const [IDSegmentChoose, setIDSegmentChoose] = useState('');
     const [markerChoose, setMarkerChoose] = useState();
-    const [listIDs, setListIDs] = useState();
     const [testPoint, setTestPoint] = useState(null);
     const [filteredUnverifiedPoints, setFilteredUnverifiedPoints] = useState([]);
 
@@ -46,14 +44,11 @@ const Analysis = (props) => {
             <AnalysisMap
                 apiKey={props.apiKey}
                 location={locationAnalysis}
-                points={UnverifiedPoints}
+                points={UnverifiedPoints.concat(ApprovedPoints)}
                 filteredUnverifiedPoints={filteredUnverifiedPoints}
                 setFilteredUnverifiedPoints={setFilteredUnverifiedPoints}
                 segmentsMarkers={segmentsMarkers}
                 setRightPart={setRightPart}
-                setListIDs={setListIDs}
-                IDSegmentChoose={IDSegmentChoose}
-                setIDSegmentChoose={setIDSegmentChoose}
                 setMarkerChoose={setMarkerChoose}
                 setTestPoint={setTestPoint}
                 setSegmentsMarkers={setSegmentsMarkers}
@@ -63,18 +58,16 @@ const Analysis = (props) => {
                 <AnalysisList
                     segmentsMarkers={segmentsMarkers}
                     setRightPart={setRightPart}
-                    setListIDs={setListIDs}
+                    setTestPoint={setTestPoint}
                 />
             )}
             {/*Создание тестовой точки*/}
             {rightPart === "Тестовый вариант" && (
                 <PointVerification
-                    listIDs={listIDs}
                     setRightPart={setRightPart}
                     addTestPoint={addTestPoint}
                     filteredUnverifiedPoints={filteredUnverifiedPoints}
                     setFilteredUnverifiedPoints={setFilteredUnverifiedPoints}
-                    setIDSegmentChoose={setIDSegmentChoose}
                     testPoint={testPoint}
                 />
             )}

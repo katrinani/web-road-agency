@@ -48,6 +48,7 @@ const FilterForAnalysis = (props) => {
     };
 
     const filterPoints = () => {
+        // TODO добавить подтвержденные точки
         const filteredPoints = props.points.filter(point => {
             const typeMatch = selectedTypes.length === 0
                 || selectedTypes.includes(unverifiedTypes[point["Тип точки"][0]])

@@ -77,7 +77,6 @@ const PointVerification = (props) => {
             // удаляем тестовую точку
             props.setFilteredUnverifiedPoints(prevPoints => prevPoints.filter(point => point.ID !== pointData.id));
             props.setRightPart("Список");
-            props.setIDSegmentChoose('');
             window.location.reload();
             // после обновления автоматом еще один запрос уже с подтвержденной точкой
         }
@@ -99,7 +98,6 @@ const PointVerification = (props) => {
                 onClick={() => {
                     props.setRightPart("Список");
                     props.setFilteredUnverifiedPoints(prevPoints => prevPoints.filter(point => point.ID !== pointData.id));
-                    props.setIDSegmentChoose('');
                 }}
             />
             <form onSubmit={handleSubmit}>

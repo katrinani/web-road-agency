@@ -4,9 +4,18 @@ import {
     ReliabilityLevels,
     unverifiedTypes
 } from "../../../helpers/FormData";
+import createTestVariant from "../../../helpers/Request/CreateTestVariant";
 
 const AnalysisList = (props) => {
     const segments = props.segmentsMarkers
+
+    const handleSegmentClick = async (segment, idSegment) => {
+        const IDs = segment.map((point) => (point["marker"]["ID"]));
+        const Point = await createTestVariant(IDs);
+        console.log(Point);
+        props.setTestPoint(Point);
+        props.setRightPart("Тестовый вариант");
+    };
 
     return (
         <div
@@ -63,6 +72,14 @@ const AnalysisList = (props) => {
                                                                  aria-labelledby={`heading${indexSegment}`}
                                                                  data-bs-parent={`#accordionSection${indexSegment}`}>
                                                                 <div className="accordion-body">
+                                                                    <div className="d-flex justify-content-center">
+                                                                        <button
+                                                                            onClick={() => handleSegmentClick(segment)}
+                                                                            className="btn btn-outline-primary rounded mybtn mb-1 w-100"
+                                                                        >
+                                                                            Выбрать участок
+                                                                        </button>
+                                                                    </div>
                                                                     <ul className="list-group">
                                                                         {segment.map((point, indexPoint) => (
                                                                             <li className="list-group-item "
@@ -124,7 +141,6 @@ const AnalysisList = (props) => {
                                             ))}
                                         </ul>
                                     }
-
                                 </div>
                             </div>
                         </div>
