@@ -21,14 +21,13 @@ export function makeSegments (points) {
     // Исходные данные: список точек и список километровых столбов
     const other = [];
     const milestones = [];
-    points.filter(point => point["Тип точки"][0] !== 9).forEach((marker) => {
-        if (marker["Тип точки"][0] !== 8 && marker["Тип точки"][0] !== 9) {
+    points.filter(point => point["Тип точки"][0] !== 9 && !point["Количество источников"]).forEach((marker) => {
+        if (marker["Тип точки"][0] !== 8) {
             other.push({"coordinate": [marker["Долгота"], marker["Широта"]], "marker": marker});
-        } else if (marker["Тип точки"][0] !== 9) {
+        } else {
             milestones.push({"coordinate": [marker["Долгота"], marker["Широта"]], "marker": marker});
         }
     });
-
 
     let stressedSegments = [];
     let mediumSegments = [];

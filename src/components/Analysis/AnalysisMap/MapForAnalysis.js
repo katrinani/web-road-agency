@@ -7,7 +7,7 @@ import {
     YMapCustomClusterer,
     YMapHintContext, YMapHint
 } from "ymap3-components";
-import {iconCluster, iconsUnverified, iconsVerified, iconTestPoint} from "../../../helpers/IconsPath";
+import {iconCluster, iconsApproved, iconsUnverified, iconsVerified, iconTestPoint} from "../../../helpers/IconsPath";
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import FilterForAnalysis from "./SmallComponents/FilterForAnalysis";
 import createTestVariant from "../../../helpers/Request/CreateTestVariant";
@@ -35,7 +35,7 @@ const AnalysisMap = (props) => {
     // Действие с точкой: Описание или создание сегмента
     const handleMarkerClick = (event, marker) => {
         if (event.ctrlKey) {
-            if (marker["Тип точки"][0] !== 8){
+            if (marker["Тип точки"][0] !== 8 && !marker["Количество источников"]){
                 setSelectedCtrlPoints(prevSelectedPoints =>
                     [...prevSelectedPoints.filter((point) => point["ID"] !== marker["ID"]), marker]
                 )
@@ -82,12 +82,17 @@ const AnalysisMap = (props) => {
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <img
                         src={
+                            feature.point["Количество источников"] && iconsApproved[feature.point["Тип точки"][0]]||
                             iconsUnverified[feature.point["Тип точки"][0]] ||
                             iconsVerified[feature.point["Тип точки"][0]] ||
                             iconTestPoint
                         }
                         alt={feature.point["Название"] || feature.point["Описание"]}
-                        style={{width: '30px', height: '30px', marginRight: '5px'}}
+                        style={{
+                            width: feature.point["Количество источников"] && '42px' || '30px',
+                            height: feature.point["Количество источников"] && '42px' || '30px',
+                            marginRight: '5px'
+                    }}
                     />
                     <span style={{
                         backgroundColor: 'rgba(255, 255, 255, 0.8)',

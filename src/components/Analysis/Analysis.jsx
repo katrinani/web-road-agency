@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import PointVerification from "./PointVerification/PointVerification";
 import DescriptionPoint from "./DescriptionPoint/DescriptionPoint";
 import UnverifiedPoints from "../../helpers/Request/AllPolesAndUnverifiedPoints";
+import ApprovedPoints from "../../helpers/Request/ApprovedPoints";
 
 
 const Analysis = (props) => {
@@ -29,8 +30,8 @@ const Analysis = (props) => {
     };
 
     useEffect(() => {
-        setFilteredUnverifiedPoints(UnverifiedPoints);
-    }, [UnverifiedPoints]);
+        setFilteredUnverifiedPoints(UnverifiedPoints.concat(ApprovedPoints));
+    }, [UnverifiedPoints, ApprovedPoints]);  // при изменении невер точек
     console.log("Все точки", filteredUnverifiedPoints)
 
     const [segmentsMarkers, setSegmentsMarkers] = useState(makeSegments(filteredUnverifiedPoints))

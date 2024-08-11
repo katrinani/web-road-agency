@@ -5,11 +5,11 @@ import {
     unverifiedTypes,
     verifiedTypes
 } from "../../../helpers/FormData";
+import {URLForPhoto} from "../../../helpers/url";
 
 const DescriptionPoint = (props) => {
     const marker = props.markerChoose;
     console.log(marker);
-    const URLForPhoto = "http://213.171.29.33:5139/api/v1/Web/files/"
 
     return (
         <div
@@ -32,7 +32,7 @@ const DescriptionPoint = (props) => {
                 />
                 <div className="row">
                     <div className="col">
-                        {/*Название или Описание*/}
+                        {/*Название */}
                         {marker["Название"] && (
                                 <div className="form-group">
                                     <label htmlFor="name"><h6>Название:</h6></label>
@@ -41,12 +41,14 @@ const DescriptionPoint = (props) => {
                                         className="form-control"
                                         id="name"
                                         name="name"
-                                        value={marker["Название"]}
+                                               value={marker["Название"]}
                                         disabled
                                     />
                                 </div>
                             )
-                            || marker["Описание"] && (
+                        }
+                        {/*Описание У подтвержденной*/}
+                        {marker["Описание"] && (
                                 <div className="form-group">
                                     <label htmlFor="description"><h6>Описание:</h6></label>
                                     <input
@@ -60,7 +62,6 @@ const DescriptionPoint = (props) => {
                                 </div>
                             )
                         }
-
                         {/*Тип точки*/}
                         <div className="form-group">
                             <label htmlFor="type"><h6>Тип точки:</h6></label>
@@ -130,12 +131,28 @@ const DescriptionPoint = (props) => {
                                         disabled
                                     />
                                 </div>
-                            )}
+                            )
+                            || marker["Количество источников"] && (
+                                <div className="form-group">
+                                    <label htmlFor="sources"><h6>Кол-во точек-источников:</h6></label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="sources"
+                                        name="sources"
+                                        value={marker["Количество источников"]}
+                                        disabled
+                                    />
+                                </div>
+                            )
+                        }
 
                         {/*Дата создания*/}
                         {marker["Дата"] && (
                             <div className="form-group">
-                                <label htmlFor="date"><h6>Дата создания:</h6></label>
+                                <label htmlFor="date"><h6>
+                                    {marker["Количество источников"] && "Время жизни:" || "Дата создания:"}
+                                </h6></label>
                                 <input
                                     type="datetime-local"
                                     step="1"

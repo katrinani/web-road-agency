@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import pointConfirmation from "../../../helpers/Request/PointConfirmation";
+import {URLForPhoto} from "../../../helpers/url";
 
 const PointVerification = (props) => {
-    const URLForPhoto = "http://213.171.29.33:5139/api/v1/Web/files/"
     const testPoint = props.testPoint
     const [pointData, setPointData] = useState({
         id: '',
@@ -78,6 +78,7 @@ const PointVerification = (props) => {
             props.setFilteredUnverifiedPoints(prevPoints => prevPoints.filter(point => point.ID !== pointData.id));
             props.setRightPart("Список");
             props.setIDSegmentChoose('');
+            window.location.reload();
             // после обновления автоматом еще один запрос уже с подтвержденной точкой
         }
     }
