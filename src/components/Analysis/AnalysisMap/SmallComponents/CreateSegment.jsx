@@ -1,3 +1,6 @@
+import React from "react";
+import {URLForUndo} from "../../../../helpers/url";
+
 const CreateSegment = (props) => {
     const segment = props.selectedCtrlPoints;
 
@@ -6,7 +9,6 @@ const CreateSegment = (props) => {
             coordinate: [point["Долгота"], point["Широта"]],
             marker: point
         }))
-        console.log(newSegment);
 
         if (segment.length > 10) {
             // {medium: [], stressed: [+1]}
@@ -29,7 +31,22 @@ const CreateSegment = (props) => {
         <div
             style={{ width: 'fit-content', height: 'fit-content' }}
             className="p-2 shadow-sm bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-center">
-            <div><b>Создать участок из точек:</b></div>
+            <div className="d-flex flex-row">
+                <b>Создать участок из точек:</b>
+                {/*Закрытие страницы*/}
+                <img
+                    src={URLForUndo}
+                    alt="Закрыть"
+                    style={{
+                        width: '10px', height: '10px',
+                        margin: '5px'
+                    }}
+                    onClick={() => {
+                        props.setSelectedCtrlPoints([]);
+                        props.setMakeSegment("");
+                    }}
+                />
+            </div>
             <ol>
                 {segment.map((marker, index) => (
                     <li key={index}>"{marker["Описание"]}"</li>

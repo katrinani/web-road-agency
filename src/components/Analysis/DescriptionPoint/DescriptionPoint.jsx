@@ -5,7 +5,7 @@ import {
     unverifiedTypes,
     verifiedTypes
 } from "../../../helpers/FormData";
-import {URLForPhoto} from "../../../helpers/url";
+import {URLForPhoto, URLForUndo} from "../../../helpers/url";
 
 const DescriptionPoint = (props) => {
     const marker = props.markerChoose;
@@ -15,11 +15,11 @@ const DescriptionPoint = (props) => {
         <div
             className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 position-relative"
         >
-            <div className="d-flex  flex-column align-items-center">
+            <div className="d-flex flex-column align-items-center">
                 <h3>Точка</h3>
                 {/*Закрытие страницы*/}
                 <img
-                    src="Icons/x-button.png"
+                    src={URLForUndo}
                     alt="Закрыть"
                     style={{
                         width: '20px', height: '20px',

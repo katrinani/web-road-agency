@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import pointConfirmation from "../../../helpers/Request/PointConfirmation";
-import {URLForPhoto} from "../../../helpers/url";
+import {URLForPhoto, URLForUndo} from "../../../helpers/url";
 
 const PointVerification = (props) => {
     const testPoint = props.testPoint
@@ -89,7 +89,7 @@ const PointVerification = (props) => {
             <h3>Верификация точки</h3>
             {/*Закрытие страницы*/}
             <img
-                src="Icons/x-button.png"
+                src={URLForUndo}
                 alt="Закрыть"
                 style={{
                     width: '20px', height: '20px',
