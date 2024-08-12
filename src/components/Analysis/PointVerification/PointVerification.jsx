@@ -77,7 +77,6 @@ const PointVerification = (props) => {
             // удаляем тестовую точку
             props.setFilteredUnverifiedPoints(prevPoints => prevPoints.filter(point => point.ID !== pointData.id));
             props.setRightPart("Список");
-            window.location.reload();
             // после обновления автоматом еще один запрос уже с подтвержденной точкой
         }
     }

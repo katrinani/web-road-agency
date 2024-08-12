@@ -11,8 +11,7 @@ axiosRetry(axios, {
 const polesAndUnverifiedPoints = async () => {
     try {
         const response = await axios.get(
-            `${url}/polesAndUnverifiedPoints`,
-            {timeout: 5000}
+            `${url}/polesAndUnverifiedPoints`
         );
 
         if (response.status === 200) {

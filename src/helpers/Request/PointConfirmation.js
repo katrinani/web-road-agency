@@ -14,7 +14,7 @@ const pointConfirmation = async (pointData, selectedImageIndex) => {
         let body = {
             "name": pointData.name,
             "description": pointData.description,
-            "expirationTime": pointData.expirationTime + ".9443764Z",
+            "expirationTime": pointData.expirationTime.split(".")[0] + ".9443764Z",
             "type": pointData.type,
             "coordinates": {
                 "latitude": pointData.coordinates.latitude,
