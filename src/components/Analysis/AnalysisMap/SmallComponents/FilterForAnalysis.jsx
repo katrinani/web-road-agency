@@ -5,7 +5,7 @@ import {
     unverifiedTypes,
     verifiedTypes
 } from "../../../../helpers/FormData";
-import {iconsReliability, iconsUnverified, iconsVerified} from "../../../../helpers/IconsPath";
+import {iconExampleApproved, iconsReliability, iconsUnverified, iconsVerified} from "../../../../helpers/IconsPath";
 import {Button} from "react-bootstrap";
 
 const FilterForAnalysis = (props) => {
@@ -48,11 +48,11 @@ const FilterForAnalysis = (props) => {
     };
 
     const filterPoints = () => {
-        // TODO добавить подтвержденные точки
         const filteredPoints = props.points.filter(point => {
             const typeMatch = selectedTypes.length === 0
                 || selectedTypes.includes(unverifiedTypes[point["Тип точки"][0]])
-                || selectedTypes.includes(verifiedTypes[point["Тип точки"][0]]);
+                || selectedTypes.includes(verifiedTypes[point["Тип точки"][0]])
+                || point["Количество источников"];
             const reliabilityMatch = selectedReliabilityLevels.length === 0
                 || selectedReliabilityLevels.includes(point["Уровень доверия"]);
             const pointDate = new Date(point["Дата"]);
@@ -93,6 +93,7 @@ const FilterForAnalysis = (props) => {
                              aria-labelledby="heading-type"
                              data-bs-parent="#all_accordion">
                             <div className="accordion-body">
+                                {/*0-1-2-3(невер типы)-8(километры)*/}
                                 {unverifiedTypes.map((type) => (
                                     <li
                                         key={unverifiedTypes.indexOf(type)}
@@ -126,6 +127,23 @@ const FilterForAnalysis = (props) => {
                                             style={{width: "25px", height: "25px", marginRight: "5px"}}
                                         />{" "}
                                         Километр
+                                    </a>
+                                </li>
+                                {/*Подтвержденые точки*/}
+                                <li
+                                    key={9}
+                                    onClick={(e) => handleSelectType('Подтвержденные', e)}
+                                    className={`dropdown-item ${
+                                        selectedTypes.includes('Подтвержденные') ? "border-midnightblue" : ""
+                                    }`}
+                                >
+                                    <a className="dropdown-item" href="#">
+                                        <img
+                                            src={iconExampleApproved}
+                                            alt="Подтвержденные точки"
+                                            style={{width: "25px", height: "25px", marginRight: "5px"}}
+                                        />{" "}
+                                        Подтвержденные точки
                                     </a>
                                 </li>
                             </div>

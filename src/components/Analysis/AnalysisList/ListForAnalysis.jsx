@@ -9,7 +9,7 @@ import createTestVariant from "../../../helpers/Request/CreateTestVariant";
 const AnalysisList = (props) => {
     const segments = props.segmentsMarkers
 
-    const handleSegmentClick = async (segment, idSegment) => {
+    const handleSegmentClick = async (segment) => {
         const IDs = segment.map((point) => (point["marker"]["ID"]));
         const Point = await createTestVariant(IDs);
         console.log(Point);
@@ -25,8 +25,8 @@ const AnalysisList = (props) => {
                 className="p-2 rounded border-dark-subtle overflow-auto shadow-sm"
                 style={{height: 'calc(100% - 60px)', width: 'calc(100% - 16px)'}}
             >
-                {["stressed", "medium"].map((kind) => (
-                    <div className="accordion mb-1" id={`accordion-${kind}`}>
+                {["stressed", "medium"].map((kind, index) => (
+                    <div key={index} className="accordion mb-1" id={`accordion-${kind}`}>
                         <div className="accordion-item">
                             <h2 className="accordion-header" id={`heading-${kind}`}>
                                 <button className={`accordion-button border border-${kind === "stressed" ? "danger" : kind === "medium" ? "warning" : ""}`}

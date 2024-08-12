@@ -31,8 +31,6 @@ function App() {
       set_list(points);
       if (points?.length > 0) {
         const lastPoint = points[points.length - 1];
-        console.log(lastPoint.Широта)
-        console.log(lastPoint.Долгота)
         setLocation({ center: [lastPoint.Долгота, lastPoint.Широта], zoom: 9 });
       }
     };
@@ -46,7 +44,7 @@ function App() {
 
   return (
     <div>
-      <div class="nav">
+      <div className="nav">
         <span onClick={() => setPage("Карта")} className="">Верифицированные точки</span>
         <span onClick={() => setPage("Новости")} className="">Новости</span>
         <span onClick={() => setPage("Анализ")} className="">Анализ дорог</span>

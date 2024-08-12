@@ -9,7 +9,7 @@ import ApprovedPoints from "../../helpers/Request/ApprovedPoints";
 
 
 const Analysis = (props) => {
-    const [locationAnalysis, setLocationAnalysis] = useState(
+    const [locationAnalysis] = useState(
         {center: [61.400346, 55.163742], zoom: 11}
     );
     const [rightPart, setRightPart] = useState("Список");
