@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, ListGroup } from "react-bootstrap";
+import {Form, Button, ListGroup, Modal} from "react-bootstrap";
 import Select from "react-select";
 import roads from "../../helpers/Request/Roads";
 import regions from "../../helpers/Request/Regions";
@@ -20,6 +20,9 @@ const MessageWindow = () => {
   const [local_roads, setRoads] = useState([]);
   const [local_regions, setRegions] = useState([]);
   const [selectedDateTime, setSelectedDateTime] = useState(new Date());
+  const [showModal, setShowModal] = useState(false);
+  const [selectedMessage, setSelectedMessage] = useState({});
+  const [buttonName, setButtonName] = useState("Отправить");
 
   const handleDateTimeChange = (date) => {
     console.log(date);
@@ -81,15 +84,60 @@ const MessageWindow = () => {
       });
       setSelectedDateTime(new Date());
       console.log(newMessage);
-      sendAdvert(newMessage);
+      if (buttonName === "Отправить") {
+        sendAdvert(newMessage);
+      } else if (buttonName === "Сохранить") {
+        //   запрос на редактирование
+      }
     }
   };
 
+  const handleClickMessage = (message) => {
+    setSelectedMessage(message);
+  };
+
+
+
   return (
     <div className="container mt-5">
+      {/*Всплывашка с действием*/}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {selectedMessage.title !== "" && selectedMessage.title}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex justify-content-between">
+          <Button
+              variant="light"
+              onClick={() => {
+                setShowModal(false);
+                setButtonName("Сохранить");
+                setFormData({
+                    title: selectedMessage.title,
+                    description: selectedMessage.description,
+                    locationType: selectedMessage.locationType,
+                    location: selectedMessage.location
+                })
+              }}
+          >
+            Редактировать
+          </Button>
+          <Button
+              variant="dark"
+              onClick={async () => {
+                setShowModal(false);
+                //  запрос на удаление
+              }}
+          >
+            Удалить
+          </Button>
+        </Modal.Body>
+      </Modal>
+
       <ListGroup className="mt-3">
-        {messages.map((message) => (
-          <ListGroup.Item key={message.id}>
+        {messages && messages.map((message) => (
+          <ListGroup.Item key={message.id} onClick={() => handleClickMessage(message)}>
             {message.timestamp} <br />
             <br />
             <strong>{message.title}</strong>
@@ -103,7 +151,7 @@ const MessageWindow = () => {
       </ListGroup>
       <br />
       <br />
-      <h2>Отправить новость</h2>
+      <h2>{buttonName === "Отправить" && "Создать новость" || "Редактирование новости"}</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="titleInput" className="mb-3">
           <Form.Control
@@ -160,6 +208,7 @@ const MessageWindow = () => {
             placeholder="Выберите дорогу"
           />
         )}
+        {/*TODO Сделать более приятный выбор даты*/}
         <DateTimePicker
           className="mb-3"
           id="datetime"
@@ -167,7 +216,7 @@ const MessageWindow = () => {
           value={selectedDateTime}
         />
         <Button variant="primary" type="submit" className="mx-3">
-          Отправить
+          {buttonName}
         </Button>
       </Form>
     </div>
