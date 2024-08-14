@@ -23,7 +23,8 @@ function App() {
   const [formValues, setFormValues] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const [page, setPage] = useState("Карта");
-  console.log(location)
+  const [rightPart, setRightPart] = useState("Создаем");
+
   useEffect(() => {
     const fetchPoints = async () => {
       const points = await getAllPoints(location);
@@ -87,15 +88,26 @@ function App() {
           </Modal>
 
           <div className="position-absolute translate-middle top-50 start-50 w-75 h-75 d-flex flex-row">
-            <FormCreatePoint
-              points_list={points_list}
-              set_list={set_list}
-              button_name={buttonName}
-              setButtonName={setButtonName}
-              formValues={formValues}
-              isActive={isActive}
-              setLocation={setLocation}
-            />
+            {rightPart === "Создаем" && (
+                <FormCreatePoint
+                    points_list={points_list}
+                    set_list={set_list}
+                    button_name={buttonName}
+                    setButtonName={setButtonName}
+                    formValues={formValues}
+                    isActive={isActive}
+                    setLocation={setLocation}
+                />
+            )}
+            {rightPart === "Изучаем" && (
+                <ListPoints
+                    points_list={points_list}
+                    setShowModal={setShowModal}
+                    setSelectedPoint={setSelectedPoint}
+                    setFormValues={handleFormValues}
+                    setRightPart={setRightPart}
+                />
+            )}
             <Map
               location={location}
               apiKey={apiKey}
@@ -103,12 +115,7 @@ function App() {
               setShowModal={setShowModal}
               setSelectedPoint={setSelectedPoint}
               setFormValues={handleFormValues}
-            />
-            <ListPoints
-              points_list={points_list}
-              setShowModal={setShowModal}
-              setSelectedPoint={setSelectedPoint}
-              setFormValues={handleFormValues}
+              setRightPart={setRightPart}
             />
             <NotificationContainer />
           </div>
@@ -122,9 +129,10 @@ function App() {
       )}
 
       {page === "Анализ" && (
-          <Analysis
-                apiKey={apiKey}
-          />
+          <div>
+            <Analysis apiKey={apiKey}/>
+            <NotificationContainer />
+          </div>
       )}
     </div>
   );

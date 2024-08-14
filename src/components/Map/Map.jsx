@@ -32,6 +32,12 @@ const Map = (props) => {
                   setFilteredPoints={setFilteredPoints}
               />
           </div>
+          <div className="position-absolute top-0 end-0 p-3" style={{zIndex: 1}}>
+              <button
+                  className="btn btn-secondary"
+                  onClick={() => props.setRightPart("Изучаем")}
+              >Список всех точек</button>
+          </div>
           <YMapComponentsProvider apiKey={props.apiKey}>
               <YMap location={props.location}>
                   <YMapDefaultSchemeLayer/>

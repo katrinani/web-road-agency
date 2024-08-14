@@ -87,7 +87,7 @@ const FormCreatePoint = (props) => {
   };
 
   return (
-    <form className="p-5  w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-start">
+    <form className="p-5 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-start">
       <h3>Добавить точку</h3>
       <div className="my-3 w-100">
         <div className="container-fluid w-100 p-0">
