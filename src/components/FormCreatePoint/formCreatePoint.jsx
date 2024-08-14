@@ -48,18 +48,15 @@ const FormCreatePoint = (props) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     props.setButtonName("Добавить");
     const form = {
       ...inputValues,
-      Дорога: inputValues["Дорога"].value,
+      "Дорога": inputValues["Дорога"].value,
       "Тип точки": inputValues["Тип точки"].value,
     };
 
-    // // установка локации на новой точке
-    // console.log({ center: [inputValues.Долгота, inputValues.Широта ], zoom: 9 })
-    // props.setLocation({ center: [inputValues.Долгота, inputValues.Широта ], zoom: 9 });
-    const newCenter = {center: [inputValues.Долгота, inputValues.Широта], zoom: 9};
+    const newCenter = {center: [inputValues["Долгота"], inputValues["Широта"]], zoom: 9};
     if (isEditMode) {
       console.log("Редактируем....");
       const response = await CrudPoints.pointEditing(form);
@@ -69,7 +66,7 @@ const FormCreatePoint = (props) => {
     } else {
       console.log("Создаем....");
       const response = await CrudPoints.createPoint(form);
-      if (response === 200) {
+      if (response === 201) {
         props.setLocation(newCenter);
       }
     }
@@ -122,7 +119,7 @@ const FormCreatePoint = (props) => {
           <span>Название дороги</span>
           <Select
             key={`road ${inputValues[Object.keys(FormData)[3]]}`}
-            value={inputValues[Object.keys(FormData)[3]] || ""}
+            value={inputValues[Object.keys(FormData)[3]] || "Select..."}
             options={highways.map((value) => ({
               value,
               label: value,
@@ -130,12 +127,11 @@ const FormCreatePoint = (props) => {
             onChange={handleSingleSelectChange}
           />
         </div>
-
         <div className="my-3">
           <span>Тип точки</span>
           <Select
             key={`type ${inputValues[Object.keys(FormData)[4]]}`}
-            value={inputValues[Object.keys(FormData)[4]] || ""}
+            value={inputValues[Object.keys(FormData)[4]] || "Select..."}
             options={verifiedTypes.map((value) => ({
               value,
               label: value
@@ -143,10 +139,12 @@ const FormCreatePoint = (props) => {
             onChange={handleSingleSelectChangeType}
           />
         </div>
-        {inputValues["Тип точки"]["value"] === "Километр" && (
+        {(inputValues["Тип точки"]["value"] === "Километр"
+            || verifiedTypes[inputValues[Object.keys(FormData)[4]][0]] === "Километр") && (
           <div className="my-3">
             <span>Регион</span>
             <Select
+              value={inputValues[Object.keys(FormData)[5]] || "Select..."}
               options={regions.map((value) => ({
                 value,
                 label: value,
@@ -156,7 +154,8 @@ const FormCreatePoint = (props) => {
           </div>
         )}
 
-        {inputValues["Тип точки"]["value"] === "Событие" && (
+        {(inputValues["Тип точки"]["value"] === "Событие"
+            || verifiedTypes[inputValues[Object.keys(FormData)[4]][0]] === "Событие") && (
           <div>
             <Form.Group
               className="mb-3"
@@ -166,7 +165,7 @@ const FormCreatePoint = (props) => {
               <Form.Control
                 as="textarea"
                 rows={3}
-                value={inputValues[Object.keys(FormData)[6]]}
+                value={inputValues[Object.keys(FormData)[6]] || ""}
                 onChange={handleInputChange(Object.keys(FormData)[6])}
               />
             </Form.Group>

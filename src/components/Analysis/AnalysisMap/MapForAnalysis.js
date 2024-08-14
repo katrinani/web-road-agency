@@ -149,6 +149,7 @@ const AnalysisMap = (props) => {
                 <YMap location={props.location}>
                     <YMapDefaultSchemeLayer/>
                     <YMapDefaultFeaturesLayer/>
+                    {/*Всплывашка для сегмента*/}
                     <YMapHint hint={getHint}>
                         <HintWindow />
                     </YMapHint>

@@ -13,7 +13,6 @@ axiosRetry(axios, {
 class CrudPoints {
   static async createPoint(point) {
     try {
-
       let body = {
         name: point["Название"],
         type: verifiedTypes.indexOf(point["Тип точки"]),
@@ -35,7 +34,7 @@ class CrudPoints {
       if (response.status === 201) {
         NotificationManager.success('Успешно создано');
       }
-
+      return response.status;
     } catch (error) {
         handleError(error)
     }
@@ -68,6 +67,7 @@ class CrudPoints {
         console.log(response);
         NotificationManager.success('Успешно изменена');
       }
+      return response.status;
     } catch (error) {
       console.log(error)
       handleError(error)
