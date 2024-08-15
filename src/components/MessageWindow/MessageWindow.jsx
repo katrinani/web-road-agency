@@ -9,8 +9,38 @@ import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import sendAdvert from "../../helpers/Request/Ads";
 
+const allMessages = [
+  {
+    id: "1",
+    title: "Обьявление 1",
+    description: "Опиисание",
+    regionName: null,
+    roadName: "М-5 \"Урал\" ПкЕ: Челябинск - Екатеринбург",
+    createTime: "2024-08-15T06:30:19.795Z", // начало
+    expirationTime: "2024-08-18T06:30:19.795Z" // конец
+  },
+  {
+    id: "2",
+    title: "Обьявление 2",
+    description: "Опиисание",
+    regionName: "Челябинская область",
+    roadName: null,
+    createTime: "2024-08-16T06:31:18.795Z", // начало
+    expirationTime: "2024-08-30T10:30:19.795Z" // конец
+  },
+  {
+    id: "3",
+    title: "Обьявление 3",
+    description: "Опиисание",
+    regionName: null,
+    roadName: "А-310: Челябинск - Троицк",
+    createTime: "2024-08-15T06:30:19.795Z", // начало
+    expirationTime: "2024-09-20T16:00:10.795Z" // конец
+  },
+]
+
 const MessageWindow = () => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(allMessages);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -52,7 +82,7 @@ const MessageWindow = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const a = document.getElementById("datetime").value;
 
@@ -75,7 +105,7 @@ const MessageWindow = () => {
         expireTime: selectedDateTime,
         timestamp: new Date().toLocaleString(),
       };
-      setMessages([...messages, newMessage]);
+      // setMessages([...messages, newMessage]);
       setFormData({
         title: "",
         description: "",
@@ -85,15 +115,18 @@ const MessageWindow = () => {
       setSelectedDateTime(new Date());
       console.log(newMessage);
       if (buttonName === "Отправить") {
-        sendAdvert(newMessage);
+        await sendAdvert(newMessage);
       } else if (buttonName === "Сохранить") {
+        console.log("..Сохраняем")
         //   запрос на редактирование
       }
     }
   };
 
   const handleClickMessage = (message) => {
+    console.log(message);
     setSelectedMessage(message);
+    setShowModal(true);
   };
 
 
@@ -116,9 +149,17 @@ const MessageWindow = () => {
                 setFormData({
                     title: selectedMessage.title,
                     description: selectedMessage.description,
-                    locationType: selectedMessage.locationType,
-                    location: selectedMessage.location
+                    locationType: selectedMessage.roadName && {value: "road", label: "Дорога"}
+                        || selectedMessage.regionName && {value: "region", label: "Регион"},
+                    location: selectedMessage.roadName && {
+                      value: selectedMessage.roadName,
+                      label: selectedMessage.roadName,
+                    } || selectedMessage.regionName && {
+                      value: selectedMessage.regionName,
+                      label: selectedMessage.regionName,
+                    }
                 })
+                setSelectedDateTime(new Date(selectedMessage.expirationTime))
               }}
           >
             Редактировать
@@ -138,20 +179,21 @@ const MessageWindow = () => {
       <ListGroup className="mt-3">
         {messages && messages.map((message) => (
           <ListGroup.Item key={message.id} onClick={() => handleClickMessage(message)}>
-            {message.timestamp} <br />
+            {message.createTime} <br />
             <br />
             <strong>{message.title}</strong>
             <br />
-            {message.description} <br />#{message.location}
+            {message.description} <br />#{message.regionName || message.roadName}
             <br />
             <br />
-            Новость существует до: {message.expireTime.toLocaleString()}
+            Новость существует до: {message.expirationTime}
           </ListGroup.Item>
         ))}
       </ListGroup>
       <br />
       <br />
       <h2>{buttonName === "Отправить" && "Создать новость" || "Редактирование новости"}</h2>
+
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="titleInput" className="mb-3">
           <Form.Control

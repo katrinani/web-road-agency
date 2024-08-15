@@ -15,12 +15,14 @@ const prepareAdvert = (newMessage) => {
   console.log(expirationTime);
   const advertisement = {
     title,
-    description: description || undefined,
+    description: description || "",
   };
   if (locationType === "Дорога") {
     advertisement.roadName = location;
+    advertisement.regionName = null;
   } else if (locationType === "Регион") {
     advertisement.regionName = location;
+    advertisement.roadName = null;
   }
   advertisement.expirationTime = expirationTime;
   console.log(advertisement);
