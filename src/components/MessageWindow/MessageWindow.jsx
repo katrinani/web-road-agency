@@ -7,7 +7,7 @@ import DateTimePicker from "react-datetime-picker";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
-import sendAdvert from "../../helpers/Request/Ads";
+import CrudAdvertisement from "../../helpers/Request/CrudAdvertisement";
 
 const allMessages = [
   {
@@ -97,7 +97,7 @@ const MessageWindow = () => {
       selectedDateTime
     ) {
       const newMessage = {
-        id: new Date(),
+        id: formData.id || new Date(),
         title: formData.title,
         description: formData.description,
         locationType: formData.locationType.label,
@@ -105,7 +105,7 @@ const MessageWindow = () => {
         expireTime: selectedDateTime,
         timestamp: new Date().toLocaleString(),
       };
-      // setMessages([...messages, newMessage]);
+
       setFormData({
         title: "",
         description: "",
@@ -115,10 +115,11 @@ const MessageWindow = () => {
       setSelectedDateTime(new Date());
       console.log(newMessage);
       if (buttonName === "Отправить") {
-        await sendAdvert(newMessage);
+        await CrudAdvertisement.createAdvertisement(newMessage)
       } else if (buttonName === "Сохранить") {
         console.log("..Сохраняем")
-        //   запрос на редактирование
+        await CrudAdvertisement.updateAdvertisement(newMessage)
+        setButtonName("Отправить")
       }
     }
   };
@@ -129,7 +130,25 @@ const MessageWindow = () => {
     setShowModal(true);
   };
 
-
+  const handleClickUpdate = () => {
+    setShowModal(false);
+    setButtonName("Сохранить");
+    setFormData({
+      id: selectedMessage.id,
+      title: selectedMessage.title,
+      description: selectedMessage.description,
+      locationType: selectedMessage.roadName && {value: "road", label: "Дорога"}
+          || selectedMessage.regionName && {value: "region", label: "Регион"},
+      location: selectedMessage.roadName && {
+        value: selectedMessage.roadName,
+        label: selectedMessage.roadName,
+      } || selectedMessage.regionName && {
+        value: selectedMessage.regionName,
+        label: selectedMessage.regionName,
+      }
+    });
+    setSelectedDateTime(new Date(selectedMessage.expirationTime));
+  }
 
   return (
     <div className="container mt-5">
@@ -143,24 +162,7 @@ const MessageWindow = () => {
         <Modal.Body className="d-flex justify-content-between">
           <Button
               variant="light"
-              onClick={() => {
-                setShowModal(false);
-                setButtonName("Сохранить");
-                setFormData({
-                    title: selectedMessage.title,
-                    description: selectedMessage.description,
-                    locationType: selectedMessage.roadName && {value: "road", label: "Дорога"}
-                        || selectedMessage.regionName && {value: "region", label: "Регион"},
-                    location: selectedMessage.roadName && {
-                      value: selectedMessage.roadName,
-                      label: selectedMessage.roadName,
-                    } || selectedMessage.regionName && {
-                      value: selectedMessage.regionName,
-                      label: selectedMessage.regionName,
-                    }
-                })
-                setSelectedDateTime(new Date(selectedMessage.expirationTime))
-              }}
+              onClick={() => handleClickUpdate()}
           >
             Редактировать
           </Button>
@@ -168,7 +170,8 @@ const MessageWindow = () => {
               variant="dark"
               onClick={async () => {
                 setShowModal(false);
-                //  запрос на удаление
+                const id = selectedMessage.id;
+                await CrudAdvertisement.deleteAdvertisement(id);
               }}
           >
             Удалить
@@ -250,7 +253,6 @@ const MessageWindow = () => {
             placeholder="Выберите дорогу"
           />
         )}
-        {/*TODO Сделать более приятный выбор даты*/}
         <DateTimePicker
           className="mb-3"
           id="datetime"
