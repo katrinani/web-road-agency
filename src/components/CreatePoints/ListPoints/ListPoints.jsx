@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {verifiedTypes} from "../../helpers/FormData";
-import {URLForUndo} from "../../helpers/url";
+import {verifiedTypes} from "../../../helpers/FormData";
+import {URLForUndo} from "../../../helpers/url";
 
 const ListPoints = (props) => {
     const [searchTerm, setSearchTerm] = useState('');

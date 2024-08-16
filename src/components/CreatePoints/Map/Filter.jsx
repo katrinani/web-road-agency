@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {verifiedTypes} from "../../helpers/FormData";
-import {iconsVerified} from "../../helpers/IconsPath";
+import {verifiedTypes} from "../../../helpers/FormData";
+import {iconsVerified} from "../../../helpers/IconsPath";
 
 
 const Filter = (props) => {

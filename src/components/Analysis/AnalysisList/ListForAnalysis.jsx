@@ -124,7 +124,7 @@ const AnalysisList = (props) => {
                                                                                                         {ReliabilityLevels[point["marker"]["Уровень доверия"] - 1]}</div>
                                                                                                     <div>Дорога: {point["marker"]["Дорога"]}</div>
                                                                                                     <div>Дата
-                                                                                                        создания: {point["marker"]["Дата"]}</div>
+                                                                                                        создания: {new Date(point["marker"]["Дата"]).toLocaleString()}</div>
                                                                                                 </div>}
                                                                                             </div>
                                                                                         </div>

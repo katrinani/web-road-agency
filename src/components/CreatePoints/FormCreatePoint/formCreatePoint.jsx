@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import CustomInput from "../CustomInput/custom_input";
-import { FormData, highways, verifiedTypes } from "../../helpers/FormData.js";
-import FormDefaultData from "../../helpers/FormDefaultData";
-import CrudPoints from "../../helpers/Request/CrudPoints.js";
-import getAllPoints from "../../helpers/Request/AllPoints";
-import regions from "../../helpers/Request/Regions.js";
+import { FormData, highways, verifiedTypes } from "../../../helpers/FormData.js";
+import FormDefaultData from "../../../helpers/FormDefaultData";
+import CrudPoints from "../../../helpers/Request/CrudPoints.js";
+import getAllPoints from "../../../helpers/Request/AllPoints";
+import regions from "../../../helpers/Request/Regions.js";
 import Form from "react-bootstrap/Form";
 
 const FormCreatePoint = (props) => {

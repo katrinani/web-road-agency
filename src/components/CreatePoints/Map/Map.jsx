@@ -5,7 +5,7 @@ import {
     YMapComponentsProvider,
     YMapMarker, YMapCustomClusterer
 } from "ymap3-components";
-import {iconCluster, iconsVerified} from "../../helpers/IconsPath";
+import {iconCluster, iconsVerified} from "../../../helpers/IconsPath";
 import React, {useCallback, useEffect, useState} from "react";
 import Filter from "./Filter";
 

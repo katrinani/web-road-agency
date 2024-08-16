@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
-import FormCreatePoint from "./components/FormCreatePoint/formCreatePoint";
-import Map from "./components/Map/Map";
+import FormCreatePoint from "./components/CreatePoints/FormCreatePoint/formCreatePoint";
+import Map from "./components/CreatePoints/Map/Map";
 import {Button, Container, Modal} from "react-bootstrap";
 import "react-notifications/lib/notifications.css";
 import {NotificationContainer} from "react-notifications";
 import "./App.css"
 import MessageWindow from "./components/MessageWindow/MessageWindow";
 import getAllPoints from "./helpers/Request/AllPoints";
-import ListPoints from "./components/ListPoints/ListPoints";
+import ListPoints from "./components/CreatePoints/ListPoints/ListPoints";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Analysis from "./components/Analysis/Analysis";
 import CrudPoints from "./helpers/Request/CrudPoints";
