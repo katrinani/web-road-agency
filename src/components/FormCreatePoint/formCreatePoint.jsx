@@ -30,21 +30,21 @@ const FormCreatePoint = (props) => {
   const handleSingleSelectChange = (event) => {
     setInputValues((prevState) => ({
       ...prevState,
-      [Object.keys(FormData)[3]]: event,
+      [Object.keys(FormData)[3]]: event.value,
     }));
   };
 
   const handleSingleSelectChangeType = (event) => {
     setInputValues((prevState) => ({
       ...prevState,
-      [Object.keys(FormData)[4]]: event,
+      [Object.keys(FormData)[4]]: event.value,
     }));
   };
 
   const handleSingleSelectChangeRegion = (event) => {
     setInputValues((prevState) => ({
       ...prevState,
-      [Object.keys(FormData)[5]]: event,
+      [Object.keys(FormData)[5]]: event.value,
     }));
   };
 
@@ -59,6 +59,7 @@ const FormCreatePoint = (props) => {
     const newCenter = {center: [inputValues["Долгота"], inputValues["Широта"]], zoom: 9};
     if (isEditMode) {
       console.log("Редактируем....");
+      console.log(form)
       const response = await CrudPoints.pointEditing(form);
       if (response === 200) {
         props.setLocation(newCenter);
@@ -119,7 +120,10 @@ const FormCreatePoint = (props) => {
           <span>Название дороги</span>
           <Select
             key={`road ${inputValues[Object.keys(FormData)[3]]}`}
-            value={inputValues[Object.keys(FormData)[3]] || "Select..."}
+            value={{
+              value: inputValues[Object.keys(FormData)[3]],
+              label: inputValues[Object.keys(FormData)[3]]
+            }}
             options={highways.map((value) => ({
               value,
               label: value,
@@ -131,7 +135,10 @@ const FormCreatePoint = (props) => {
           <span>Тип точки</span>
           <Select
             key={`type ${inputValues[Object.keys(FormData)[4]]}`}
-            value={inputValues[Object.keys(FormData)[4]] || "Select..."}
+            value={{
+              value: inputValues[Object.keys(FormData)[4]],
+              label: verifiedTypes[inputValues[Object.keys(FormData)[4]]]
+            }}
             options={verifiedTypes.map((value) => ({
               value,
               label: value
@@ -144,7 +151,10 @@ const FormCreatePoint = (props) => {
           <div className="my-3">
             <span>Регион</span>
             <Select
-              value={inputValues[Object.keys(FormData)[5]] || "Select..."}
+              value={{
+                value: inputValues[Object.keys(FormData)[5]],
+                label: inputValues[Object.keys(FormData)[5]]
+              }}
               options={regions.map((value) => ({
                 value,
                 label: value,
