@@ -151,119 +151,156 @@ const MessageWindow = () => {
   }
 
   return (
-    <div className="container mt-5">
-      {/*Всплывашка с действием*/}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {selectedMessage.title !== "" && selectedMessage.title}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="d-flex justify-content-between">
-          <Button
-              variant="light"
-              onClick={() => handleClickUpdate()}
-          >
-            Редактировать
-          </Button>
-          <Button
-              variant="dark"
-              onClick={async () => {
-                setShowModal(false);
-                const id = selectedMessage.id;
-                await CrudAdvertisement.deleteAdvertisement(id);
-              }}
-          >
-            Удалить
-          </Button>
-        </Modal.Body>
-      </Modal>
+      <div className="container mt-5">
+        {/*Всплывашка с действием*/}
+        <Modal show={showModal} onHide={() => setShowModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              {selectedMessage.title !== "" && selectedMessage.title}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="d-flex justify-content-between">
+            <Button
+                variant="light"
+                onClick={() => handleClickUpdate()}
+            >
+              Редактировать
+            </Button>
+            <Button
+                variant="dark"
+                onClick={async () => {
+                  setShowModal(false);
+                  const id = selectedMessage.id;
+                  await CrudAdvertisement.deleteAdvertisement(id);
+                }}
+            >
+              Удалить
+            </Button>
+          </Modal.Body>
+        </Modal>
 
-      <ListGroup className="mt-3">
-        {messages && messages.map((message) => (
-          <ListGroup.Item key={message.id} onClick={() => handleClickMessage(message)}>
-            {message.createTime} <br />
-            <br />
-            <strong>{message.title}</strong>
-            <br />
-            {message.description} <br />#{message.regionName || message.roadName}
-            <br />
-            <br />
-            Новость существует до: {message.expirationTime}
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-      <br />
-      <br />
-      <h2>{buttonName === "Отправить" && "Создать новость" || "Редактирование новости"}</h2>
-
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="titleInput" className="mb-3">
-          <Form.Control
-            type="text"
-            value={formData.title}
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
-            placeholder="Название"
-          />
-        </Form.Group>
-        <Form.Group controlId="descriptionTextarea" className="mb-3">
-          <Form.Control
-            as="textarea"
-            rows={3}
-            value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-            placeholder="Описание"
-          />
-        </Form.Group>
-        <Select
-          className="mb-3"
-          options={[
-            { value: "region", label: "Регион" },
-            { value: "road", label: "Дорога" },
-          ]}
-          value={formData.locationType}
-          onChange={handleInputChange("locationType")}
-          placeholder="Выберите способ определения локации"
-        />
-        {formData.locationType && formData.locationType.value === "region" && (
+        <h2>{buttonName === "Отправить" && "Создать новость" || "Редактирование новости"}</h2>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="titleInput" className="mb-3">
+            <Form.Control
+                type="text"
+                value={formData.title}
+                onChange={(e) =>
+                    setFormData({...formData, title: e.target.value})
+                }
+                placeholder="Название"
+            />
+          </Form.Group>
+          <Form.Group controlId="descriptionTextarea" className="mb-3">
+            <Form.Control
+                as="textarea"
+                rows={3}
+                value={formData.description}
+                onChange={(e) =>
+                    setFormData({...formData, description: e.target.value})
+                }
+                placeholder="Описание"
+            />
+          </Form.Group>
           <Select
-            className="mb-3"
-            options={local_regions.map((region) => ({
-              value: region,
-              label: region,
-            }))}
-            value={formData.location}
-            onChange={handleInputChange("location")}
-            placeholder="Выберите регион"
+              className="mb-3"
+              options={[
+                {value: "region", label: "Регион"},
+                {value: "road", label: "Дорога"},
+              ]}
+              value={formData.locationType}
+              onChange={handleInputChange("locationType")}
+              placeholder="Выберите способ определения локации"
           />
-        )}
-        {formData.locationType && formData.locationType.value === "road" && (
-          <Select
-            className="mb-3"
-            options={local_roads.map((road) => ({
-              value: road,
-              label: road,
-            }))}
-            value={formData.location}
-            onChange={handleInputChange("location")}
-            placeholder="Выберите дорогу"
+          {formData.locationType && formData.locationType.value === "region" && (
+              <Select
+                  className="mb-3"
+                  options={local_regions.map((region) => ({
+                    value: region,
+                    label: region,
+                  }))}
+                  value={formData.location}
+                  onChange={handleInputChange("location")}
+                  placeholder="Выберите регион"
+              />
+          )}
+          {formData.locationType && formData.locationType.value === "road" && (
+              <Select
+                  className="mb-3"
+                  options={local_roads.map((road) => ({
+                    value: road,
+                    label: road,
+                  }))}
+                  value={formData.location}
+                  onChange={handleInputChange("location")}
+                  placeholder="Выберите дорогу"
+              />
+          )}
+          <DateTimePicker
+              className="mb-3"
+              id="datetime"
+              onChange={handleDateTimeChange}
+              value={selectedDateTime}
           />
-        )}
-        <DateTimePicker
-          className="mb-3"
-          id="datetime"
-          onChange={handleDateTimeChange}
-          value={selectedDateTime}
-        />
-        <Button variant="primary" type="submit" className="mx-3">
-          {buttonName}
-        </Button>
-      </Form>
-    </div>
+          <Button variant="primary" type="submit" className="mx-3">
+            {buttonName}
+          </Button>
+          {buttonName === "Сохранить" && (
+              <button
+                  className={"btn btn-primary"}
+                  onClick={() => {
+                    setButtonName("Отправить");
+                    setFormData({
+                      title: "",
+                      description: "",
+                      locationType: null,
+                      location: null,
+                    });
+                    setSelectedDateTime(new Date());
+                  }}
+              >Отменить изменение</button>
+          )}
+        </Form>
+        <br/>
+        {/*Список всех новостей*/}
+        <div className="accordion">
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="heading-advert">
+              <button className="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapse-advert"
+                      aria-expanded="true"
+                      aria-controls="collapse-advert"
+                      style={{backgroundColor: 'transparent'}}>
+                <h4 className="text-black">Список всех новостей</h4>
+              </button>
+            </h2>
+            <div id="collapse-advert" className="accordion-collapse collapse show"
+                 aria-labelledby="heading-advert"
+                 data-bs-parent="#accordion-advert">
+              <div className="accordion-body overflow-y-auto" style={{
+                maxHeight: '350px'
+              }}>
+                <ListGroup className="mt-3">
+                  {messages && messages.map((message) => (
+                      <ListGroup.Item key={message.id} onClick={() => handleClickMessage(message)}>
+                        {new Date(message.createTime).toLocaleString()} <br/>
+                        <br/>
+                        <strong>{message.title}</strong>
+                        <br/>
+                        {message.description} <br/>#{message.regionName || message.roadName}
+                        <br/>
+                        <br/>
+                        Новость существует до: {new Date(message.expirationTime).toLocaleString()}
+                      </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
   );
 };
 
