@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import pointConfirmation from "../../../helpers/Request/PointConfirmation";
 import {URLForPhoto, URLForUndo} from "../../../helpers/url";
+import {highways} from "../../../helpers/FormData";
+import UnverifiedPoints from "../../../helpers/Request/AllPolesAndUnverifiedPoints";
+import ApprovedPoints from "../../../helpers/Request/ApprovedPoints";
 
 const PointVerification = (props) => {
     const testPoint = props.testPoint
@@ -76,8 +79,8 @@ const PointVerification = (props) => {
         if (response === 200) {
             // удаляем тестовую точку
             props.setFilteredUnverifiedPoints(prevPoints => prevPoints.filter(point => point.ID !== pointData.id));
+            props.setFilteredUnverifiedPoints(UnverifiedPoints.concat(ApprovedPoints));
             props.setRightPart("Список");
-            // после обновления автоматом еще один запрос уже с подтвержденной точкой
         }
     }
 
@@ -183,16 +186,17 @@ const PointVerification = (props) => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="roadName">Дорога:</label>
-                            <input
-                                type="text"
+                            <select
                                 className="form-control"
                                 id="roadName"
                                 name="roadName"
                                 value={pointData.roadName}
                                 onChange={handleInputChange}
-                                title={pointData.roadName}
-                                disabled
-                            />
+                            >
+                                {highways.map((road, index) => (
+                                    <option key={index} value={road}>{road}</option>
+                                ))}
+                            </select>
                         </div>
                     </div>
                 </div>

@@ -20,6 +20,7 @@ const pointConfirmation = async (pointData, selectedImageIndex) => {
                 "latitude": pointData.coordinates.latitude,
                 "longitude": pointData.coordinates.longitude
             },
+            "roadName":pointData.roadName,
             "fileId": selectedImageIndex
         }
         console.log("Тело запроса", body);
