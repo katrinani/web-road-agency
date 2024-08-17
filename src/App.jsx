@@ -22,8 +22,7 @@ function App() {
   const [buttonName, setButtonName] = useState("Добавить");
   const [formValues, setFormValues] = useState(null);
   const [isActive, setIsActive] = useState(false);
-  // TODO сменить начало
-  const [page, setPage] = useState("Новости");
+  const [page, setPage] = useState("Карта");
   const [rightPart, setRightPart] = useState("Создаем");
 
   useEffect(() => {

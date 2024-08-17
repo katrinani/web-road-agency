@@ -9,35 +9,7 @@ import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import CrudAdvertisement from "../../helpers/Request/CrudAdvertisement";
 
-const allMessages = [
-  {
-    id: "1",
-    title: "Обьявление 1",
-    description: "Опиисание",
-    regionName: null,
-    roadName: "М-5 \"Урал\" ПкЕ: Челябинск - Екатеринбург",
-    createTime: "2024-08-15T06:30:19.795Z", // начало
-    expirationTime: "2024-08-18T06:30:19.795Z" // конец
-  },
-  {
-    id: "2",
-    title: "Обьявление 2",
-    description: "Опиисание",
-    regionName: "Челябинская область",
-    roadName: null,
-    createTime: "2024-08-16T06:31:18.795Z", // начало
-    expirationTime: "2024-08-30T10:30:19.795Z" // конец
-  },
-  {
-    id: "3",
-    title: "Обьявление 3",
-    description: "Опиисание",
-    regionName: null,
-    roadName: "А-310: Челябинск - Троицк",
-    createTime: "2024-08-15T06:30:19.795Z", // начало
-    expirationTime: "2024-09-20T16:00:10.795Z" // конец
-  },
-]
+const allMessages = await CrudAdvertisement.readAllAdvertisements()
 
 const MessageWindow = () => {
   const [messages, setMessages] = useState(allMessages);
@@ -121,6 +93,7 @@ const MessageWindow = () => {
         await CrudAdvertisement.updateAdvertisement(newMessage)
         setButtonName("Отправить")
       }
+      setMessages(await CrudAdvertisement.readAllAdvertisements())
     }
   };
 

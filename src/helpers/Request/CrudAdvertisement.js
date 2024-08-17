@@ -33,7 +33,8 @@ const prepareAdvert = (newMessage) => {
 class CrudAdvertisement {
     static async createAdvertisement(newMessage) {
         try {
-            const advert = prepareAdvert(newMessage);
+            const advert = prepareAdvert(newMessage).advertisement;
+            console.log("Тело", advert);
             const response = await axios.post(`${url}/advertisements`, advert);
             console.log(response);
             if (response.status === 201) {
@@ -45,15 +46,37 @@ class CrudAdvertisement {
         }
     };
 
+    static async readAllAdvertisements() {
+        try {
+            const response = await axios.get(`${url}/advertisements`);
+            console.log(response);
+            if (response.status === 200) {
+                const allAdvertisements = response.data["advertisements"].map((advertisement) => ({
+                    id: advertisement.id,
+                    title: advertisement.title,
+                    description: advertisement.description,
+                    regionName: advertisement.regionName,
+                    roadName: advertisement.roadName,
+                    createTime: advertisement.creationDate,
+                    expirationTime: advertisement.expirationDate
+                }))
+                return allAdvertisements;
+            }
+        } catch (error) {
+            handleError(error);
+        }
+    };
+
     static async updateAdvertisement(newMessage) {
         try {
             let body = {
                 "title": newMessage.title,
                 "description": newMessage.description,
-                "regionName": newMessage.locationType === "Дорога" && newMessage.roadName || null,
-                "roadName": newMessage.locationType === "Регион" && newMessage.regionName || null,
-                "expirationTime": newMessage.expireTime
+                "regionName": newMessage.locationType === "Регион" && newMessage.location || null,
+                "roadName": newMessage.locationType === "Дорога" && newMessage.location || null,
+                "expirationTime": newMessage.expireTime.toISOString()
             }
+            console.log("Тело", body)
             const response = await axios.put(`${url}/advertisements/${newMessage.id}`, body);
             console.log(response);
             if (response.status === 200) {
