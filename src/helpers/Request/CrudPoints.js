@@ -75,7 +75,6 @@ class CrudPoints {
   }
 
   static async pointDeleting (point) {
-    console.log(point)
     try {
       let mainUrl = `/verifiedPoints/${point.ID}`
       console.log(mainUrl)

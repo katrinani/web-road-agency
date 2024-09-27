@@ -5,6 +5,8 @@ import {
     unverifiedTypes
 } from "../../../helpers/FormData";
 import createTestVariant from "../../../helpers/Request/CreateTestVariant";
+import url from "../../../helpers/url";
+import ReportPoints from "../../../helpers/Request/Report";
 
 const AnalysisList = (props) => {
     const segments = props.segmentsMarkers
@@ -17,10 +19,36 @@ const AnalysisList = (props) => {
         props.setRightPart("Тестовый вариант");
     };
 
+    const handleDownload = async () => {
+        const info = await ReportPoints.ReportUnverifiedPoints(segments);
+        const link = info[0]
+        const downloadUrl = info[1]
+
+        await document.body.appendChild(link);
+        link.click();
+
+        await link.parentNode.removeChild(link);
+        window.URL.revokeObjectURL(downloadUrl);
+    };
+
     return (
         <div
             className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-center">
             <h3 className="text-center">Анализ участков</h3>
+            <div className="d-flex flex-row w-100">
+                <a
+                    href="#"
+                    className="btn w-50 m-1 btn-outline-secondary rounded mybtn "
+                    title="Скачать информацию о существующих сегментах в формате .xlsx"
+                    onClick={handleDownload}
+                >Скачать сегменты</a>
+                <a
+                    href={url + "/approved-points/report"}
+                    className="btn w-50 m-1 btn-outline-secondary rounded mybtn"
+                    title="Скачать информацию о подтвержденных точках в формате .xlsx"
+                    download
+                >Скачать подтв. точки</a>
+            </div>
             <div
                 className="p-2 rounded border-dark-subtle overflow-auto shadow-sm"
                 style={{height: 'calc(100% - 60px)', width: 'calc(100% - 16px)'}}
