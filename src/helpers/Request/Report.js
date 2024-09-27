@@ -25,13 +25,13 @@ class ReportPoints {
                 )) || [],
                 "pointsWithoutAreas":  single || [],
             }
-            console.log(body)
+
             const response = await axios.post(
                 url + "/unverified-points/report",
                 body,
                 {responseType: 'blob'}
             );
-            console.log(response);
+
             if (response.status === 200) {
                 console.log(response);
                 NotificationManager.success('Успешно получено!');
@@ -39,6 +39,7 @@ class ReportPoints {
 
             const blob = new Blob([response.data], { type: 'application/octet-stream' });
             const downloadUrl = window.URL.createObjectURL(blob);
+
 
             const link = document.createElement('a');
             link.href = downloadUrl;
