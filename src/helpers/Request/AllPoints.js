@@ -15,8 +15,9 @@ const getAllPoints = async (coordinate) => {
     let radius = `&RadiusInKm=${100}`
     let params = latitude + longitude + radius
     const response = await axios.get(
-      `${url}/verifiedPoints` + params
+        `${url}/verifiedPoints` + params
     );
+
 
     if (response.status === 200) {
       const points_list = Array.isArray(response.data.verifiedPoints) ? response.data.verifiedPoints.map((point) => ({
