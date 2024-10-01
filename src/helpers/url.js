@@ -1,4 +1,4 @@
-const backend_url = process.env.BACKEND_URL;
+const backend_url = process.env.REACT_APP_BACKEND_URL;
 
 export const url = `${backend_url}/api/v1/Web`;
 export default url;
