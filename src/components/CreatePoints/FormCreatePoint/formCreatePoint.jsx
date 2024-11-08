@@ -66,6 +66,7 @@ const FormCreatePoint = (props) => {
       }
     } else {
       console.log("Создаем....");
+      console.log(form)
       const response = await CrudPoints.createPoint(form);
       if (response === 201) {
         props.setLocation(newCenter);
