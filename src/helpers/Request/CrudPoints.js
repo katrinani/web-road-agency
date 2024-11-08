@@ -20,9 +20,9 @@ class CrudPoints {
           latitude: point["Широта"],
           longitude: point["Долгота"],
         },
-        roadName: point["Дорога"] || null,
-        regionName: point["Регион"]["value"] || null,
-        description: point["Описание"] || null
+        roadName: point["Дорога"] === "" ? null : point["Дорога"],
+        regionName: point["Регион"] && point["Регион"]["value"] ? point["Регион"]["value"] : null,
+        description: point["Описание"] ? point["Описание"] : null
       };
       console.log(body)
       let mainURL = url + `/verifiedPoints`
