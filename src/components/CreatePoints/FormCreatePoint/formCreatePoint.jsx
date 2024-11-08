@@ -81,7 +81,7 @@ const FormCreatePoint = (props) => {
     console.log(props.points_list);
     setInputValues(FormDefaultData);
     console.log("inputValues", inputValues);
-    window.location.reload(); // Обновление страницы
+    // window.location.reload(); // Обновление страницы
   };
 
   return (
