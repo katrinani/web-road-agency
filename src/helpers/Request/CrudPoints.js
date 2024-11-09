@@ -1,5 +1,4 @@
 import axios from "axios";
-import { verifiedTypes } from "../FormData";
 import url from "../url"
 import {NotificationManager} from "react-notifications";
 import handleError from "../Notifications";
@@ -15,14 +14,14 @@ class CrudPoints {
     try {
       let body = {
         name: point["Название"],
-        type: verifiedTypes.indexOf(point["Тип точки"]),
+        type: point["Тип точки"][0],
         coordinates: {
           latitude: point["Широта"],
           longitude: point["Долгота"],
         },
         roadName: point["Дорога"] === "" ? null : point["Дорога"],
-        regionName: point["Регион"] && point["Регион"]["value"] ? point["Регион"]["value"] : null,
-        description: point["Описание"] ? point["Описание"] : null
+        regionName: point["Регион"] === "" ? null : point["Регион"],
+        description: point["Описание"] === "" ? null : point["Регион"]
       };
       console.log(body)
       let mainURL = url + `/verifiedPoints`
@@ -44,15 +43,15 @@ class CrudPoints {
     console.log(point)
     try {
       let body = {
-        name: point.Название,
-        type: point.Тип,
+        name: point["Название"],
+        type: point["Тип точки"][0],
         coordinates: {
-          latitude: point.Широта,
-          longitude: point.Долгота,
+          latitude: point["Широта"],
+          longitude: point["Долгота"],
         },
-        description: point.Описание || null,
-        regionName: point.Регион || null,
-        newRoadName: point.Дорога || null,
+        roadName: point["Дорога"] === "" ? null : point["Дорога"],
+        regionName: point["Регион"] === "" ? null : point["Регион"],
+        description: point["Описание"] === "" ? null : point["Регион"]
       };
       console.log('Body: ', body)
       let mainUrl = `/verifiedPoints/${point.ID}`

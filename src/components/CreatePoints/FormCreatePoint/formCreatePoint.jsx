@@ -37,7 +37,7 @@ const FormCreatePoint = (props) => {
   const handleSingleSelectChangeType = (event) => {
     setInputValues((prevState) => ({
       ...prevState,
-      [Object.keys(FormData)[4]]: event.value,
+      [Object.keys(FormData)[4]]: [verifiedTypes.indexOf(event.value)],
     }));
   };
 
@@ -50,24 +50,19 @@ const FormCreatePoint = (props) => {
 
   const handleSubmit = async () => {
     props.setButtonName("Добавить");
-    const form = {
-      ...inputValues,
-      "Дорога": inputValues["Дорога"].value,
-      "Тип точки": inputValues["Тип точки"].value,
-    };
 
     const newCenter = {center: [inputValues["Долгота"], inputValues["Широта"]], zoom: 9};
     if (isEditMode) {
       console.log("Редактируем....");
-      console.log(form)
-      const response = await CrudPoints.pointEditing(form);
+      console.log(inputValues)
+      const response = await CrudPoints.pointEditing(inputValues);
       if (response === 200) {
         props.setLocation(newCenter);
       }
     } else {
       console.log("Создаем....");
-      console.log(form)
-      const response = await CrudPoints.createPoint(form);
+      console.log(inputValues)
+      const response = await CrudPoints.createPoint(inputValues);
       if (response === 201) {
         props.setLocation(newCenter);
       }
@@ -82,7 +77,6 @@ const FormCreatePoint = (props) => {
     console.log(props.points_list);
     setInputValues(FormDefaultData);
     console.log("inputValues", inputValues);
-    // window.location.reload(); // Обновление страницы
   };
 
   return (
