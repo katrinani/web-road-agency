@@ -209,15 +209,19 @@ const MessageWindow = () => {
                   placeholder="Выберите дорогу"
               />
           )}
-          <DateTimePicker
-              className="mb-3"
-              id="datetime"
-              onChange={handleDateTimeChange}
-              value={selectedDateTime}
-          />
-          <Button variant="primary" type="submit" className="mx-3">
-            {buttonName}
-          </Button>
+          <div>
+            <span className="text text-secondary">Время жизни</span>
+            <br/>
+            <DateTimePicker
+                className="mb-3"
+                id="datetime"
+                onChange={handleDateTimeChange}
+                value={selectedDateTime}
+            />
+            <Button variant="primary" type="submit" className="mx-3">
+              {buttonName}
+            </Button>
+          </div>
           {buttonName === "Сохранить" && (
               <button
                   className={"btn btn-primary"}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
     ExplanationForReliabilityLevels,
     ReliabilityLevels,
@@ -13,6 +13,22 @@ const FilterForAnalysis = (props) => {
     const [selectedReliabilityLevels, setSelectedReliabilityLevels] = useState([]);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+
+    useEffect(() => {
+        setSelectedTypes([
+            "ДТП",
+            "Недостатки дороги",
+            "Преграда",
+            "Противоправные действия 3х лиц",
+            "Подтвержденные"
+        ])
+        filterPoints();
+    }, []);
+
+    // установка базовых фильтров
+    useEffect(() => {
+        filterPoints();
+    }, [selectedTypes]);
 
     const handleSelectType = (typeId, event) => {
         event.stopPropagation();
@@ -50,9 +66,9 @@ const FilterForAnalysis = (props) => {
     const filterPoints = () => {
         const filteredPoints = props.points.filter(point => {
             const typeMatch = selectedTypes.length === 0
-                || selectedTypes.includes(unverifiedTypes[point["Тип точки"][0]])
-                || selectedTypes.includes(verifiedTypes[point["Тип точки"][0]])
-                || point["Количество источников"];
+                || point["Подтверждение"] && selectedTypes.includes('Подтвержденные')
+                || selectedTypes.includes(unverifiedTypes[point["Тип точки"][0]]) && !point["Подтверждение"]
+                || selectedTypes.includes(verifiedTypes[point["Тип точки"][0]]) && !point["Подтверждение"];
             const reliabilityMatch = selectedReliabilityLevels.length === 0
                 || selectedReliabilityLevels.includes(point["Уровень доверия"]);
             const pointDate = new Date(point["Дата"]);
@@ -93,7 +109,6 @@ const FilterForAnalysis = (props) => {
                              aria-labelledby="heading-type"
                              data-bs-parent="#all_accordion">
                             <div className="accordion-body">
-                                {/*0-1-2-3(невер типы)-8(километры)*/}
                                 {unverifiedTypes.map((type) => (
                                     <li
                                         key={unverifiedTypes.indexOf(type)}

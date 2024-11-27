@@ -14,7 +14,9 @@ import CrudPoints from "./helpers/Request/CrudPoints";
 
 
 function App() {
-  const apiKey = process.env.REACT_APP_API_KEY;
+  // const apiKey = process.env.REACT_APP_API_KEY;
+  const apiKey = 'f76e8033-445d-48b9-8805-b6987c78678d';
+  // TODO убрать хардкод
   const [location, setLocation] = useState({ center: [55.163742, 61.400346], zoom: 11 });
   const [points_list, set_list] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -22,7 +24,7 @@ function App() {
   const [buttonName, setButtonName] = useState("Добавить");
   const [formValues, setFormValues] = useState(null);
   const [isActive, setIsActive] = useState(false);
-  const [page, setPage] = useState("Карта");
+  const [page, setPage] = useState("Анализ");
   const [rightPart, setRightPart] = useState("Создаем");
 
   useEffect(() => {

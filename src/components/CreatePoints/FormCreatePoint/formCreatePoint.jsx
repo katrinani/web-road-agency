@@ -58,6 +58,7 @@ const FormCreatePoint = (props) => {
       const response = await CrudPoints.pointEditing(inputValues);
       if (response === 200) {
         props.setLocation(newCenter);
+        window.location.reload();
       }
     } else {
       console.log("Создаем....");
@@ -65,6 +66,7 @@ const FormCreatePoint = (props) => {
       const response = await CrudPoints.createPoint(inputValues);
       if (response === 201) {
         props.setLocation(newCenter);
+        window.location.reload();
       }
     }
     console.log(newCenter)
