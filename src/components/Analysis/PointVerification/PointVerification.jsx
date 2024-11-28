@@ -88,20 +88,6 @@ const PointVerification = (props) => {
         <div
             className="p-4 w-50 shadow-sm p-3 bg-body-tertiary rounded border border-dark-subtle d-flex flex-column mb-2 align-items-center">
             <h3>Верификация точки</h3>
-            {/*Закрытие страницы*/}
-            <img
-                src={URLForUndo}
-                alt="Закрыть"
-                style={{
-                    width: '20px', height: '20px',
-                    position: 'absolute', margin: '20px',
-                    right: '0', top: '0'
-                }}
-                onClick={() => {
-                    props.setRightPart("Список");
-                    props.setFilteredUnverifiedPoints(prevPoints => prevPoints.filter(point => point.ID !== pointData.id));
-                }}
-            />
             <form onSubmit={handleSubmit}>
                 <div className="row">
                     <div className="col">

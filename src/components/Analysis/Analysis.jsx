@@ -50,6 +50,7 @@ const Analysis = (props) => {
                 segmentsMarkers={segmentsMarkers}
                 setRightPart={setRightPart}
                 setMarkerChoose={setMarkerChoose}
+                rightPart={rightPart}
                 setTestPoint={setTestPoint}
                 setSegmentsMarkers={setSegmentsMarkers}
             />

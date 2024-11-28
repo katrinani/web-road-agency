@@ -12,10 +12,14 @@ import React, {useCallback, useContext, useEffect, useState} from "react";
 import FilterForAnalysis from "./SmallComponents/FilterForAnalysis";
 import createTestVariant from "../../../helpers/Request/CreateTestVariant";
 import CreateSegment from "./SmallComponents/CreateSegment";
+import {Button, Modal} from "react-bootstrap";
+import deleteUnverified from "../../../helpers/Request/DeleteUnverifiedPoints";
 
 const AnalysisMap = (props) => {
     const [selectedCtrlPoints, setSelectedCtrlPoints] = useState([]);
     const [makeSegment, setMakeSegment] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const [deletedMessage, setDeletedMessage] = useState({});
     const getHint = useCallback((object) => object?.properties?.hint, []);
 
     // Всплывающее описание сегмента
@@ -34,15 +38,27 @@ const AnalysisMap = (props) => {
 
     // Действие с точкой: Описание или создание сегмента
     const handleMarkerClick = (event, marker) => {
-        if (event.ctrlKey) {
-            if (marker["Тип точки"][0] !== 8 && !marker["Количество источников"]){
-                setSelectedCtrlPoints(prevSelectedPoints =>
-                    [...prevSelectedPoints.filter((point) => point["ID"] !== marker["ID"]), marker]
-                )
+        // Не даем уйти из верификации
+        if (props.rightPart !== "Тестовый вариант") {
+            if (event.ctrlKey) {
+                if (marker["Тип точки"][0] !== 8 && !marker["Количество источников"]) {
+                    setSelectedCtrlPoints(prevSelectedPoints =>
+                        [...prevSelectedPoints.filter((point) => point["ID"] !== marker["ID"]), marker]
+                    )
+                }
+            } else {
+                props.setMarkerChoose(marker);
+                props.setRightPart("Описание точки");
             }
-        } else {
-            props.setMarkerChoose(marker);
-            props.setRightPart("Описание точки");
+        }
+    };
+
+    const handleMarkerDoubleClick = (marker) => {
+        if (props.rightPart !== "Тестовый вариант") {
+            if (!marker["Подтверждение"] && marker["Тип точки"][0] !== 8) {
+                setDeletedMessage(marker);
+                setShowModal(true);
+            }
         }
     };
 
@@ -76,6 +92,7 @@ const AnalysisMap = (props) => {
             <YMapMarker
                 coordinates={[feature.point["Долгота"], feature.point["Широта"]]}
                 onClick={(event) => handleMarkerClick(event, feature.point)}
+                onDoubleClick={(event) => handleMarkerDoubleClick(feature.point)}
             >
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <img
@@ -126,6 +143,26 @@ const AnalysisMap = (props) => {
 
     return (
         <div className="map w-50 h-100 px-2 position-relative rounded">
+
+            {/*Всплывашка с действием*/}
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        {deletedMessage["Описание"] !== "" && deletedMessage["Описание"]}
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="d-flex justify-content-between">
+                    <Button
+                        variant="dark"
+                        onClick={async () => {
+                            setShowModal(false);
+                            const id = deletedMessage.ID;
+                            await deleteUnverified(id);
+                        }}
+                    >Удалить</Button>
+                </Modal.Body>
+            </Modal>
+
             {/*Фильтры*/}
             <div className="position-absolute top-0 start-0 p-3" style={{zIndex: 1}}>
                 <FilterForAnalysis
@@ -134,6 +171,7 @@ const AnalysisMap = (props) => {
                     setFilteredUnverifiedPoints={props.setFilteredUnverifiedPoints}
                 />
             </div>
+
             {/*Окно для создания сегмента*/}
             {makeSegment === "Создаем" && (
                 <div className="position-absolute bottom-0 end-0 p-2" style={{zIndex: 1}}>
@@ -145,6 +183,7 @@ const AnalysisMap = (props) => {
                     />
                 </div>
             )}
+
             <YMapComponentsProvider apiKey={props.apiKey}>
                 <YMap location={props.location}>
                     <YMapDefaultSchemeLayer/>
