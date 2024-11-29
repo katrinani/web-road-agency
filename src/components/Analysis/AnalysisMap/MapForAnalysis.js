@@ -39,7 +39,7 @@ const AnalysisMap = (props) => {
     // Действие с точкой: Описание или создание сегмента
     const handleMarkerClick = (event, marker) => {
         // Не даем уйти из верификации
-        if (props.rightPart !== "Тестовый вариант") {
+        if (props.static_form.current === false) {
             if (event.ctrlKey) {
                 if (marker["Тип точки"][0] !== 8 && !marker["Количество источников"]) {
                     setSelectedCtrlPoints(prevSelectedPoints =>
@@ -54,7 +54,7 @@ const AnalysisMap = (props) => {
     };
 
     const handleMarkerDoubleClick = (marker) => {
-        if (props.rightPart !== "Тестовый вариант") {
+        if (props.static_form.current === false) {
             if (!marker["Подтверждение"] && marker["Тип точки"][0] !== 8) {
                 setDeletedMessage(marker);
                 setShowModal(true);
@@ -73,6 +73,7 @@ const AnalysisMap = (props) => {
         const Point = await createTestVariant(IDs);
         console.log(Point);
         props.setTestPoint(Point);
+        props.static_form.current = true;
         props.setRightPart("Тестовый вариант");
     };
 
@@ -91,7 +92,7 @@ const AnalysisMap = (props) => {
         (feature) => (
             <YMapMarker
                 coordinates={[feature.point["Долгота"], feature.point["Широта"]]}
-                onClick={(event) => handleMarkerClick(event, feature.point)}
+                onClick={(event) => handleMarkerClick(event, feature.point, props.rightPart)}
                 onDoubleClick={(event) => handleMarkerDoubleClick(feature.point)}
             >
                 <div style={{display: 'flex', alignItems: 'center'}}>
@@ -164,13 +165,14 @@ const AnalysisMap = (props) => {
             </Modal>
 
             {/*Фильтры*/}
-            <div className="position-absolute top-0 start-0 p-3" style={{zIndex: 1}}>
+            {props.static_form.current === false && (<div className="position-absolute top-0 start-0 p-3" style={{zIndex: 1}}>
                 <FilterForAnalysis
                     points={props.points}
                     filteredUnverifiedPoints={props.filteredUnverifiedPoints}
                     setFilteredUnverifiedPoints={props.setFilteredUnverifiedPoints}
                 />
             </div>
+            )}
 
             {/*Окно для создания сегмента*/}
             {makeSegment === "Создаем" && (

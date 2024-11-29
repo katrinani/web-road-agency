@@ -48,7 +48,7 @@ export function makeSegments (points) {
                 nearbyPoints.push(point);
             }
         });
-        console.log(nearbyPoints.length)
+
         if (nearbyPoints.length > 10) {
             stressedSegments.push(nearbyPoints);
         } else if (nearbyPoints.length >= 3 && nearbyPoints.length <= 10) {
@@ -72,7 +72,7 @@ export function makeSegments (points) {
         });
         return uniqueList.filter(segment => segment.length !== 0);
     }
-    console.log(singlePoints)
+
     return {
         "stressed": uniqueList(stressedSegments),
         "medium": uniqueList(mediumSegments),

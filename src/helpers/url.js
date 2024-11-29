@@ -1,6 +1,5 @@
-// const backend_url = process.env.REACT_APP_BACKEND_URL;
-const backend_url = 'http://localhost:5139'
-// TODO урать хардкодн
+const backend_url = process.env.REACT_APP_BACKEND_URL;
+
 export const url = `${backend_url}/api/v1/web`;
 export default url;
 

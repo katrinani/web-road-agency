@@ -16,6 +16,7 @@ const AnalysisList = (props) => {
         const Point = await createTestVariant(IDs);
         console.log(Point);
         props.setTestPoint(Point);
+        props.static_form.current = true;
         props.setRightPart("Тестовый вариант");
     };
 

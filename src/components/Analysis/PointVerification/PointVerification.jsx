@@ -81,6 +81,7 @@ const PointVerification = (props) => {
             props.setFilteredUnverifiedPoints(prevPoints => prevPoints.filter(point => point.ID !== pointData.id));
             props.setFilteredUnverifiedPoints(UnverifiedPoints.concat(ApprovedPoints));
             props.setRightPart("Список");
+            props.static_form.current = false;
         }
     }
 

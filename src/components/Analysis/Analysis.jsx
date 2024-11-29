@@ -1,7 +1,7 @@
 import {makeSegments} from "../../helpers/Segments";
 import AnalysisMap from "./AnalysisMap/MapForAnalysis";
 import AnalysisList from "./AnalysisList/ListForAnalysis";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import PointVerification from "./PointVerification/PointVerification";
 import DescriptionPoint from "./DescriptionPoint/DescriptionPoint";
 import UnverifiedPoints from "../../helpers/Request/AllPolesAndUnverifiedPoints";
@@ -13,6 +13,7 @@ const Analysis = (props) => {
         {center: [61.400346, 55.163742], zoom: 11}
     );
     const [rightPart, setRightPart] = useState("Список");
+    const static_form = useRef(false);
     const [markerChoose, setMarkerChoose] = useState();
     const [testPoint, setTestPoint] = useState(null);
     const [filteredUnverifiedPoints, setFilteredUnverifiedPoints] = useState([]);
@@ -53,6 +54,7 @@ const Analysis = (props) => {
                 rightPart={rightPart}
                 setTestPoint={setTestPoint}
                 setSegmentsMarkers={setSegmentsMarkers}
+                static_form={static_form}
             />
             {/*Список участков*/}
             {rightPart === "Список" && (
@@ -60,6 +62,7 @@ const Analysis = (props) => {
                     segmentsMarkers={segmentsMarkers}
                     setRightPart={setRightPart}
                     setTestPoint={setTestPoint}
+                    static_form={static_form}
                 />
             )}
             {/*Создание тестовой точки*/}
@@ -70,6 +73,7 @@ const Analysis = (props) => {
                     filteredUnverifiedPoints={filteredUnverifiedPoints}
                     setFilteredUnverifiedPoints={setFilteredUnverifiedPoints}
                     testPoint={testPoint}
+                    static_form={static_form}
                 />
             )}
             {/*Описание точки*/}
