@@ -13,11 +13,11 @@ const FormCreatePoint = (props) => {
   const [isEditMode, setIsEditMode] = useState(false);
 
   useEffect(() => {
-    if (props.isActive && props.formValues) {
+    if (props.isActive && props.formValues && props.button_name === "Сохранить") {
       setInputValues(props.formValues);
       setIsEditMode(true);
     }
-  }, [props.isActive, props.formValues]);
+  }, [props.isActive, props.formValues, props.button_name]);
 
   const handleInputChange = (name) => (event) => {
     const { value } = event.target;
@@ -58,7 +58,7 @@ const FormCreatePoint = (props) => {
       const response = await CrudPoints.pointEditing(inputValues);
       if (response === 200) {
         props.setLocation(newCenter);
-        window.location.reload();
+        props.setRefresh(true);
       }
     } else {
       console.log("Создаем....");
@@ -66,7 +66,7 @@ const FormCreatePoint = (props) => {
       const response = await CrudPoints.createPoint(inputValues);
       if (response === 201) {
         props.setLocation(newCenter);
-        window.location.reload();
+        props.setRefresh(true);
       }
     }
     console.log(newCenter)

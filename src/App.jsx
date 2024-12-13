@@ -14,8 +14,9 @@ import CrudPoints from "./helpers/Request/CrudPoints";
 
 
 function App() {
-  const apiKey = process.env.REACT_APP_API_KEY;
-  const [location, setLocation] = useState({ center: [55.163742, 61.400346], zoom: 11 });
+  // const apiKey = process.env.REACT_APP_API_KEY;
+  const apiKey = 'f76e8033-445d-48b9-8805-b6987c78678d';
+  const [location, setLocation] = useState({ center: [61.400346, 55.163742], zoom: 11 });
   const [points_list, set_list] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState(null);
@@ -24,18 +25,16 @@ function App() {
   const [isActive, setIsActive] = useState(false);
   const [page, setPage] = useState("Анализ");
   const [rightPart, setRightPart] = useState("Создаем");
+  const [refresh, setRefresh]  = useState(false);
 
   useEffect(() => {
     const fetchPoints = async () => {
-      const points = await getAllPoints(location);
+      const points = await getAllPoints();
       set_list(points);
-      if (points?.length > 0) {
-        const lastPoint = points[points.length - 1];
-        setLocation({ center: [lastPoint.Долгота, lastPoint.Широта], zoom: 9 });
-      }
     };
     fetchPoints();
-  }, []);
+    setRefresh(false);
+  }, [refresh]);
 
   const handleFormValues = (marker) => {
     console.log(marker);
@@ -78,7 +77,7 @@ function App() {
                   console.log(selectedPoint);
                   const response = await CrudPoints.pointDeleting(selectedPoint);
                   if (response === 200) {
-                    window.location.reload(); // Обновление страницы
+                    setRefresh(true);
                   }
                 }}
               >
@@ -97,6 +96,7 @@ function App() {
                     formValues={formValues}
                     isActive={isActive}
                     setLocation={setLocation}
+                    setRefresh={setRefresh}
                 />
             )}
             {rightPart === "Изучаем" && (
